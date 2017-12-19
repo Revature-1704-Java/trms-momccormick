@@ -1,0 +1,27 @@
+Employee
+  First Name
+  Last Name
+  Date Hired
+  Available Reimbursement?
+
+Event Types (%)
+  University Course 80%
+  Seminar 60%
+  Certification Preparation Class 75%
+  Certification 100%
+  Technical Training 90%
+  Other 30%
+
+Reimbursement Status
+  Pending
+  Approved
+
+BenCo?
+
+Reimbursement
+  Employee
+  Event Type
+  Amount
+  Reimbursement Status
+  
+  
