@@ -4,7 +4,7 @@
 The purpose of TRMS is to provide a system that encourages quality knowledge growth relevant to an individual’s expertise.   Currently, TRMS provides reimbursements for university courses, seminars, certification preparation classes, certifications, and technical training.  The current system relies solely on email communication, requiring manual lookups of available funds and is error-prone due to inbox clutter and incorrect routing of tasks.  Furthermore, there is no way to record and report on reimbursements awarded, and so the company has no way to identify highly-invested courses that could be developed to be offered in-house.
 
 ### 1.1. Business Rules
-Each employee is allowed to claim up to $1000 in tuition reimbursement a year.  The amount available to an employee is reset on the new year.  Event types have different standard reimbursement coverage: University Courses 80%, Seminars 60%, Certification Preparation Classes 75%, Certification 100%, Technical Training 90%, Other 30%.  After a BenCo has approved a reimbursement, the reimbursement is pending until a passing grade or presentation over the event is provided.  The monetary amount available for an employee to reimburse is defined by the following equation: AvailableReimburstment = TotalReimburstment ($1000) – PendingReimburstments – AwardedReimburstments.  If the projected reimbursement for an event exceeds the available reimbursement amount, it is adjusted to the amount available.  Reimbursements do not cover course materials such as books.
+Each employee is allowed to claim up to $1000 in tuition reimbursement a year.  The amount available to an employee is reset on the new year.  Event types have different standard reimbursement coverage: University Courses 80%, Seminars 60%, Certification Preparation Classes 75%, Certification 100%, Technical Training 90%, Other 30%.  After a Benefits Coordinator has approved a reimbursement, the reimbursement is pending until a passing grade or presentation over the event is provided.  The monetary amount available for an employee to reimburse is defined by the following equation: AvailableReimburstment = TotalReimburstment ($1000) – PendingReimburstments – AwardedReimburstments.  If the projected reimbursement for an event exceeds the available reimbursement amount, it is adjusted to the amount available.  Reimbursements do not cover course materials such as books.
 
 
 
@@ -12,7 +12,7 @@ Each employee is allowed to claim up to $1000 in tuition reimbursement a year.  
 All Employees must complete the Tuition Reimbursement form one week prior to the start of the event.  This form must collect (required): basic employee information; date, time, location, description, cost, grading format, and type of event; work-related justification.  The employee can optionally include: event-related attachments of pdf, png, jpeg, txt, or doc file type, attachments of approvals already provided of .msg (Outlook Email File) file type and type of approval, work time that will be missed.  The projected reimbursement should be provided as a read-only field.
 
 ### 2.1. Business Rules
-Grading formats are pulled from a reference table.  Certain grading formats require the employee to perform a presentation to management after the event’s completion and prior to awarded reimbursement.  A passing grade is needed for reimbursement otherwise.  Employee must provide the passing grade cutoff for the course, or choose to use a default passing grade if unknown.  If an employee provides an approval email, that approval step is skipped (cannot skip BenCo Approval).  If the course is < 2 weeks from beginning, the request is marked urgent.
+Grading formats are pulled from a reference table.  Certain grading formats require the employee to perform a presentation to management after the event’s completion and prior to awarded reimbursement.  A passing grade is needed for reimbursement otherwise.  Employee must provide the passing grade cutoff for the course, or choose to use a default passing grade if unknown.  If an employee provides an approval email, that approval step is skipped (cannot skip Benefits Coordinator Approval).  If the course is < 2 weeks from beginning, the request is marked urgent.
 
 
 
@@ -33,15 +33,15 @@ If the Department Head does not complete this task in a timely matter, the reque
 
 
 ## 5. Benefits Coordinator Approval
-The BenCo must provide approval for Tuition Reimbursement.   This stage is not skippable for any reason.  The BenCo can request additional information from the employee, direct supervisor, or department head before approval. The BenCo has the ability to alter the reimbursement amount.
+The Benefits Coordinator must provide approval for Tuition Reimbursement.   This stage is not skippable for any reason.  The Benefits Coordinator can request additional information from the employee, direct supervisor, or department head before approval. The Benefits Coordinator has the ability to alter the reimbursement amount.
 
 ### 5.1. Business Rules
-If the BenCo changes the reimbursement amount, the Employee should be notified and given the option to cancel the request.  If the BenCo does not approval in a timely matter, an escalation email should be sent to the BenCo’s direct supervisor.  The BenCo is allowed to award an amount larger than the amount available for the employee.  The BenCo must provide reason for this, and the reimbursement must be marked as exceeding available funds for reporting purposes.
+If the Benefits Coordinator changes the reimbursement amount, the Employee should be notified and given the option to cancel the request.  If the Benefits Coordinator does not approval in a timely matter, an escalation email should be sent to the Benefits Coordinator’s direct supervisor.  The Benefits Coordinator is allowed to award an amount larger than the amount available for the employee.  The Benefits Coordinator must provide reason for this, and the reimbursement must be marked as exceeding available funds for reporting purposes.
 
 
 
 ## 6. Grade/Presentation Upload
-Upon completion of the event, the employee should attach either the Grade or Presentation as appropriate.  After upload of a grade, the BenCo must confirm that the grade is passing.  After upload of a presentation, the direct manager must confirm that the presentation was satisfactory and presented to the appropriate parties.  Upon confirmation, the amount is awarded to the requestor.
+Upon completion of the event, the employee should attach either the Grade or Presentation as appropriate.  After upload of a grade, the Benefits Coordinator must confirm that the grade is passing.  After upload of a presentation, the direct manager must confirm that the presentation was satisfactory and presented to the appropriate parties.  Upon confirmation, the amount is awarded to the requestor.
 
 ### 6.1. Business Rules
 Only interested parties should be able to access the grades/presentations.  Interested parties include the requestor and approvers.  
