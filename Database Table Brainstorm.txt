@@ -2,7 +2,6 @@ Employee
   First Name
   Last Name
   Date Hired
-  Available Reimbursement?
 
 Event Types (%)
   University Course 80%
@@ -14,14 +13,33 @@ Event Types (%)
 
 Reimbursement Status
   Pending
-  Approved
-
-BenCo?
+  Approved (waiting for letter grade or presentation)
+  Awarded
 
 Reimbursement
   Employee
-  Event Type
-  Amount
   Reimbursement Status
-  
-  
+  approval attachments' LOCATION
+  projected reimbursement
+
+Event
+  Date
+  Time
+  Location
+  Description
+  Grading Format
+  Event Type
+  Event Attachments' LOCATION
+  Cost
+
+Grading Formats
+  Grade Pending
+  Grade Failed
+  Grade Passed
+  Presentation Pending
+  Presentation Failed
+  Presentation Passed
+
+Employee Position
+  Direct Supervisor
+  Department Head
