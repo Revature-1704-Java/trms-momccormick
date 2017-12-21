@@ -1,7 +1,8 @@
-Employee
+Employees
+  Username
   First Name
   Last Name
-  Date Hired
+  Password
 
 Event Types (%)
   University Course 80%
@@ -11,18 +12,18 @@ Event Types (%)
   Technical Training 90%
   Other 30%
 
-Reimbursement Status
-  Pending
-  Approved (waiting for letter grade or presentation)
+Reimbursement Statuses
+  Pending Approval
+  Approved (Grade Pending)
   Awarded
 
-Reimbursement
-  Employee
-  Reimbursement Status
+Reimbursements
+  EmployeeId
+  ReimbursementStatusId
   approval attachments' LOCATION
   projected reimbursement
 
-Event
+Events
   Date
   Time
   Location
@@ -39,7 +40,3 @@ Grading Formats
   Presentation Pending
   Presentation Failed
   Presentation Passed
-
-Employee Position
-  Direct Supervisor
-  Department Head
