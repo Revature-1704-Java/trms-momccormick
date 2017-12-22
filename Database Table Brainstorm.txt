@@ -1,42 +1,93 @@
 Employees
-  Username
   First Name
   Last Name
+  Email
+  Username
   Password
+  *Direct Supervisor
+  *Department
 
-Event Types (%)
-  University Course 80%
-  Seminar 60%
-  Certification Preparation Class 75%
+Departments
+  Department Name
+
+Department Heads
+  *Employee
+  *Department
+
+Benefits Coordinators
+  *Employee
+
+Events
+  Event Name
+  Start Date
+  Time
+  Location
+  Description
+  Cost
+  *Grading Format
+  Passing Grade Cutoff?
+  *Event Type
+
+Reimbursement
+  *Employee
+  Date Submitted
+  *Event
+  Work-related Justification
+  Work time Missed
+  Projected Amount
+  *Reimbursement Status
+  Amount Awarded
+  [Event, Presentation] Grade Recieved
+  Direct Supervisor Approved
+  Department Head Approved
+  Benefits Coordinator Approved
+  "Type of Approval"?
+
+Reimbursement Attachments
+  *Reimbursement
+  Path to Attachment
+
+Additional Notes
+  *Reimbursement
+  *Note Reason
+  Note
+
+
+
+### Reference Tables ###
+:Note Reason
+  Reimbursement Denied
+  Reimbursement Amount Exceeded
+
+:Event Types
+  University Courses 80%
+  Seminars 60%
+  Certification Preparation Classes 75%
   Certification 100%
   Technical Training 90%
   Other 30%
 
-Reimbursement Statuses
-  Pending Approval
-  Approved (Grade Pending)
-  Awarded
-
-Reimbursements
-  EmployeeId
-  ReimbursementStatusId
-  approval attachments' LOCATION
-  projected reimbursement
-
-Events
-  Date
-  Time
-  Location
-  Description
-  Grading Format
-  Event Type
-  Event Attachments' LOCATION
-  Cost
-
-Grading Formats
+:Reimbursement Status
+  Pending
   Grade Pending
-  Grade Failed
-  Grade Passed
-  Presentation Pending
-  Presentation Failed
-  Presentation Passed
+  Approval Pending
+  Awarded
+  Canceled
+  Urgent
+  Denied
+
+
+
+Grading Formats (reference table)
+Default Passing Grade 
+  Letter Grade
+    A
+    B
+    C (default)
+    D
+    F
+  Presentation Grade
+    Excellent
+    Satisfactory (default)
+    Needs Improvement
+    Unsatisfactory
