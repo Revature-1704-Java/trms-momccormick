@@ -1,5 +1,5 @@
 # Tuition Reimbursement Management System (TRMS)
-## Listed Requirments
+## Listed Requirements
 
 Each employee can claim up to $1000 in tuition reimbursement a year.
 The amount available to an employee is reset on the new year.
@@ -21,40 +21,38 @@ Tuition Reimbursement Form must be filled out one week prior to the start of the
 Form requires:
   basic employee information; date, time, location, description, cost, grading format, and type of event;
   work-related justification
-For can include:
-  event-related attachments of pdf, png, jpeg, txt, or doc file type, attachments of approvals already provided of .msg (Outlook Email File) file type and type of approval, work time that will be missed.
+Can include:
+  event-related attachments of pdf, png, jpeg, txt, or doc file type,
+  attachments of approvals already provided of file type .msg (Outlook Email File) and type of approval,
+  work time that will be missed.
+Employee can cancel the request
 The projected reimbursement should be provided as a read-only field.
 
 Grading formats are pulled from a reference table.
 Certain grading formats require a presentation after the event’s completion and prior to awarded reimbursement.
 A passing grade is needed for reimbursement otherwise.
 Employee must provide the passing grade cutoff for the course, or choose to use a default passing grade if unknown.
-If an employee provides an approval email, that approval step is skipped (cannot skip Benefits Coordinator Approval).
+If a Direct Supervisor or Department Head provides an approval email, that approval step is skipped (cannot skip Benefits Coordinator Approval).
 If the course is < 2 weeks long, the request is marked urgent.
+Employee must attach (Presentation) Grade upon event completion.
 
-The direct supervisor must provide approval for Tuition Reimbursement.
-The Direct Supervisor can request additional information from the employee before approval. 
+The direct supervisor must provide approval for Reimbursement.
 If denied, the Direct Supervisor must provide a reason.
-  If the Direct Supervisor is also a Department Head, then the department head approval is skipped.
+If the Direct Supervisor is also a Department Head, then the department head approval is skipped.
 If the direct supervisor does not complete this task in a timely matter, the request is auto-approved. 
 
-The department head must provide approval for Tuition Reimbursement. 
-The Department Head can request additional information from the employee or direct supervisor before approval.
+The department head must provide approval for Reimbursement. 
 If the Department Head does not complete this task in a timely matter, the request is auto-approved.
 
 The Benefits Coordinator must provide approval for Tuition Reimbursement.
-This stage is not skippable for any reason.
-The Benefits Coordinator can request additional information from the employee, direct supervisor, or department head before approval.
 The Benefits Coordinator has the ability to alter the reimbursement amount.
+Employee is notified if Benefits Coordinator changes reimbursement amount.
 
-Employee is notified if Benefits Coordinator changes reimbursement amount
-Employee can cancel the request (when amount is changed?)
 If the Benefits Coordinator does not approval in a timely matter, an escalation email should be sent to the Benefits Coordinator’s direct supervisor.
 The Benefits Coordinator is allowed to award an amount larger than the amount available for the employee.
   The Benefits Coordinator must provide reason for this
 Reimbursments that are awards with larger amounts must be marked as exceeding available funds for reporting purposes.
 
-Employee must attach Grade or Presentation upon event completion.
 The Benefits Coordinator must confirm that the grade is passing.
 After upload of a presentation, the direct manager must confirm that the presentation was satisfactory and presented to the appropriate parties.
 Upon confirmation, the amount is awarded to the requestor.
@@ -62,16 +60,21 @@ Upon confirmation, the amount is awarded to the requestor.
 Only interested parties should have access to the grades/presentations.
   Interested parties include the requestor and approvers.  
 
+  
 # Unspecified Decisions #
-## note: Not Specified = up to me ##
-Direct Supervisor, Department Heads, & Benefits Coordinators are all employees
-Benefits Coordinators cannot submit reimbursements
 Pending Reimbursements can only be deleted by the Requester
 Pending Reimbursements can be deleted at any time
+Direct Supervisor, Department Heads, & Benefits Coordinators are all employees
 A Benefits Coordinator cannot be a Direct Supervisor or Department Head
-  BenCo is part of HR
-Are the Grading Formats standard A-F Letter grades?  Would Presentations have simpler Grading Formats (Pending, Failed, Passed)?
-  up to me (proper college)
+  Benefits Coordinator is part of HR
+No employee can approve their own reimbursement
+Grading Formats will be either Letter Grade (ABCDF) or ESNU
+  
   
 ##BONUS/WANT TO DO##
 Use AJAX to keep any tables refreshed and up to date
+
+
+### ??? QUESTIONS ??? ###
+BenCo needs to approve twice?
+What is "Type of Approval"?
