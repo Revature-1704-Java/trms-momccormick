@@ -1,6 +1,7 @@
 # Tuition Reimbursement Management System (TRMS)
 ## Listed Requirements
 
+### Basic Requirements
 Each employee can claim up to $1000 in tuition reimbursement a year.
 The amount available to an employee is reset on the new year.
 Event types have different standard reimbursement coverage:
@@ -9,14 +10,17 @@ Event types have different standard reimbursement coverage:
   Certification Preparation Classes 75%
   Certification 100%, Technical Training 90%
   Other 30%
-Reimbursement status proceeds in order:
-  Pending Benefits Coordinator Approval
-  Pending Passing Grade or Presentation
-  Awarded
 AvailableReimburstment = TotalReimburstment($1000) – PendingReimburstments – AwardedReimburstments
-Projected reimbursement adjusts to amount available if event cost exceeds available amount.
 Reimbursements do not cover course materials such as books.
+The projected reimbursement should be provided as a read-only field.
+Only the request, approvers, and select interested parties should have access to the grades/presentations.
+Grading formats are pulled from a reference table.
+Certain grading formats require a presentation after the event’s completion and prior to awarded reimbursement.
+Employees can cancel there own Reimbursement requests
 
+
+### Procedural Requirements
+#### Form Submission
 Tuition Reimbursement Form must be filled out one week prior to the start of the event.
 Form requires:
   basic employee information; date, time, location, description, cost, grading format, and type of event;
@@ -25,56 +29,55 @@ Can include:
   event-related attachments of pdf, png, jpeg, txt, or doc file type,
   attachments of approvals already provided of file type .msg (Outlook Email File) and type of approval,
   work time that will be missed.
-Employee can cancel the request
-The projected reimbursement should be provided as a read-only field.
-
-Grading formats are pulled from a reference table.
-Certain grading formats require a presentation after the event’s completion and prior to awarded reimbursement.
-A passing grade is needed for reimbursement otherwise.
-Employee must provide the passing grade cutoff for the course, or choose to use a default passing grade if unknown.
-If a Direct Supervisor or Department Head provides an approval email, that approval step is skipped (cannot skip Benefits Coordinator Approval).
 If the course is < 2 weeks long, the request is marked urgent.
+Employee must provide the passing grade cutoff for the course, or choose to use a default passing grade if unknown.
+A passing grade is needed for reimbursement.
+Projected reimbursement adjusts to amount available if event cost exceeds available amount.
 Employee must attach (Presentation) Grade upon event completion.
+Reimbursement status proceeds in order:
+  Pending Benefits Coordinator Approval
+  Pending Passing Grade or Presentation
+  Pending Management Approval
+  Reimbursment Awarded
 
-The direct supervisor must provide approval for Reimbursement.
+#### Direct Supervisor & Department Head Approvals
+If a Direct Supervisor or Department Head provides an approval email, that approval step is skipped.
+
+The Direct Supervisor must confirm that the presentation was satisfactory and presented to the appropriate parties.
+
+The Direct Supervisor must provide Approval for Reimbursement.
 If denied, the Direct Supervisor must provide a reason.
-If the Direct Supervisor is also a Department Head, then the department head approval is skipped.
-If the direct supervisor does not complete this task in a timely matter, the request is auto-approved. 
+If the Direct Supervisor does not complete this task in a timely matter, the request is auto-approved. 
 
-The department head must provide approval for Reimbursement. 
+If the Direct Supervisor is also a Department Head, then the Department Head approval is skipped.
+
+The Department Head must provide approval for Reimbursement. 
 If the Department Head does not complete this task in a timely matter, the request is auto-approved.
 
-The Benefits Coordinator must provide approval for Tuition Reimbursement.
-The Benefits Coordinator has the ability to alter the reimbursement amount.
+
+#### Benefits Coordinator Approval
+The Benefits Coordinator must confirm that the grade is passing.
+
+The Benefits Coordinator must provide approval for Reimbursement.
+If the Benefits Coordinator does not approval in a timely matter, an escalation email should be sent to the Benefits Coordinator’s Direct Supervisor.
+
+The Benefits Coordinator has the ability to alter the Reimbursement amount.
+The Benefits Coordinator is allowed to award an amount larger than the amount available for the employee.
+If the Reimburesment amount awarded is greater than the amount available, the Benefits Coordinator must provide a reason why.
+Reimbursments that are awards with larger amounts must be marked as exceeding available funds for reporting purposes.
 Employee is notified if Benefits Coordinator changes reimbursement amount.
 
-If the Benefits Coordinator does not approval in a timely matter, an escalation email should be sent to the Benefits Coordinator’s direct supervisor.
-The Benefits Coordinator is allowed to award an amount larger than the amount available for the employee.
-  The Benefits Coordinator must provide reason for this
-Reimbursments that are awards with larger amounts must be marked as exceeding available funds for reporting purposes.
-
-The Benefits Coordinator must confirm that the grade is passing.
-After upload of a presentation, the direct manager must confirm that the presentation was satisfactory and presented to the appropriate parties.
 Upon confirmation, the amount is awarded to the requestor.
 
-Only interested parties should have access to the grades/presentations.
-  Interested parties include the requestor and approvers.  
 
   
 # Unspecified Decisions #
 Pending Reimbursements can only be deleted by the Requester
 Pending Reimbursements can be deleted at any time
-Direct Supervisor, Department Heads, & Benefits Coordinators are all employees
-A Benefits Coordinator cannot be a Direct Supervisor or Department Head
-  Benefits Coordinator is part of HR
-No employee can approve their own reimbursement
+Direct Supervisor, Department Heads, & Benefits Coordinators cannot make Reimbursement Requests
+A Benefits Coordinator cannot be a Direct Supervisor or Department Head as the Benefits Coordinator is part of HR
 Grading Formats will be either Letter Grade (ABCDF) or ESNU
   
   
 ##BONUS/WANT TO DO##
 Use AJAX to keep any tables refreshed and up to date
-
-
-### ??? QUESTIONS ??? ###
-BenCo needs to approve twice?
-What is "Type of Approval"?
