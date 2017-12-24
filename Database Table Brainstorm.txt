@@ -1,65 +1,47 @@
-Employees
-  First Name
-  Last Name
-  Email
-  Username
-  Password
-  *Direct Supervisor
-  *Department
-
-Departments
-  Department Name
-
-Department Heads
-  *Employee
-  *Department
-
-Benefits Coordinators
-  *Employee
-
-Events
-  Event Name
-  Start Date
-  Time
-  Location
-  Description
-  Cost
-  *Grading Format
-  Passing Grade Cutoff?
-  *Event Type
-
+Attachments
+  *Reimbursement
+  Path to Attachment
+  
 Reimbursement
   *Employee
   Date Submitted
   *Event
-  Work-related Justification
   Work time Missed
+  Justification
   Projected Amount
   *Reimbursement Status
+  *Management Approvals
   Amount Awarded
-  [Event, Presentation] Grade Recieved
-  Direct Supervisor Approved
-  Department Head Approved
-  Benefits Coordinator Approved
-  "Type of Approval"?
 
-Reimbursement Attachments
-  *Reimbursement
-  Path to Attachment
+Employees
+  First Name
+  Last Name
+  Email
+  Password
+  *Employee Type
+  *Direct Supervisor
+  *Department Head
 
-Additional Notes
-  *Reimbursement
-  *Note Reason
-  Note
+:Employee Type (ID, EmployeeType)
+  Standard
+  Direct Supervisor
+  Department Head
+  Benefits Coordinator
 
+Event
+  Name
+  *Event Type
+  Description
+  Start Date
+  End Date
+  Time
+  Location
+  Cost
+  *Grading Format
+  *Passing Grade Cutoff
+  Grade Recieved  
 
-
-### Reference Tables ###
-:Note Reason
-  Reimbursement Denied
-  Reimbursement Amount Exceeded
-
-:Event Types
+:Event Types (ID, EventType, PercentCoverage)
   University Courses 80%
   Seminars 60%
   Certification Preparation Classes 75%
@@ -67,7 +49,18 @@ Additional Notes
   Technical Training 90%
   Other 30%
 
-:Reimbursement Status
+:Grading Formats (ID, Format)
+  Letter Grade
+  Presentation
+
+:Grade Score (ID, Letter, MinPercentage, MaxPercentage)
+  A, 0.9, 1.0
+  B, 0.8, 0.9
+  C, 0.7, 0.8
+  D, 0.6, 0.7
+  F, 0.0, 0.6
+
+:Reimbursement Status (ID, Status)
   Pending
   Grade Pending
   Approval Pending
@@ -76,18 +69,19 @@ Additional Notes
   Urgent
   Denied
 
+Management Approvals
+  *Approving Direct Supervisor
+  Direct Supervisor Approved Date
+  *Approving Department Head
+  Department Head Approve Date
+  *Approving Benefits Coordinator
+  Benefits Coordinator Approve Date
 
+Additional Notes
+  *Reimbursement
+  *Note Reason
+  Note
 
-Grading Formats (reference table)
-Default Passing Grade 
-  Letter Grade
-    A
-    B
-    C (default)
-    D
-    F
-  Presentation Grade
-    Excellent
-    Satisfactory (default)
-    Needs Improvement
-    Unsatisfactory
+:Note Reason (ID, NoteReason)
+  Reimbursement Amount Exceeded
+  Reimbursement Denied
