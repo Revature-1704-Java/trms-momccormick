@@ -1,6 +1,6 @@
-/*******************************
-*Drop Tables for Database Reset*
-*******************************/
+/********************************
+*Drop Objects for Database Reset*
+********************************/
 DROP TABLE Attachments;
 DROP TABLE ReimbursementNotes;
 DROP TABLE NoteReasons;
@@ -13,6 +13,18 @@ DROP TABLE EventTypes;
 DROP TABLE GradingFormats;
 DROP TABLE GradeLetters;
 DROP TABLE ReimbursementStatuses;
+DROP SEQUENCE seqPK_Attachments;
+DROP SEQUENCE seqPK_ReimbursementNotes;
+DROP SEQUENCE seqPK_NoteReasons;
+DROP SEQUENCE seqPK_Reimbursements;
+DROP SEQUENCE seqPK_ManagementApprovals;
+DROP SEQUENCE seqPK_Employees;
+DROP SEQUENCE seqPK_EmployeeTypes;
+DROP SEQUENCE seqPK_Events;
+DROP SEQUENCE seqPK_EventTypes;
+DROP SEQUENCE seqPK_GradingFormats;
+DROP SEQUENCE seqPK_GradeLetters;
+DROP SEQUENCE seqPK_ReimbursementStatuses;
 
 /***********************
 *Create Database Tables*
@@ -194,21 +206,137 @@ INSERT INTO NoteReasons (ID, NoteReason) VALUES (1,'Reimbursement Amount Exceede
 INSERT INTO NoteReasons (ID, NoteReason) VALUES (2,'Reimbursement Denied');
 
 
-/*****************************
-*Create Primary Key Sequences*
-*****************************/
-CREATE SEQUENCE seqPK_ReimbursementStatus;
-
-SELECT seqPK_ReimbursementStatus.NEXTVAL FROM DUAL;
-
-CREATE OR REPLACE TRIGGER increment_ReimbursementStatus
-BEFORE INSERT ON ReimbursementStatuses
+/********************************************
+*Create Primary Key Sequences and Procedures*
+********************************************/
+CREATE SEQUENCE seqPK_Attachments;
+CREATE OR REPLACE TRIGGER inc_Attachments
+BEFORE INSERT ON Attachments
 FOR EACH ROW
   BEGIN
-    SELECT seqPK_ReimbursementStatus.NEXTVAL
+    SELECT seqPK_Attachments.NEXTVAL
+    INTO :NEW.ID
+    FROM DUAL;
+  END;
+/
+
+CREATE SEQUENCE seqPK_ReimbursementNotes;
+CREATE OR REPLACE TRIGGER inc_ReimbursementNotes
+BEFORE INSERT ON ReimbursementNotes
+FOR EACH ROW
+  BEGIN
+    SELECT seqPK_ReimbursementNotes.NEXTVAL
     INTO   :NEW.ID
     FROM   DUAL;
   END;
 /
 
---INSERT INTO  () VALUES ();
+CREATE SEQUENCE seqPK_NoteReasons;
+CREATE OR REPLACE TRIGGER inc_NoteReasons
+BEFORE INSERT ON NoteReasons
+FOR EACH ROW
+  BEGIN
+    SELECT seqPK_NoteReasons.NEXTVAL
+    INTO   :NEW.ID
+    FROM   DUAL;
+  END;
+/
+
+CREATE SEQUENCE seqPK_Reimbursements;
+CREATE OR REPLACE TRIGGER inc_Reimbursements
+BEFORE INSERT ON Reimbursements
+FOR EACH ROW
+  BEGIN
+    SELECT seqPK_Reimbursements.NEXTVAL
+    INTO   :NEW.ID
+    FROM   DUAL;
+  END;
+/
+
+CREATE SEQUENCE seqPK_ManagementApprovals;
+CREATE OR REPLACE TRIGGER inc_ManagementApprovals
+BEFORE INSERT ON ManagementApprovals
+FOR EACH ROW
+  BEGIN
+    SELECT seqPK_ManagementApprovals.NEXTVAL
+    INTO   :NEW.ID
+    FROM   DUAL;
+  END;
+/
+
+CREATE SEQUENCE seqPK_Employees;
+CREATE OR REPLACE TRIGGER inc_Employees
+BEFORE INSERT ON Employees
+FOR EACH ROW
+  BEGIN
+    SELECT seqPK_Employees.NEXTVAL
+    INTO   :NEW.ID
+    FROM   DUAL;
+  END;
+/
+
+CREATE SEQUENCE seqPK_EmployeeTypes;
+CREATE OR REPLACE TRIGGER inc_EmployeeTypes
+BEFORE INSERT ON EmployeeTypes
+FOR EACH ROW
+  BEGIN
+    SELECT seqPK_EmployeeTypes.NEXTVAL
+    INTO   :NEW.ID
+    FROM   DUAL;
+  END;
+/
+
+CREATE SEQUENCE seqPK_Events;
+CREATE OR REPLACE TRIGGER inc_Events
+BEFORE INSERT ON Events
+FOR EACH ROW
+  BEGIN
+    SELECT seqPK_Events.NEXTVAL
+    INTO   :NEW.ID
+    FROM   DUAL;
+  END;
+/
+
+CREATE SEQUENCE seqPK_EventTypes;
+CREATE OR REPLACE TRIGGER inc_EventTypes
+BEFORE INSERT ON EventTypes
+FOR EACH ROW
+  BEGIN
+    SELECT seqPK_EventTypes.NEXTVAL
+    INTO   :NEW.ID
+    FROM   DUAL;
+  END;
+/
+
+CREATE SEQUENCE seqPK_GradingFormats;
+CREATE OR REPLACE TRIGGER inc_GradingFormats
+BEFORE INSERT ON GradingFormats
+FOR EACH ROW
+  BEGIN
+    SELECT seqPK_GradingFormats.NEXTVAL
+    INTO   :NEW.ID
+    FROM   DUAL;
+  END;
+/
+
+CREATE SEQUENCE seqPK_GradeLetters;
+CREATE OR REPLACE TRIGGER inc_GradeLetters
+BEFORE INSERT ON GradeLetters
+FOR EACH ROW
+  BEGIN
+    SELECT seqPK_GradeLetters.NEXTVAL
+    INTO   :NEW.ID
+    FROM   DUAL;
+  END;
+/
+
+CREATE SEQUENCE seqPK_ReimbursementStatuses;
+CREATE OR REPLACE TRIGGER inc_ReimbursementStatuses
+BEFORE INSERT ON ReimbursementStatuses
+FOR EACH ROW
+  BEGIN
+    SELECT seqPK_ReimbursementStatuses.NEXTVAL
+    INTO   :NEW.ID
+    FROM   DUAL;
+  END;
+/
