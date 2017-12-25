@@ -1,3 +1,6 @@
+/*******************************
+*Drop Tables for Database Reset*
+*******************************/
 DROP TABLE Attachments;
 DROP TABLE ReimbursementNotes;
 DROP TABLE NoteReasons;
@@ -11,6 +14,9 @@ DROP TABLE GradingFormats;
 DROP TABLE GradeLetters;
 DROP TABLE ReimbursementStatuses;
 
+/***********************
+*Create Database Tables*
+***********************/
 CREATE TABLE Attachments
 (
   ID INT NOT NULL,
@@ -130,6 +136,10 @@ CREATE TABLE NoteReasons
   CONSTRAINT PK_NoteReasons PRIMARY KEY (ID)
 );
 
+
+/****************************
+*Add Foriegn Key Constraints*
+****************************/
 ALTER TABLE Attachments ADD CONSTRAINT FK_Reimbursement_1 FOREIGN KEY (Reimbursement) REFERENCES Reimbursements (ID);
 ALTER TABLE Reimbursements ADD CONSTRAINT FK_Employee FOREIGN KEY (Employee) REFERENCES Employees (ID);
 ALTER TABLE Reimbursements ADD CONSTRAINT FK_Event FOREIGN KEY (Event) REFERENCES Events (ID);
@@ -146,3 +156,59 @@ ALTER TABLE ManagementApprovals ADD CONSTRAINT FK_DepartmentHead_2 FOREIGN KEY (
 ALTER TABLE ManagementApprovals ADD CONSTRAINT FK_BenefitsCoordinator FOREIGN KEY (BenefitsCoordinator) REFERENCES Employees (ID);
 ALTER TABLE ReimbursementNotes ADD CONSTRAINT FK_Reimbursement_2 FOREIGN KEY (Reimbursement) REFERENCES Reimbursements (ID);
 ALTER TABLE ReimbursementNotes ADD CONSTRAINT FK_NoteReason FOREIGN KEY (NoteReason) REFERENCES NoteReasons (ID);
+
+
+/*************************
+*Add Reference Table Data*
+*************************/
+INSERT INTO EmployeeTypes (ID, EmployeeType) VALUES (1,'Standard');
+INSERT INTO EmployeeTypes (ID, EmployeeType) VALUES (2,'Direct Supervisor');
+INSERT INTO EmployeeTypes (ID, EmployeeType) VALUES (3,'Department Head');
+INSERT INTO EmployeeTypes (ID, EmployeeType) VALUES (4,'Benefits Coordinator');
+
+INSERT INTO EventTypes (ID, EventType, CostPercentCovered) VALUES (1,'University Courses',0.80);
+INSERT INTO EventTypes (ID, EventType, CostPercentCovered) VALUES (2,'Seminars',0.60);
+INSERT INTO EventTypes (ID, EventType, CostPercentCovered) VALUES (3,'Certification Preparation Classes',0.75);
+INSERT INTO EventTypes (ID, EventType, CostPercentCovered) VALUES (4,'Certification',1.00);
+INSERT INTO EventTypes (ID, EventType, CostPercentCovered) VALUES (5,'Technical Training',0.90);
+INSERT INTO EventTypes (ID, EventType, CostPercentCovered) VALUES (6,'Other',0.30);
+
+INSERT INTO GradingFormats (ID, GradingFormat) VALUES (1,'Letter Grade');
+INSERT INTO GradingFormats (ID, GradingFormat) VALUES (2,'Presentation');
+
+INSERT INTO GradeLetters (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (1,'A',0.9,1.0);
+INSERT INTO GradeLetters (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (2,'B',0.8,0.9);
+INSERT INTO GradeLetters (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (3,'C',0.7,0.8);
+INSERT INTO GradeLetters (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (4,'D',0.6,0.7);
+INSERT INTO GradeLetters (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (5,'F',0.0,0.6);
+
+INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (1,'Pending');
+INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (2,'Grade Pending');
+INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (3,'Approval Pending');
+INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (4,'Awarded');
+INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (5,'Canceled');
+INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (6,'Urgent');
+INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (7,'Denied');
+
+INSERT INTO NoteReasons (ID, NoteReason) VALUES (1,'Reimbursement Amount Exceeded');
+INSERT INTO NoteReasons (ID, NoteReason) VALUES (2,'Reimbursement Denied');
+
+
+/*****************************
+*Create Primary Key Sequences*
+*****************************/
+CREATE SEQUENCE seqPK_ReimbursementStatus;
+
+SELECT seqPK_ReimbursementStatus.NEXTVAL FROM DUAL;
+
+CREATE OR REPLACE TRIGGER increment_ReimbursementStatus
+BEFORE INSERT ON ReimbursementStatuses
+FOR EACH ROW
+  BEGIN
+    SELECT seqPK_ReimbursementStatus.NEXTVAL
+    INTO   :NEW.ID
+    FROM   DUAL;
+  END;
+/
+
+--INSERT INTO  () VALUES ();
