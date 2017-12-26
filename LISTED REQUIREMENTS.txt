@@ -76,7 +76,7 @@ Pending Reimbursements can only be deleted by the Requester
 Pending Reimbursements can be deleted at any time
 Direct Supervisor, Department Heads, & Benefits Coordinators cannot make Reimbursement Requests
 A Benefits Coordinator cannot be a Direct Supervisor or Department Head as the Benefits Coordinator is part of HR
-Grading Formats will be either Letter Grade (ABCDF) or ESNU
+Grading Formats will be Letter Grade (ABCDF)
   
   
 ##BONUS/WANT TO DO##
