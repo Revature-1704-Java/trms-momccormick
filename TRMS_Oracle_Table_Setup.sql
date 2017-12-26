@@ -234,11 +234,6 @@ BEFORE INSERT ON Reimbursements
 FOR EACH ROW
   BEGIN
     :NEW.ID := seqPK_Reimbursements.NEXTVAL;
-    
-    SELECT Events.Cost*EventTypes.CostPercentCovered
-    INTO :NEW.ProjectedAmount
-    FROM Events, EventTypes 
-    WHERE Events.ID = :NEW.Event AND EventTypes.ID = Events.EventType;
   END;
 /
 
@@ -266,3 +261,26 @@ FOR EACH ROW
   END;
 /
 
+
+/********************
+*Validation Triggers*
+********************/
+CREATE OR REPLACE TRIGGER validate_Reimbursements
+BEFORE INSERT OR UPDATE ON Reimbursements
+FOR EACH ROW
+  BEGIN
+    SELECT Events.Cost*EventTypes.CostPercentCovered
+    INTO :NEW.ProjectedAmount
+    FROM Events, EventTypes 
+    WHERE Events.ID = :NEW.Event AND EventTypes.ID = Events.EventType;
+    /*
+    IF Events.StartDate - DateSubmitted < 7
+    THEN
+      SELECT ReimbursementStatuses.ID
+      INTO ReimbursementStatus
+      FROM ReimbursementStatuses
+      WHERE ReimbursementStatuses.ReimbursementStatus = 'Denied';
+      INSERT INTO ReimbursementNotes (Reimbursement, NoteReason, Note) VALUES (ID, 2, 'Event Starting in less than 1 Week');
+    */
+  END;
+/
