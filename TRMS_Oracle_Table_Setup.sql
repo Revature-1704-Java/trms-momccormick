@@ -1,6 +1,6 @@
-/********************************
-*Drop Objects for Database Reset*
-********************************/
+/*******************
+*RESET THE DATABASE*
+*******************/
 DROP TABLE Attachments;
 DROP TABLE ReimbursementNotes;
 DROP TABLE NoteReasons;
@@ -19,12 +19,6 @@ DROP SEQUENCE seqPK_Reimbursements;
 DROP SEQUENCE seqPK_ManagementApprovals;
 DROP SEQUENCE seqPK_Employees;
 DROP SEQUENCE seqPK_Events;
-DROP TRIGGER inc_Attachments;
-DROP TRIGGER inc_ReimbursementNotes;
-DROP TRIGGER inc_Reimbursements;
-DROP TRIGGER inc_ManagementApprovals;
-DROP TRIGGER inc_Employees;
-DROP TRIGGER inc_Events;
 
 /***********************
 *Create Database Tables*
@@ -241,10 +235,10 @@ FOR EACH ROW
   BEGIN
     :NEW.ID := seqPK_Reimbursements.NEXTVAL;
     
-    :NEW.ProjectedAmount :=
-      SELECT Events.Cost*EventTypes.CostPercentCovered
-      FROM Events, EventTypes 
-      WHERE Events.ID = :NEW.Event AND EventTypes.ID = Events.EventType;
+    SELECT Events.Cost*EventTypes.CostPercentCovered
+    INTO :NEW.ProjectedAmount
+    FROM Events, EventTypes 
+    WHERE Events.ID = :NEW.Event AND EventTypes.ID = Events.EventType;
   END;
 /
 
