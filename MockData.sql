@@ -16,23 +16,19 @@ INSERT INTO Employees (FirstName,LastName,Email,Password,EmployeeType) VALUES ('
 INSERT INTO Employees (FirstName,LastName,Email,Password,EmployeeType) VALUES ('Lindy','Raywood','Lindy.Raywood@mail.com','ffvWvXZRxlI',1);
 INSERT INTO Employees (FirstName,LastName,Email,Password,EmployeeType) VALUES ('Merry','Sleeny','Merry.Sleeny@mail.com','owhYxVDIVTV',1);
 
+
+INSERT INTO ManagementApprovals(ID) VALUES (1);
+
+
+INSERT INTO Reimbursements (Employee, DateSubmitted, Event, WorkTimeMissed, Justification, ProjectedAmount, ReimbursementStatus, ManagementApprovals) VALUES (1,TO_DATE('2017-01-01','yyyy-mm-dd'),1,'4 Weeks','JUSTIFIED',0,1,1);
+INSERT INTO Reimbursements (Employee, DateSubmitted, Event, WorkTimeMissed, Justification, ProjectedAmount, ReimbursementStatus, ManagementApprovals) VALUES (1,TO_DATE('2017-01-01','yyyy-mm-dd'),2,'2 Days','JUSTIFIED',0,1,2);
+INSERT INTO Reimbursements (Employee, DateSubmitted, Event, WorkTimeMissed, Justification, ProjectedAmount, ReimbursementStatus, ManagementApprovals) VALUES (1,TO_DATE('2017-01-01','yyyy-mm-dd'),3,'1 Week','JUSTIFIED',0,1,3);
+INSERT INTO Reimbursements (Employee, DateSubmitted, Event, WorkTimeMissed, Justification, ProjectedAmount, ReimbursementStatus, ManagementApprovals) VALUES (1,TO_DATE('2017-01-01','yyyy-mm-dd'),4,'1 Day','JUSTIFIED',0,1,4);
+INSERT INTO Reimbursements (Employee, DateSubmitted, Event, WorkTimeMissed, Justification, ProjectedAmount, ReimbursementStatus, ManagementApprovals) VALUES (1,TO_DATE('2017-01-01','yyyy-mm-dd'),5,'2 Weeks','JUSTIFIED',0,1,5);
+INSERT INTO Reimbursements (Employee, DateSubmitted, Event, WorkTimeMissed, Justification, ProjectedAmount, ReimbursementStatus, ManagementApprovals) VALUES (1,TO_DATE('2017-01-01','yyyy-mm-dd'),6,'4 Days','JUSTIFIED',0,1,6);
+
+
 Attachments;
 ReimbursementNotes;
 Reimbursements;
 ManagementApprovals;
-
-INSERT INTO ManagementApprovals() VALUES ();
-INSERT INTO ManagementApprovals() VALUES ();
-INSERT INTO ManagementApprovals() VALUES ();
-INSERT INTO ManagementApprovals() VALUES ();
-INSERT INTO ManagementApprovals() VALUES ();
-INSERT INTO ManagementApprovals() VALUES ();
-
-
-
-INSERT INTO Reimbursements (Employee, DateSubmitted, Event, WorkTimeMissed, Justification, ProjectedAmount, ManagementApprovals) VALUES (1,TO_DATE('',''),1,'4 Weeks','JUSTIFIED',0,1);
-INSERT INTO Reimbursements (Employee, DateSubmitted, Event, WorkTimeMissed, Justification, ProjectedAmount, ManagementApprovals) VALUES (1,TO_DATE('',''),2,'2 Days','JUSTIFIED',0,2);
-INSERT INTO Reimbursements (Employee, DateSubmitted, Event, WorkTimeMissed, Justification, ProjectedAmount, ManagementApprovals) VALUES (1,TO_DATE('',''),3,'1 Week','JUSTIFIED',0,3);
-INSERT INTO Reimbursements (Employee, DateSubmitted, Event, WorkTimeMissed, Justification, ProjectedAmount, ManagementApprovals) VALUES (1,TO_DATE('',''),4,'1 Day','JUSTIFIED',0,4);
-INSERT INTO Reimbursements (Employee, DateSubmitted, Event, WorkTimeMissed, Justification, ProjectedAmount, ManagementApprovals) VALUES (1,TO_DATE('',''),5,'2 Weeks','JUSTIFIED',0,5);
-INSERT INTO Reimbursements (Employee, DateSubmitted, Event, WorkTimeMissed, Justification, ProjectedAmount, ManagementApprovals) VALUES (1,TO_DATE('',''),6,'4 Days','JUSTIFIED',0,6);
