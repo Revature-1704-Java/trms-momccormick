@@ -15,16 +15,10 @@ DROP TABLE GradeLetters;
 DROP TABLE ReimbursementStatuses;
 DROP SEQUENCE seqPK_Attachments;
 DROP SEQUENCE seqPK_ReimbursementNotes;
-DROP SEQUENCE seqPK_NoteReasons;
 DROP SEQUENCE seqPK_Reimbursements;
 DROP SEQUENCE seqPK_ManagementApprovals;
 DROP SEQUENCE seqPK_Employees;
-DROP SEQUENCE seqPK_EmployeeTypes;
 DROP SEQUENCE seqPK_Events;
-DROP SEQUENCE seqPK_EventTypes;
-DROP SEQUENCE seqPK_GradingFormats;
-DROP SEQUENCE seqPK_GradeLetters;
-DROP SEQUENCE seqPK_ReimbursementStatuses;
 
 /***********************
 *Create Database Tables*
@@ -223,9 +217,7 @@ CREATE OR REPLACE TRIGGER inc_Attachments
 BEFORE INSERT ON Attachments
 FOR EACH ROW
   BEGIN
-    SELECT seqPK_Attachments.NEXTVAL
-    INTO :NEW.ID
-    FROM DUAL;
+    :NEW.ID := seqPK_Attachments.NEXTVAL;
   END;
 /
 
@@ -233,9 +225,7 @@ CREATE OR REPLACE TRIGGER inc_ReimbursementNotes
 BEFORE INSERT ON ReimbursementNotes
 FOR EACH ROW
   BEGIN
-    SELECT seqPK_ReimbursementNotes.NEXTVAL
-    INTO   :NEW.ID
-    FROM   DUAL;
+    :NEW.ID := seqPK_ReimbursementNotes.NEXTVAL;
   END;
 /
 
@@ -243,11 +233,7 @@ CREATE OR REPLACE TRIGGER inc_Reimbursements
 BEFORE INSERT ON Reimbursements
 FOR EACH ROW
   BEGIN
-    SELECT seqPK_Reimbursements.NEXTVAL
-    INTO   :NEW.ID
-    FROM   DUAL;
-    
-    SELECT 
+    :NEW.ID := seqPK_Reimbursements.NEXTVAL;
   END;
 /
 
@@ -255,9 +241,7 @@ CREATE OR REPLACE TRIGGER inc_ManagementApprovals
 BEFORE INSERT ON ManagementApprovals
 FOR EACH ROW
   BEGIN
-    SELECT seqPK_ManagementApprovals.NEXTVAL
-    INTO   :NEW.ID
-    FROM   DUAL;
+    :NEW.ID := seqPK_ManagementApprovals.NEXTVAL;
   END;
 /
 
@@ -265,9 +249,7 @@ CREATE OR REPLACE TRIGGER inc_Employees
 BEFORE INSERT ON Employees
 FOR EACH ROW
   BEGIN
-    SELECT seqPK_Employees.NEXTVAL
-    INTO   :NEW.ID
-    FROM   DUAL;
+    :NEW.ID := seqPK_Employees.NEXTVAL;
   END;
 /
 
@@ -275,9 +257,7 @@ CREATE OR REPLACE TRIGGER inc_Events
 BEFORE INSERT ON Events
 FOR EACH ROW
   BEGIN
-    SELECT seqPK_Events.NEXTVAL
-    INTO   :NEW.ID
-    FROM   DUAL;
+    :NEW.ID := seqPK_Events.NEXTVAL;
   END;
 /
 
