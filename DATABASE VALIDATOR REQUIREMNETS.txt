@@ -1,0 +1,41 @@
+# Tuition Reimbursement Management System (TRMS)
+## Validation Requirements (Possibly Set in Database)
+
+### DATA VALIDATION
+
+#### AFTER UPDATE ON Reimbursements
+AvailableReimburstment = TotalReimburstment($1000) – PendingReimburstments – AwardedReimburstments
+
+#### AFTER UPDATE ON Event
+A passing grade is needed for reimbursement.
+
+#### BEFORE INSERT ON Reimbursements
+Projected reimbursement adjusts to amount available if event cost exceeds available amount.
+
+#### AFTER UPDATE ON ManagerApprovals
+Reimbursement status proceeds in order:
+  Pending Benefits Coordinator Approval
+  Pending Passing Grade or Presentation
+  Pending Management Approval
+  Reimbursment Awarded
+
+#### BEFORE UPDATE ON ManagerApprovals
+If the Direct Supervisor is also a Department Head, then the Department Head approval is skipped.
+
+Upon confirmation, the amount is awarded to the requestor.
+
+#### AFTER UPDATE ON Reimbursements
+Reimbursments that are awards with larger amounts must be marked as exceeding available funds for reporting purposes.
+
+
+### TIME VALIDATION
+
+The amount available to an employee is reset on the new year.
+
+Tuition Reimbursement Form must be filled out one week prior to the start of the event.
+
+If the course is < 2 weeks long, the request is marked urgent.
+
+If DirSupervisor or DeptHead approval is not made in a timely matter, the request is auto-approved. 
+
+If Benefits Coordinator approval is not made in a timely matter, an escalation email should be sent to the Benefits Coordinator’s Direct Supervisor.
