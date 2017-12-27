@@ -1,6 +1,18 @@
 # Tuition Reimbursement Management System (TRMS)
-## Validation Requirements (Possibly Set in Database)
 
+## Potential Procedures
+InsertOn<table>
+  ReverseLookupTables
+    ReimbursementNotes
+  Tables with Calculated Information
+    AvailableReimbursement
+    ProjectedAmount
+    URGENT
+  Grouping
+    Reimbursement&Event...
+
+
+## Validation Requirements (Possibly Set in Database)
 ### DATA VALIDATION
 
 #### AFTER UPDATE ON Reimbursements
@@ -21,7 +33,6 @@ Reimbursement status proceeds in order:
 
 #### BEFORE UPDATE ON ManagerApprovals
 If the Direct Supervisor is also a Department Head, then the Department Head approval is skipped.
-
 Upon confirmation, the amount is awarded to the requestor.
 
 #### AFTER UPDATE ON Reimbursements
