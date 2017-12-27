@@ -10,8 +10,9 @@ DROP TABLE Employees;
 DROP TABLE EmployeeTypes;
 DROP TABLE Events;
 DROP TABLE EventTypes;
+DROP TABLE Grades;
 DROP TABLE GradingFormats;
-DROP TABLE GradeLetters;
+DROP TABLE GradeScores;
 DROP TABLE ReimbursementStatuses;
 
 /***********************
@@ -34,7 +35,7 @@ CREATE TABLE ReimbursementNotes
   CONSTRAINT PK_ReimbursementNotes PRIMARY KEY (ID)
 );
 
-CREATE TABLE NoteReasons
+CREATE TABLE NoteReasons --REFERENCE TABLE
 (
   ID INT NOT NULL,
   NoteReason VARCHAR2(70) UNIQUE NOT NULL,
@@ -52,7 +53,7 @@ CREATE TABLE Reimbursements
   ProjectedAmount NUMBER(6,2) NOT NULL,
   ReimbursementStatus INT NOT NULL,
   BenefitsCoordinator INT,
-  ApprovalDates INT NOT NULL,
+  ApprovalDates INT UNIQUE NOT NULL,
   AmountAwarded NUMBER(6,2),
   CONSTRAINT PK_Reimbursements PRIMARY KEY (ID)
 );
@@ -71,7 +72,7 @@ CREATE TABLE Employees
   ID INT NOT NULL,
   FirstName VARCHAR2(35) NOT NULL,
   LastName VARCHAR2(35) NOT NULL,
-  Email VARCHAR2(100) NOT NULL, --firstname.lastname@domain
+  Email VARCHAR2(100) UNIQUE NOT NULL, --firstname.lastname@domain
   Password VARCHAR2(128) NOT NULL,
   EmployeeType INT NOT NULL,
   DirectSupervisor INT,
@@ -80,7 +81,7 @@ CREATE TABLE Employees
   CONSTRAINT PK_Employees PRIMARY KEY (ID)
 );
 
-CREATE TABLE EmployeeTypes
+CREATE TABLE EmployeeTypes --REFERENCE TABLE
 (
   ID INT NOT NULL,
   EmployeeType VARCHAR2(100) UNIQUE NOT NULL,
@@ -98,13 +99,11 @@ CREATE TABLE Events
   Time VARCHAR2(8) NOT NULL, --HH:mm AM/PM
   Location VARCHAR2(175) NOT NULL,
   Cost NUMBER(6,2) NOT NULL,
-  GradingFormat INT NOT NULL,
-  PassingGrade INT NOT NULL, --Presentations Get Grade as well
-  GradeRecieved NUMBER(4,2), --Points #/#
+  Grade INT UNIQUE NOT NULL,
   CONSTRAINT PK_Events PRIMARY KEY (ID)
 );
 
-CREATE TABLE EventTypes
+CREATE TABLE EventTypes --REFERENCE TABLE
 (
   ID INT NOT NULL,
   EventType VARCHAR2(70) UNIQUE NOT NULL,
@@ -112,23 +111,31 @@ CREATE TABLE EventTypes
   CONSTRAINT PK_EventTypes PRIMARY KEY (ID)
 );
 
-CREATE TABLE GradingFormats
+CREATE TABLE Grades
+(
+  ID INT NOT NULL,
+  GradingFormat INT NOT NULL,
+  Passing INT NOT NULL, --Presentations get Grades as well
+  Recieved NUMBER(4,2), --Points #/#
+);
+
+CREATE TABLE GradingFormats --REFERENCE TABLE
 (
   ID INT NOT NULL,
   GradingFormat VARCHAR2(35) UNIQUE NOT NULL, 
   CONSTRAINT PK_GradingFormats PRIMARY KEY (ID)
 );
 
-CREATE TABLE GradeLetters
+CREATE TABLE GradeScores --REFERENCE TABLE
 (
   ID INT NOT NULL,
   GradeLetter VARCHAR2(2) UNIQUE NOT NULL,
   MinPercentage NUMBER(2,1) UNIQUE NOT NULL,
   MaxPercentage NUMBER(2,1) UNIQUE NOT NULL,
-  CONSTRAINT PK_GradeLetters PRIMARY KEY (ID)
+  CONSTRAINT PK_GradeScores PRIMARY KEY (ID)
 );
 
-CREATE TABLE ReimbursementStatuses
+CREATE TABLE ReimbursementStatuses --REFERENCE TABLE
 (
   ID INT NOT NULL,
   ReimbursementStatus VARCHAR2(35) UNIQUE NOT NULL,
@@ -151,7 +158,7 @@ ALTER TABLE Employees ADD CONSTRAINT FK_DirectSupervisor_1 FOREIGN KEY (DirectSu
 ALTER TABLE Employees ADD CONSTRAINT FK_DepartmentHead_1 FOREIGN KEY (DepartmentHead) REFERENCES Employees (ID);
 ALTER TABLE Events ADD CONSTRAINT FK_EventType FOREIGN KEY (EventType) REFERENCES EventTypes (ID);
 ALTER TABLE Events ADD CONSTRAINT FK_GradingFormat FOREIGN KEY (GradingFormat) REFERENCES GradingFormats (ID);
-ALTER TABLE Events ADD CONSTRAINT FK_GradeCutoff FOREIGN KEY (PassingGrade) REFERENCES GradeLetters (ID);
+ALTER TABLE Events ADD CONSTRAINT FK_GradeCutoff FOREIGN KEY (Passing) REFERENCES GradeScores (ID);
 
 
 /*************************
@@ -175,11 +182,11 @@ INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (6,'Other',0.30);
 INSERT INTO GradingFormats (ID, GradingFormat) VALUES (1,'Letter Grade');
 INSERT INTO GradingFormats (ID, GradingFormat) VALUES (2,'Presentation');
 
-INSERT INTO GradeLetters (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (1,'A',0.9,1.0);
-INSERT INTO GradeLetters (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (2,'B',0.8,0.9);
-INSERT INTO GradeLetters (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (3,'C',0.7,0.8);
-INSERT INTO GradeLetters (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (4,'D',0.6,0.7);
-INSERT INTO GradeLetters (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (5,'F',0.0,0.6);
+INSERT INTO GradeScores (ID, GradeScore, MinPercentage, MaxPercentage) VALUES (1,'A',0.9,1.0);
+INSERT INTO GradeScores (ID, GradeScore, MinPercentage, MaxPercentage) VALUES (2,'B',0.8,0.9);
+INSERT INTO GradeScores (ID, GradeScore, MinPercentage, MaxPercentage) VALUES (3,'C',0.7,0.8);
+INSERT INTO GradeScores (ID, GradeScore, MinPercentage, MaxPercentage) VALUES (4,'D',0.6,0.7);
+INSERT INTO GradeScores (ID, GradeScore, MinPercentage, MaxPercentage) VALUES (5,'F',0.0,0.6);
 
 INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (1,'Initial Approval Pending');
 INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (2,'Grade Pending');
@@ -188,22 +195,3 @@ INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (4,'Awarded')
 INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (5,'Canceled');
 INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (6,'Urgent');
 INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (7,'Denied');
-
-/********************************
-*Create Procedures and Functions*
-********************************/
-CREATE OR REPLACE FUNCTION getProjectedAmount (eventID INT) RETURN NUMBER
-IS
-  coverageCost NUMBER;
-  CURSOR costCursor IS
-    SELECT Events.Cost * EventTypes.PercentCovered
-    FROM Events, EventTypes 
-    WHERE Events.ID = eventID AND EventTypes.ID = Events.EventType;
-BEGIN
-  OPEN costCursor;
-  FETCH costCursor INTO coverageCost;
-  CLOSE costCursor;
-  
-  RETURN coverageCost;
-END;
-/

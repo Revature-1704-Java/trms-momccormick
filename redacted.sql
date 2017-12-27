@@ -139,3 +139,24 @@ FOR EACH ROW
     :NEW.ID := seqPK_Events.NEXTVAL;
   END;
 /
+
+
+
+/********************************
+*Create Procedures and Functions*
+********************************/
+CREATE OR REPLACE FUNCTION getProjectedAmount (eventID INT) RETURN NUMBER
+IS
+  coverageCost NUMBER;
+  CURSOR costCursor IS
+    SELECT Events.Cost * EventTypes.PercentCovered
+    FROM Events, EventTypes 
+    WHERE Events.ID = eventID AND EventTypes.ID = Events.EventType;
+BEGIN
+  OPEN costCursor;
+  FETCH costCursor INTO coverageCost;
+  CLOSE costCursor;
+  
+  RETURN coverageCost;
+END;
+/
