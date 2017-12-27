@@ -117,6 +117,7 @@ CREATE TABLE Grades
   GradingFormat INT NOT NULL,
   Passing INT NOT NULL, --Presentations get Grades as well
   Recieved NUMBER(4,2), --Points #/#
+  CONSTRAINT PK_Grades PRIMARY KEY (ID)
 );
 
 CREATE TABLE GradingFormats --REFERENCE TABLE
@@ -152,13 +153,14 @@ ALTER TABLE ReimbursementNotes ADD CONSTRAINT FK_NoteReason FOREIGN KEY (NoteRea
 ALTER TABLE Reimbursements ADD CONSTRAINT FK_Event FOREIGN KEY (Event) REFERENCES Events (ID);
 ALTER TABLE Reimbursements ADD CONSTRAINT FK_ReimbursementStatus FOREIGN KEY (ReimbursementStatus) REFERENCES ReimbursementStatuses (ID);
 ALTER TABLE Reimbursements ADD CONSTRAINT FK_ApprovalDates FOREIGN KEY (ApprovalDates) REFERENCES ApprovalDates (ID);
-ALTER TABLE ApprovalDates ADD CONSTRAINT FK_BenefitsCoordinator FOREIGN KEY (BenefitsCoordinator) REFERENCES Employees (ID);
+ALTER TABLE Reimbursements ADD CONSTRAINT FK_BenefitsCoordinator FOREIGN KEY (BenefitsCoordinator) REFERENCES Employees (ID);
 ALTER TABLE Employees ADD CONSTRAINT FK_EmployeeType FOREIGN KEY (EmployeeType) REFERENCES EmployeeTypes (ID);
 ALTER TABLE Employees ADD CONSTRAINT FK_DirectSupervisor_1 FOREIGN KEY (DirectSupervisor) REFERENCES Employees (ID);
 ALTER TABLE Employees ADD CONSTRAINT FK_DepartmentHead_1 FOREIGN KEY (DepartmentHead) REFERENCES Employees (ID);
 ALTER TABLE Events ADD CONSTRAINT FK_EventType FOREIGN KEY (EventType) REFERENCES EventTypes (ID);
-ALTER TABLE Events ADD CONSTRAINT FK_GradingFormat FOREIGN KEY (GradingFormat) REFERENCES GradingFormats (ID);
-ALTER TABLE Events ADD CONSTRAINT FK_GradeCutoff FOREIGN KEY (Passing) REFERENCES GradeScores (ID);
+ALTER TABLE Events ADD CONSTRAINT FK_Grade FOREIGN KEY (Grade) REFERENCES Grades (ID);
+ALTER TABLE Grades ADD CONSTRAINT FK_GradingFormat FOREIGN KEY (GradingFormat) REFERENCES GradingFormats (ID);
+ALTER TABLE Grades ADD CONSTRAINT FK_Passing FOREIGN KEY (Passing) REFERENCES GradeScores (ID);
 
 
 /*************************
@@ -182,11 +184,11 @@ INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (6,'Other',0.30);
 INSERT INTO GradingFormats (ID, GradingFormat) VALUES (1,'Letter Grade');
 INSERT INTO GradingFormats (ID, GradingFormat) VALUES (2,'Presentation');
 
-INSERT INTO GradeScores (ID, GradeScore, MinPercentage, MaxPercentage) VALUES (1,'A',0.9,1.0);
-INSERT INTO GradeScores (ID, GradeScore, MinPercentage, MaxPercentage) VALUES (2,'B',0.8,0.9);
-INSERT INTO GradeScores (ID, GradeScore, MinPercentage, MaxPercentage) VALUES (3,'C',0.7,0.8);
-INSERT INTO GradeScores (ID, GradeScore, MinPercentage, MaxPercentage) VALUES (4,'D',0.6,0.7);
-INSERT INTO GradeScores (ID, GradeScore, MinPercentage, MaxPercentage) VALUES (5,'F',0.0,0.6);
+INSERT INTO GradeScores (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (1,'A',0.9,1.0);
+INSERT INTO GradeScores (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (2,'B',0.8,0.9);
+INSERT INTO GradeScores (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (3,'C',0.7,0.8);
+INSERT INTO GradeScores (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (4,'D',0.6,0.7);
+INSERT INTO GradeScores (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (5,'F',0.0,0.6);
 
 INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (1,'Initial Approval Pending');
 INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (2,'Grade Pending');
