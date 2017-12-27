@@ -5,7 +5,7 @@ DROP TABLE Attachments;
 DROP TABLE ReimbursementNotes;
 DROP TABLE NoteReasons;
 DROP TABLE Reimbursements;
-DROP TABLE ManagementApprovals;
+DROP TABLE ApprovalDates;
 DROP TABLE Employees;
 DROP TABLE EmployeeTypes;
 DROP TABLE Events;
@@ -13,12 +13,6 @@ DROP TABLE EventTypes;
 DROP TABLE GradingFormats;
 DROP TABLE GradeLetters;
 DROP TABLE ReimbursementStatuses;
-DROP SEQUENCE seqPK_Attachments;
-DROP SEQUENCE seqPK_ReimbursementNotes;
-DROP SEQUENCE seqPK_Reimbursements;
-DROP SEQUENCE seqPK_ManagementApprovals;
-DROP SEQUENCE seqPK_Employees;
-DROP SEQUENCE seqPK_Events;
 
 /***********************
 *Create Database Tables*
@@ -57,21 +51,19 @@ CREATE TABLE Reimbursements
   Justification VARCHAR2(140) NOT NULL,
   ProjectedAmount NUMBER(6,2) NOT NULL,
   ReimbursementStatus INT NOT NULL,
-  ManagementApprovals INT NOT NULL,
+  BenefitsCoordinator INT,
+  ApprovalDates INT NOT NULL,
   AmountAwarded NUMBER(6,2),
   CONSTRAINT PK_Reimbursements PRIMARY KEY (ID)
 );
 
-CREATE TABLE ManagementApprovals
+CREATE TABLE ApprovalDates
 (
   ID INT NOT NULL,
-  DirectSupervisor INT,
-  DirectSupervisorDate DATE,
-  DepartmentHead INT,
-  DepartmentHeadDate DATE,
-  BenefitsCoordinator INT,
-  BenefitsCoordinatorDate DATE,
-  CONSTRAINT PK_ManagementApprovals PRIMARY KEY (ID)
+  DirectSupervisor DATE,
+  DepartmentHead DATE,
+  BenefitsCoordinator DATE,
+  CONSTRAINT PK_ApprovalDates PRIMARY KEY (ID)
 );
 
 CREATE TABLE Employees
@@ -84,6 +76,7 @@ CREATE TABLE Employees
   EmployeeType INT NOT NULL,
   DirectSupervisor INT,
   DepartmentHead INT,
+  AvailableReimbursement NUMBER(6,2),
   CONSTRAINT PK_Employees PRIMARY KEY (ID)
 );
 
@@ -115,7 +108,7 @@ CREATE TABLE EventTypes
 (
   ID INT NOT NULL,
   EventType VARCHAR2(70) UNIQUE NOT NULL,
-  CostPercentCovered NUMBER(2,1) NOT NULL,
+  PercentCovered NUMBER(2,1) NOT NULL,
   CONSTRAINT PK_EventTypes PRIMARY KEY (ID)
 );
 
@@ -151,10 +144,8 @@ ALTER TABLE ReimbursementNotes ADD CONSTRAINT FK_Reimbursement_2 FOREIGN KEY (Re
 ALTER TABLE ReimbursementNotes ADD CONSTRAINT FK_NoteReason FOREIGN KEY (NoteReason) REFERENCES NoteReasons (ID);ALTER TABLE Reimbursements ADD CONSTRAINT FK_Employee FOREIGN KEY (Employee) REFERENCES Employees (ID);
 ALTER TABLE Reimbursements ADD CONSTRAINT FK_Event FOREIGN KEY (Event) REFERENCES Events (ID);
 ALTER TABLE Reimbursements ADD CONSTRAINT FK_ReimbursementStatus FOREIGN KEY (ReimbursementStatus) REFERENCES ReimbursementStatuses (ID);
-ALTER TABLE Reimbursements ADD CONSTRAINT FK_ManagementApprovals FOREIGN KEY (ManagementApprovals) REFERENCES ManagementApprovals (ID);
-ALTER TABLE ManagementApprovals ADD CONSTRAINT FK_DirectSupervisor_2 FOREIGN KEY (DirectSupervisor) REFERENCES Employees (ID);
-ALTER TABLE ManagementApprovals ADD CONSTRAINT FK_DepartmentHead_2 FOREIGN KEY (DepartmentHead) REFERENCES Employees (ID);
-ALTER TABLE ManagementApprovals ADD CONSTRAINT FK_BenefitsCoordinator FOREIGN KEY (BenefitsCoordinator) REFERENCES Employees (ID);
+ALTER TABLE Reimbursements ADD CONSTRAINT FK_ApprovalDates FOREIGN KEY (ApprovalDates) REFERENCES ApprovalDates (ID);
+ALTER TABLE ApprovalDates ADD CONSTRAINT FK_BenefitsCoordinator FOREIGN KEY (BenefitsCoordinator) REFERENCES Employees (ID);
 ALTER TABLE Employees ADD CONSTRAINT FK_EmployeeType FOREIGN KEY (EmployeeType) REFERENCES EmployeeTypes (ID);
 ALTER TABLE Employees ADD CONSTRAINT FK_DirectSupervisor_1 FOREIGN KEY (DirectSupervisor) REFERENCES Employees (ID);
 ALTER TABLE Employees ADD CONSTRAINT FK_DepartmentHead_1 FOREIGN KEY (DepartmentHead) REFERENCES Employees (ID);
@@ -174,12 +165,12 @@ INSERT INTO EmployeeTypes (ID, EmployeeType) VALUES (2,'Direct Supervisor');
 INSERT INTO EmployeeTypes (ID, EmployeeType) VALUES (3,'Department Head');
 INSERT INTO EmployeeTypes (ID, EmployeeType) VALUES (4,'Benefits Coordinator');
 
-INSERT INTO EventTypes (ID, EventType, CostPercentCovered) VALUES (1,'University Courses',0.80);
-INSERT INTO EventTypes (ID, EventType, CostPercentCovered) VALUES (2,'Seminars',0.60);
-INSERT INTO EventTypes (ID, EventType, CostPercentCovered) VALUES (3,'Certification Preparation Classes',0.75);
-INSERT INTO EventTypes (ID, EventType, CostPercentCovered) VALUES (4,'Certification Exam',1.00);
-INSERT INTO EventTypes (ID, EventType, CostPercentCovered) VALUES (5,'Technical Training',0.90);
-INSERT INTO EventTypes (ID, EventType, CostPercentCovered) VALUES (6,'Other',0.30);
+INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (1,'University Courses',0.80);
+INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (2,'Seminars',0.60);
+INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (3,'Certification Preparation Classes',0.75);
+INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (4,'Certification Exam',1.00);
+INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (5,'Technical Training',0.90);
+INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (6,'Other',0.30);
 
 INSERT INTO GradingFormats (ID, GradingFormat) VALUES (1,'Letter Grade');
 INSERT INTO GradingFormats (ID, GradingFormat) VALUES (2,'Presentation');
@@ -190,97 +181,29 @@ INSERT INTO GradeLetters (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES 
 INSERT INTO GradeLetters (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (4,'D',0.6,0.7);
 INSERT INTO GradeLetters (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (5,'F',0.0,0.6);
 
-INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (1,'Pending');
+INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (1,'Initial Approval Pending');
 INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (2,'Grade Pending');
-INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (3,'Approval Pending');
+INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (3,'Management Approval Pending');
 INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (4,'Awarded');
 INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (5,'Canceled');
 INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (6,'Urgent');
 INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (7,'Denied');
 
-
-/*****************************
-*Create Primary Key Sequences*
-*****************************/
-CREATE SEQUENCE seqPK_Attachments;
-CREATE SEQUENCE seqPK_ReimbursementNotes;
-CREATE SEQUENCE seqPK_Reimbursements;
-CREATE SEQUENCE seqPK_ManagementApprovals;
-CREATE SEQUENCE seqPK_Employees;
-CREATE SEQUENCE seqPK_Events;
-
-
-/****************
-*Create Triggers*
-****************/
-CREATE OR REPLACE TRIGGER inc_Attachments
-BEFORE INSERT ON Attachments
-FOR EACH ROW
-  BEGIN
-    :NEW.ID := seqPK_Attachments.NEXTVAL;
-  END;
-/
-
-CREATE OR REPLACE TRIGGER inc_ReimbursementNotes
-BEFORE INSERT ON ReimbursementNotes
-FOR EACH ROW
-  BEGIN
-    :NEW.ID := seqPK_ReimbursementNotes.NEXTVAL;
-  END;
-/
-
-CREATE OR REPLACE TRIGGER inc_Reimbursements
-BEFORE INSERT ON Reimbursements
-FOR EACH ROW
-  BEGIN
-    :NEW.ID := seqPK_Reimbursements.NEXTVAL;
-  END;
-/
-
-CREATE OR REPLACE TRIGGER inc_ManagementApprovals
-BEFORE INSERT ON ManagementApprovals
-FOR EACH ROW
-  BEGIN
-    :NEW.ID := seqPK_ManagementApprovals.NEXTVAL;
-  END;
-/
-
-CREATE OR REPLACE TRIGGER inc_Employees
-BEFORE INSERT ON Employees
-FOR EACH ROW
-  BEGIN
-    :NEW.ID := seqPK_Employees.NEXTVAL;
-  END;
-/
-
-CREATE OR REPLACE TRIGGER inc_Events
-BEFORE INSERT ON Events
-FOR EACH ROW
-  BEGIN
-    :NEW.ID := seqPK_Events.NEXTVAL;
-  END;
-/
-
-
-/********************
-*Validation Triggers*
-********************/
-CREATE OR REPLACE TRIGGER validate_Reimbursements
-BEFORE INSERT OR UPDATE ON Reimbursements
-FOR EACH ROW
-  BEGIN
-    SELECT Events.Cost*EventTypes.CostPercentCovered
-    INTO :NEW.ProjectedAmount
+/********************************
+*Create Procedures and Functions*
+********************************/
+CREATE OR REPLACE FUNCTION getProjectedAmount (eventID INT) RETURN NUMBER
+IS
+  coverageCost NUMBER;
+  CURSOR costCursor IS
+    SELECT Events.Cost * EventTypes.PercentCovered
     FROM Events, EventTypes 
-    WHERE Events.ID = :NEW.Event AND EventTypes.ID = Events.EventType;
-    /*
-    IF Events.StartDate - DateSubmitted < 7
-    THEN
-      SELECT ReimbursementStatuses.ID
-      INTO ReimbursementStatus
-      FROM ReimbursementStatuses
-      WHERE ReimbursementStatuses.ReimbursementStatus = 'Denied';
-      INSERT INTO ReimbursementNotes (Reimbursement, NoteReason, Note) VALUES (ID, 2, 'Event Starting in less than 1 Week');
-    */
-  END;
+    WHERE Events.ID = eventID AND EventTypes.ID = Events.EventType;
+BEGIN
+  OPEN costCursor;
+  FETCH costCursor INTO coverageCost;
+  CLOSE costCursor;
+  
+  RETURN coverageCost;
+END;
 /
