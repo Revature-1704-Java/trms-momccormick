@@ -1,15 +1,29 @@
 package models;
 
 public class Grades {
+
+	private int id;
 	GradingFormat gradingFormat;
 	GradeScore passingGrade;
 	double recievedGrade;
-	
-	public Grades(GradingFormat gradingFormat, GradeScore passingGrade, double recievedGrade) {
+
+	public Grades() {
 		super();
+	}
+
+	public Grades(int id, GradingFormat gradingFormat, GradeScore passingGrade, double recievedGrade) {
+		this.id = id;
 		this.gradingFormat = gradingFormat;
 		this.passingGrade = passingGrade;
 		this.recievedGrade = recievedGrade;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public GradingFormat getGradingFormat() {
@@ -37,39 +51,10 @@ public class Grades {
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((gradingFormat == null) ? 0 : gradingFormat.hashCode());
-		result = prime * result + ((passingGrade == null) ? 0 : passingGrade.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(recievedGrade);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Grades other = (Grades) obj;
-		if (gradingFormat != other.gradingFormat)
-			return false;
-		if (passingGrade != other.passingGrade)
-			return false;
-		if (Double.doubleToLongBits(recievedGrade) != Double.doubleToLongBits(other.recievedGrade))
-			return false;
-		return true;
-	}
-
-	@Override
 	public String toString() {
-		return "Grades [gradingFormat=" + gradingFormat + ", passingGrade=" + passingGrade + ", recievedGrade="
-				+ recievedGrade + "]";
+		return "Grades [id=" + id + ", gradingFormat=" + gradingFormat + ", passingGrade=" + passingGrade
+				+ ", recievedGrade=" + recievedGrade + "]";
 	}
+
 	
 }
