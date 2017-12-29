@@ -99,7 +99,7 @@ CREATE TABLE Events
   Time VARCHAR2(8) NOT NULL, --HH:mm AM/PM
   Location VARCHAR2(175) NOT NULL,
   Cost NUMBER(6,2) NOT NULL,
-  Grade INT UNIQUE NOT NULL,
+  Grades INT UNIQUE NOT NULL,
   CONSTRAINT PK_Events PRIMARY KEY (ID)
 );
 
@@ -158,7 +158,7 @@ ALTER TABLE Employees ADD CONSTRAINT FK_EmployeeType FOREIGN KEY (EmployeeType) 
 ALTER TABLE Employees ADD CONSTRAINT FK_DirectSupervisor_1 FOREIGN KEY (DirectSupervisor) REFERENCES Employees (ID);
 ALTER TABLE Employees ADD CONSTRAINT FK_DepartmentHead_1 FOREIGN KEY (DepartmentHead) REFERENCES Employees (ID);
 ALTER TABLE Events ADD CONSTRAINT FK_EventType FOREIGN KEY (EventType) REFERENCES EventTypes (ID);
-ALTER TABLE Events ADD CONSTRAINT FK_Grade FOREIGN KEY (Grade) REFERENCES Grades (ID);
+ALTER TABLE Events ADD CONSTRAINT FK_Grade FOREIGN KEY (Grades) REFERENCES Grades (ID);
 ALTER TABLE Grades ADD CONSTRAINT FK_GradingFormat FOREIGN KEY (GradingFormat) REFERENCES GradingFormats (ID);
 ALTER TABLE Grades ADD CONSTRAINT FK_Passing FOREIGN KEY (Passing) REFERENCES GradeScores (ID);
 
@@ -189,7 +189,7 @@ INSERT INTO GradeScores (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (
 INSERT INTO GradeScores (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (3,'D',0.6,0.7);
 INSERT INTO GradeScores (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (4,'F',0.0,0.6);
 
-INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (0,'Initial Approval Pending');
+INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (0,'Pending');
 INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (1,'Grade Pending');
 INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (2,'Management Approval Pending');
 INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (3,'Awarded');
@@ -214,12 +214,12 @@ INSERT INTO Grades (ID, GradingFormat, Passing, Recieved) VALUES (3,0,2,null);
 INSERT INTO Grades (ID, GradingFormat, Passing, Recieved) VALUES (4,1,2,null);
 INSERT INTO Grades (ID, GradingFormat, Passing, Recieved) VALUES (5,1,2,null);
 
-INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost,Grade) VALUES (0,'AUniversityCourse',0,'A University Course',TO_DATE('2017-01-08','yyyy-mm-dd'),TO_DATE('2017-01-15','yyyy-mm-dd'),'12:00 PM','Location1',100,0);
-INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost,Grade) VALUES (1,'ASeminar',1,'A Seminar',TO_DATE('2017-02-08','yyyy-mm-dd'),TO_DATE('2017-02-08','yyyy-mm-dd'),'01:00 PM','Location2',75,1);
-INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost,Grade) VALUES (2,'ACertificationPreperationClass',2,'A Certification Preperation Class',TO_DATE('2017-03-08','yyyy-mm-dd'),TO_DATE('2017-03-15','yyyy-mm-dd'),'02:00 PM','Location3',50,2);
-INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost,Grade) VALUES (3,'ACertificationExam',3,'A Certification Exam',TO_DATE('2017-04-08','yyyy-mm-dd'),TO_DATE('2017-04-08','yyyy-mm-dd'),'03:00 PM','Location4',150,3);
-INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost,Grade) VALUES (4,'SomeTechnicalTraining',4,'Some Technical Training',TO_DATE('2017-05-08','yyyy-mm-dd'),TO_DATE('2017-05-15','yyyy-mm-dd'),'04:00 PM','Location5',200,4);
-INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost,Grade) VALUES (5,'Other',5,'Some Other Event',TO_DATE('2017-06-08','yyyy-mm-dd'),TO_DATE('2017-06-15','yyyy-mm-dd'),'05:00 PM','Location6',25,5);
+INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost,Grades) VALUES (0,'AUniversityCourse',0,'A University Course',TO_DATE('2017-01-08','yyyy-mm-dd'),TO_DATE('2017-01-15','yyyy-mm-dd'),'12:00 PM','Location1',100,0);
+INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost,Grades) VALUES (1,'ASeminar',1,'A Seminar',TO_DATE('2017-02-08','yyyy-mm-dd'),TO_DATE('2017-02-08','yyyy-mm-dd'),'01:00 PM','Location2',75,1);
+INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost,Grades) VALUES (2,'ACertificationPreperationClass',2,'A Certification Preperation Class',TO_DATE('2017-03-08','yyyy-mm-dd'),TO_DATE('2017-03-15','yyyy-mm-dd'),'02:00 PM','Location3',50,2);
+INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost,Grades) VALUES (3,'ACertificationExam',3,'A Certification Exam',TO_DATE('2017-04-08','yyyy-mm-dd'),TO_DATE('2017-04-08','yyyy-mm-dd'),'03:00 PM','Location4',150,3);
+INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost,Grades) VALUES (4,'SomeTechnicalTraining',4,'Some Technical Training',TO_DATE('2017-05-08','yyyy-mm-dd'),TO_DATE('2017-05-15','yyyy-mm-dd'),'04:00 PM','Location5',200,4);
+INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost,Grades) VALUES (5,'Other',5,'Some Other Event',TO_DATE('2017-06-08','yyyy-mm-dd'),TO_DATE('2017-06-15','yyyy-mm-dd'),'05:00 PM','Location6',25,5);
 
 INSERT INTO ApprovalDates(ID) VALUES (0);
 INSERT INTO ApprovalDates(ID) VALUES (1);
