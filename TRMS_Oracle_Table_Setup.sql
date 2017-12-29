@@ -51,9 +51,9 @@ CREATE TABLE Reimbursements
   WorkTimeMissed VARCHAR2(140) NOT NULL,
   Justification VARCHAR2(140) NOT NULL,
   ProjectedAmount NUMBER(6,2) NOT NULL,
-  ReimbursementStatus INT NOT NULL,
   BenefitsCoordinator INT,
   ApprovalDates INT UNIQUE NOT NULL,
+  ReimbursementStatus INT NOT NULL,
   AmountAwarded NUMBER(6,2),
   CONSTRAINT PK_Reimbursements PRIMARY KEY (ID)
 );
@@ -166,39 +166,71 @@ ALTER TABLE Grades ADD CONSTRAINT FK_Passing FOREIGN KEY (Passing) REFERENCES Gr
 /*************************
 *Add Reference Table Data*
 *************************/
-INSERT INTO NoteReasons (ID, NoteReason) VALUES (1,'Reimbursement Amount Exceeded');
-INSERT INTO NoteReasons (ID, NoteReason) VALUES (2,'Reimbursement Denied');
+INSERT INTO NoteReasons (ID, NoteReason) VALUES (0,'Reimbursement Amount Exceeded');
+INSERT INTO NoteReasons (ID, NoteReason) VALUES (1,'Reimbursement Denied');
 
 INSERT INTO EmployeeTypes (ID, EmployeeType) VALUES (0,'Standard');
 INSERT INTO EmployeeTypes (ID, EmployeeType) VALUES (1,'Benefits Coordinator');
 INSERT INTO EmployeeTypes (ID, EmployeeType) VALUES (2,'Management');
 
+INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (0,'University Courses',0.80);
+INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (1,'Seminars',0.60);
+INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (2,'Certification Preparation Classes',0.75);
+INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (3,'Certification Exam',1.00);
+INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (4,'Technical Training',0.90);
+INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (5,'Other',0.30);
+
+INSERT INTO GradingFormats (ID, GradingFormat) VALUES (0,'Letter Grade');
+INSERT INTO GradingFormats (ID, GradingFormat) VALUES (1,'Presentation');
+
+INSERT INTO GradeScores (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (0,'A',0.9,1.0);
+INSERT INTO GradeScores (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (1,'B',0.8,0.9);
+INSERT INTO GradeScores (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (2,'C',0.7,0.8);
+INSERT INTO GradeScores (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (3,'D',0.6,0.7);
+INSERT INTO GradeScores (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (4,'F',0.0,0.6);
+
+INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (0,'Initial Approval Pending');
+INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (1,'Grade Pending');
+INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (2,'Management Approval Pending');
+INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (3,'Awarded');
+INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (4,'Canceled');
+INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (5,'Urgent');
+INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (6,'Denied');
+
+
+/********************
+*Add Mock Table Data*
+********************/
 INSERT INTO Employees (ID, FirstName, LastName, Email, Password, EmployeeType, DirectSupervisor, DepartmentHead, AvailableReimbursement) VALUES (0,'Department','Head','department.head@email.com','password',2,null,null,null);
 INSERT INTO Employees (ID, FirstName, LastName, Email, Password, EmployeeType, DirectSupervisor, DepartmentHead, AvailableReimbursement) VALUES (1, 'Direct', 'Supervisor','direct.supervisor@email.com','password',2,0,0,null);
 INSERT INTO Employees (ID, FirstName, LastName, Email, Password, EmployeeType, DirectSupervisor, DepartmentHead, AvailableReimbursement) VALUES (3, 'BenCo', 'Supervisor', 'ben.co.supervisor@email.com','password',2, null,null,null);
 INSERT INTO Employees (ID, FirstName, LastName, Email, Password, EmployeeType, DirectSupervisor, DepartmentHead, AvailableReimbursement) VALUES (4,'Benefits','Coordinator','benefits.cordinator@email.com','password',1,3,null,null);
 INSERT INTO Employees (ID, FirstName, LastName, Email, Password, EmployeeType, DirectSupervisor, DepartmentHead, AvailableReimbursement) VALUES (5, 'Code', 'Monkee', 'code.monkee@mail.com', 'password',0,1,0,1000);
 
-INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (1,'University Courses',0.80);
-INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (2,'Seminars',0.60);
-INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (3,'Certification Preparation Classes',0.75);
-INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (4,'Certification Exam',1.00);
-INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (5,'Technical Training',0.90);
-INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (6,'Other',0.30);
+INSERT INTO Grades (ID, GradingFormat, Passing, Recieved) VALUES (0,0,2,null);
+INSERT INTO Grades (ID, GradingFormat, Passing, Recieved) VALUES (1,1,2,null);
+INSERT INTO Grades (ID, GradingFormat, Passing, Recieved) VALUES (2,0,2,null);
+INSERT INTO Grades (ID, GradingFormat, Passing, Recieved) VALUES (3,0,2,null);
+INSERT INTO Grades (ID, GradingFormat, Passing, Recieved) VALUES (4,1,2,null);
+INSERT INTO Grades (ID, GradingFormat, Passing, Recieved) VALUES (5,1,2,null);
 
-INSERT INTO GradingFormats (ID, GradingFormat) VALUES (1,'Letter Grade');
-INSERT INTO GradingFormats (ID, GradingFormat) VALUES (2,'Presentation');
+INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost,Grade) VALUES (0,'AUniversityCourse',0,'A University Course',TO_DATE('2017-01-08','yyyy-mm-dd'),TO_DATE('2017-01-15','yyyy-mm-dd'),'12:00 PM','Location1',100,0);
+INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost,Grade) VALUES (1,'ASeminar',1,'A Seminar',TO_DATE('2017-02-08','yyyy-mm-dd'),TO_DATE('2017-02-08','yyyy-mm-dd'),'01:00 PM','Location2',75,1);
+INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost,Grade) VALUES (2,'ACertificationPreperationClass',2,'A Certification Preperation Class',TO_DATE('2017-03-08','yyyy-mm-dd'),TO_DATE('2017-03-15','yyyy-mm-dd'),'02:00 PM','Location3',50,2);
+INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost,Grade) VALUES (3,'ACertificationExam',3,'A Certification Exam',TO_DATE('2017-04-08','yyyy-mm-dd'),TO_DATE('2017-04-08','yyyy-mm-dd'),'03:00 PM','Location4',150,3);
+INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost,Grade) VALUES (4,'SomeTechnicalTraining',4,'Some Technical Training',TO_DATE('2017-05-08','yyyy-mm-dd'),TO_DATE('2017-05-15','yyyy-mm-dd'),'04:00 PM','Location5',200,4);
+INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost,Grade) VALUES (5,'Other',5,'Some Other Event',TO_DATE('2017-06-08','yyyy-mm-dd'),TO_DATE('2017-06-15','yyyy-mm-dd'),'05:00 PM','Location6',25,5);
 
-INSERT INTO GradeScores (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (1,'A',0.9,1.0);
-INSERT INTO GradeScores (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (2,'B',0.8,0.9);
-INSERT INTO GradeScores (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (3,'C',0.7,0.8);
-INSERT INTO GradeScores (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (4,'D',0.6,0.7);
-INSERT INTO GradeScores (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (5,'F',0.0,0.6);
+INSERT INTO ApprovalDates(ID) VALUES (0);
+INSERT INTO ApprovalDates(ID) VALUES (1);
+INSERT INTO ApprovalDates(ID) VALUES (2);
+INSERT INTO ApprovalDates(ID) VALUES (3);
+INSERT INTO ApprovalDates(ID) VALUES (4);
+INSERT INTO ApprovalDates(ID) VALUES (5);
 
-INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (1,'Initial Approval Pending');
-INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (2,'Grade Pending');
-INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (3,'Management Approval Pending');
-INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (4,'Awarded');
-INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (5,'Canceled');
-INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (6,'Urgent');
-INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (7,'Denied');
+INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,ApprovalDates,ReimbursementStatus) VALUES (0,5,TO_DATE('2017-01-01','yyyy-mm-dd'),0,'4 Weeks','JUSTIFIED1',80,0,1);
+INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,ApprovalDates,ReimbursementStatus) VALUES (1,5,TO_DATE('2017-02-01','yyyy-mm-dd'),1,'2 Days','JUSTIFIED2',45,1,1);
+INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,ApprovalDates,ReimbursementStatus) VALUES (2,5,TO_DATE('2017-03-01','yyyy-mm-dd'),2,'1 Week','JUSTIFIED3',37.5,2,1);
+INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,ApprovalDates,ReimbursementStatus) VALUES (3,5,TO_DATE('2017-04-01','yyyy-mm-dd'),3,'1 Day','JUSTIFIED4',150,3,1);
+INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,ApprovalDates,ReimbursementStatus) VALUES (4,5,TO_DATE('2017-05-01','yyyy-mm-dd'),4,'2 Weeks','JUSTIFIED5',180,4,1);
+INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,ApprovalDates,ReimbursementStatus) VALUES (5,5,TO_DATE('2017-06-01','yyyy-mm-dd'),5,'4 Days','JUSTIFIED6',7.5,5,1);
