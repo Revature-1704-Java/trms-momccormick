@@ -169,10 +169,15 @@ ALTER TABLE Grades ADD CONSTRAINT FK_Passing FOREIGN KEY (Passing) REFERENCES Gr
 INSERT INTO NoteReasons (ID, NoteReason) VALUES (1,'Reimbursement Amount Exceeded');
 INSERT INTO NoteReasons (ID, NoteReason) VALUES (2,'Reimbursement Denied');
 
-INSERT INTO EmployeeTypes (ID, EmployeeType) VALUES (1,'Standard');
-INSERT INTO EmployeeTypes (ID, EmployeeType) VALUES (2,'Direct Supervisor');
-INSERT INTO EmployeeTypes (ID, EmployeeType) VALUES (3,'Department Head');
-INSERT INTO EmployeeTypes (ID, EmployeeType) VALUES (4,'Benefits Coordinator');
+INSERT INTO EmployeeTypes (ID, EmployeeType) VALUES (0,'Standard');
+INSERT INTO EmployeeTypes (ID, EmployeeType) VALUES (1,'Benefits Coordinator');
+INSERT INTO EmployeeTypes (ID, EmployeeType) VALUES (2,'Management');
+
+INSERT INTO Employees (ID, FirstName, LastName, Email, Password, EmployeeType, DirectSupervisor, DepartmentHead, AvailableReimbursement) VALUES (0,'Department','Head','department.head@email.com','password',2,null,null,null);
+INSERT INTO Employees (ID, FirstName, LastName, Email, Password, EmployeeType, DirectSupervisor, DepartmentHead, AvailableReimbursement) VALUES (1, 'Direct', 'Supervisor','direct.supervisor@email.com','password',2,0,0,null);
+INSERT INTO Employees (ID, FirstName, LastName, Email, Password, EmployeeType, DirectSupervisor, DepartmentHead, AvailableReimbursement) VALUES (3, 'BenCo', 'Supervisor', 'ben.co.supervisor@email.com','password',2, null,null,null);
+INSERT INTO Employees (ID, FirstName, LastName, Email, Password, EmployeeType, DirectSupervisor, DepartmentHead, AvailableReimbursement) VALUES (4,'Benefits','Coordinator','benefits.cordinator@email.com','password',1,3,null,null);
+INSERT INTO Employees (ID, FirstName, LastName, Email, Password, EmployeeType, DirectSupervisor, DepartmentHead, AvailableReimbursement) VALUES (5, 'Code', 'Monkee', 'code.monkee@mail.com', 'password',0,1,0,1000);
 
 INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (1,'University Courses',0.80);
 INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (2,'Seminars',0.60);
