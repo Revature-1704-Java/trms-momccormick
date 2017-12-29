@@ -173,9 +173,9 @@ INSERT INTO EmployeeTypes (ID, EmployeeType) VALUES (0,'Standard');
 INSERT INTO EmployeeTypes (ID, EmployeeType) VALUES (1,'Benefits Coordinator');
 INSERT INTO EmployeeTypes (ID, EmployeeType) VALUES (2,'Management');
 
-INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (0,'University Courses',0.80);
-INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (1,'Seminars',0.60);
-INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (2,'Certification Preparation Classes',0.75);
+INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (0,'University Course',0.80);
+INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (1,'Seminar',0.60);
+INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (2,'Certification Preparation Classe',0.75);
 INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (3,'Certification Exam',1.00);
 INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (4,'Technical Training',0.90);
 INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (5,'Other',0.30);
