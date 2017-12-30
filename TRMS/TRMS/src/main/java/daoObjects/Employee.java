@@ -1,4 +1,4 @@
-package models;
+package daoObjects;
 
 public class Employee {
 

@@ -1,17 +1,17 @@
-package models;
+package daoObjects;
 
 public class Grades {
 
 	private int id;
 	GradingFormat gradingFormat;
-	GradeScore passingGrade;
+	GradeLetter passingGrade;
 	double recievedGrade;
 
 	public Grades() {
 		super();
 	}
 
-	public Grades(int id, GradingFormat gradingFormat, GradeScore passingGrade, double recievedGrade) {
+	public Grades(int id, GradingFormat gradingFormat, GradeLetter passingGrade, double recievedGrade) {
 		this.id = id;
 		this.gradingFormat = gradingFormat;
 		this.passingGrade = passingGrade;
@@ -34,11 +34,11 @@ public class Grades {
 		this.gradingFormat = gradingFormat;
 	}
 
-	public GradeScore getPassingGrade() {
+	public GradeLetter getPassingGrade() {
 		return passingGrade;
 	}
 
-	public void setPassingGrade(GradeScore passingGrade) {
+	public void setPassingGrade(GradeLetter passingGrade) {
 		this.passingGrade = passingGrade;
 	}
 
