@@ -64,7 +64,7 @@ If the Benefits Coordinator does not approval in a timely matter, an escalation 
 The Benefits Coordinator has the ability to alter the Reimbursement amount.
 The Benefits Coordinator is allowed to award an amount larger than the amount available for the employee.
 If the Reimburesment amount awarded is greater than the amount available, the Benefits Coordinator must provide a reason why.
-Reimbursments that are awards with larger amounts must be marked as exceeding available funds for reporting purposes.
+Reimbursments that are awarded with larger amounts must be marked as exceeding available funds for reporting purposes.
 Employee is notified if Benefits Coordinator changes reimbursement amount.
 
 Upon confirmation, the amount is awarded to the requestor.
