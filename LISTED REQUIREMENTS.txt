@@ -72,8 +72,8 @@ Upon confirmation, the amount is awarded to the requestor.
 
   
 # Unspecified Decisions #
-Pending Reimbursements can only be deleted by the Requester
-Pending Reimbursements can be deleted at any time
+Pending Reimbursements can only be cancelled by the Requester
+Pending Reimbursements can be cancelled at any time
 Direct Supervisor, Department Heads, & Benefits Coordinators cannot make Reimbursement Requests
 A Benefits Coordinator cannot be a Direct Supervisor or Department Head as the Benefits Coordinator is part of HR
 Grading Formats will be Letter Grade (ABCDF)
