@@ -12,17 +12,16 @@ public class Reimbursement {
 	String justification;
 	double projectedAmount;
 	Employee benefitsCoordinator;
-	ApprovalDates approvalDates;
+	Date directSupervisorApproved;
+	Date departmentHeadApproved;
+	Date benefitesCoordinatorApproved;
 	ReimbursementStatus reimbursementStatus;
 	double amountAwarded;
 
-	public Reimbursement() {
-		super();
-	}
-
 	public Reimbursement(int id, Employee employee, Date dateSubmitted, Event event, String workTimeMissed,
-			String justification, double projectedAmount, Employee benefitsCoordinator, ApprovalDates approvalDates,
-			ReimbursementStatus reimbursementStatus, double amountAwarded) {
+			String justification, double projectedAmount, Employee benefitsCoordinator, Date directSupervisorApproved,
+			Date departmentHeadApproved, Date benefitesCoordinatorApproved, ReimbursementStatus reimbursementStatus,
+			double amountAwarded) {
 		this.id = id;
 		this.employee = employee;
 		this.dateSubmitted = dateSubmitted;
@@ -31,7 +30,9 @@ public class Reimbursement {
 		this.justification = justification;
 		this.projectedAmount = projectedAmount;
 		this.benefitsCoordinator = benefitsCoordinator;
-		this.approvalDates = approvalDates;
+		this.directSupervisorApproved = directSupervisorApproved;
+		this.departmentHeadApproved = departmentHeadApproved;
+		this.benefitesCoordinatorApproved = benefitesCoordinatorApproved;
 		this.reimbursementStatus = reimbursementStatus;
 		this.amountAwarded = amountAwarded;
 	}
@@ -100,12 +101,28 @@ public class Reimbursement {
 		this.benefitsCoordinator = benefitsCoordinator;
 	}
 
-	public ApprovalDates getApprovalDates() {
-		return approvalDates;
+	public Date getDirectSupervisorApproved() {
+		return directSupervisorApproved;
 	}
 
-	public void setApprovalDates(ApprovalDates approvalDates) {
-		this.approvalDates = approvalDates;
+	public void setDirectSupervisorApproved(Date directSupervisorApproved) {
+		this.directSupervisorApproved = directSupervisorApproved;
+	}
+
+	public Date getDepartmentHeadApproved() {
+		return departmentHeadApproved;
+	}
+
+	public void setDepartmentHeadApproved(Date departmentHeadApproved) {
+		this.departmentHeadApproved = departmentHeadApproved;
+	}
+
+	public Date getBenefitesCoordinatorApproved() {
+		return benefitesCoordinatorApproved;
+	}
+
+	public void setBenefitesCoordinatorApproved(Date benefitesCoordinatorApproved) {
+		this.benefitesCoordinatorApproved = benefitesCoordinatorApproved;
 	}
 
 	public ReimbursementStatus getReimbursementStatus() {
@@ -129,9 +146,9 @@ public class Reimbursement {
 		return "Reimbursement [id=" + id + ", employee=" + employee + ", dateSubmitted=" + dateSubmitted + ", event="
 				+ event + ", workTimeMissed=" + workTimeMissed + ", justification=" + justification
 				+ ", projectedAmount=" + projectedAmount + ", benefitsCoordinator=" + benefitsCoordinator
-				+ ", approvalDates=" + approvalDates + ", reimbursementStatus=" + reimbursementStatus
-				+ ", amountAwarded=" + amountAwarded + "]";
+				+ ", directSupervisorApproved=" + directSupervisorApproved + ", departmentHeadApproved="
+				+ departmentHeadApproved + ", benefitesCoordinatorApproved=" + benefitesCoordinatorApproved
+				+ ", reimbursementStatus=" + reimbursementStatus + ", amountAwarded=" + amountAwarded + "]";
 	}
-	
-	
+
 }

@@ -2,8 +2,8 @@ package daoObjects;
 
 import java.sql.Date;
 
-public class Event {
 
+public class Event {
 	private int id;
 	String name;
 	EventType eventType;
@@ -13,14 +13,13 @@ public class Event {
 	String time;
 	String location;
 	double cost;
-	Grades grades;
-
-	public Event() {
-		super();
-	}
-
+	GradingFormat gradingFormat;
+	GradeLetter passingGrade;
+	double recievedGrade;
+	
 	public Event(int id, String name, EventType eventType, String description, Date startDate, Date endDate,
-			String time, String location, double cost, Grades grades) {
+			String time, String location, double cost, GradingFormat gradingFormat, GradeLetter passingGrade,
+			double recievedGrade) {
 		this.id = id;
 		this.name = name;
 		this.eventType = eventType;
@@ -30,7 +29,9 @@ public class Event {
 		this.time = time;
 		this.location = location;
 		this.cost = cost;
-		this.grades = grades;
+		this.gradingFormat = gradingFormat;
+		this.passingGrade = passingGrade;
+		this.recievedGrade = recievedGrade;
 	}
 
 	public int getId() {
@@ -105,20 +106,37 @@ public class Event {
 		this.cost = cost;
 	}
 
-	public Grades getGrades() {
-		return grades;
+	public GradingFormat getGradingFormat() {
+		return gradingFormat;
 	}
 
-	public void setGrades(Grades grades) {
-		this.grades = grades;
+	public void setGradingFormat(GradingFormat gradingFormat) {
+		this.gradingFormat = gradingFormat;
+	}
+
+	public GradeLetter getPassingGrade() {
+		return passingGrade;
+	}
+
+	public void setPassingGrade(GradeLetter passingGrade) {
+		this.passingGrade = passingGrade;
+	}
+
+	public double getRecievedGrade() {
+		return recievedGrade;
+	}
+
+	public void setRecievedGrade(double recievedGrade) {
+		this.recievedGrade = recievedGrade;
 	}
 
 	@Override
 	public String toString() {
 		return "Event [id=" + id + ", name=" + name + ", eventType=" + eventType + ", description=" + description
 				+ ", startDate=" + startDate + ", endDate=" + endDate + ", time=" + time + ", location=" + location
-				+ ", cost=" + cost + ", grades=" + grades + "]";
+				+ ", cost=" + cost + ", gradingFormat=" + gradingFormat + ", passingGrade=" + passingGrade
+				+ ", recievedGrade=" + recievedGrade + "]";
 	}
-
 	
+		
 }

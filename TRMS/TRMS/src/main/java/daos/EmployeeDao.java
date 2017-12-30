@@ -94,7 +94,7 @@ public class EmployeeDao implements EmployeeDaoInterface {
 		}
 	}
 
-	public void addNew(Employee newObj) {
+	public void add(Employee newObj) {
 		// Not Adding Employees
 	}
 
