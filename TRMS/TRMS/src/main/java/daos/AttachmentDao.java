@@ -13,7 +13,7 @@ public class AttachmentDao implements AttachmentDaoInterface{
 		
 	}
 
-	public void addNew(Attachment newObj) {
+	public void add(Attachment newObj) {
 		
 	}
 

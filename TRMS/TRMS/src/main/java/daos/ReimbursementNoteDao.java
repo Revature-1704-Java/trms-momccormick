@@ -13,7 +13,7 @@ public class ReimbursementNoteDao implements ReimbursementNoteDaoInterface{
 		
 	}
 
-	public void addNew(ReimbursementNote newObj) {
+	public void add(ReimbursementNote newObj) {
 		
 	}
 
