@@ -16,6 +16,30 @@ public class Employee {
 		super();
 	}
 
+	/*
+	 * Managerment Employee's Basic information
+	 */
+	public Employee(int id, String firstName, String lastName, String email, EmployeeType type) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.type = type;
+	}
+
+	/*
+	 * Employee's Basic information
+	 */
+	public Employee(int id, String firstName, String lastName, String email, EmployeeType type,
+			double availableReimbursement) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.type = type;
+		this.availableReimbursement = availableReimbursement;
+	}
+
 	public Employee(int id, String firstName, String lastName, String email, String password, EmployeeType type,
 			Employee directSupervisor, Employee departmentHead, double availableReimbursement) {
 		this.id = id;
@@ -104,9 +128,7 @@ public class Employee {
 	@Override
 	public String toString() {
 		return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", password=" + password + ", type=" + type + ", directSupervisor=" + directSupervisor
-				+ ", departmentHead=" + departmentHead + ", availableReimbursement=" + availableReimbursement + "]";
+				+ ", type=" + type + ", availableReimbursement=" + availableReimbursement + "]";
 	}
 
-	
 }

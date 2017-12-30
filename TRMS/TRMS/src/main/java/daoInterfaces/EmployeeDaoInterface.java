@@ -4,5 +4,8 @@ import daoObjects.Employee;
 
 public interface EmployeeDaoInterface extends BaseDaoInterface<Employee> {
 
-	Employee getEmployeeByLogin(String email, String password);
+	Employee getEmployeeWithLogin(String email, String password);
+	Employee getDirectSupervisorForEmployee(Employee employee);
+	Employee getDirectSupervisorForEmployeeId(int id);
+	
 }
