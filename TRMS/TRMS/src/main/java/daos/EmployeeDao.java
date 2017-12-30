@@ -64,21 +64,14 @@ public class EmployeeDao implements EmployeeDaoInterface {
 	}
 
 	public void update(Employee newObj) {
-		StringBuilder updateQuery = new StringBuilder();
-
-		updateQuery.append("UPDATE Employees SET ");
-		updateQuery.append(newObj.getEmail() != null ? "Email = '" + newObj.getEmail() + "', " : "");
-		updateQuery.append(newObj.getPassword() != null ? "Password = '" + newObj.getPassword() + "', " : "");
-		updateQuery.append("AvailableReimbursement = " + newObj.getAvailableReimbursement() + ", ");
-		updateQuery.deleteCharAt(updateQuery.length()-2);
-		updateQuery.append(" WHERE ID = ?");
+		String query = "UPDATE Employees SET AvailableReimbursement = " + newObj.getAvailableReimbursement() + " WHERE ID = ?";
 
 		Connection conn = null;
 		PreparedStatement ps = null;
 
 		try {
 			conn = ConnectionUtil.getConnection();
-			ps = conn.prepareStatement(updateQuery.toString());
+			ps = conn.prepareStatement(query);
 			ps.setInt(1, newObj.getId());
 			ps.executeUpdate();
 		} catch (SQLException e) {
@@ -107,7 +100,7 @@ public class EmployeeDao implements EmployeeDaoInterface {
 
 	public Employee getEmployeeWithLogin(String email, String password) {
 		Employee employee = null;
-		String query = "SELECT ID, FirstName, LastName, EmployeeType, AvailableReimbursement FROM Employees WHERE Email = ?";
+		String query = "SELECT ID, FirstName, LastName, EmployeeType, AvailableReimbursement FROM Employees WHERE Email = ? AND Password = ?";
 
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -117,6 +110,7 @@ public class EmployeeDao implements EmployeeDaoInterface {
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
 			ps.setString(1, email);
+			ps.setString(2, password);
 
 			rs = ps.executeQuery();
 
@@ -207,5 +201,4 @@ public class EmployeeDao implements EmployeeDaoInterface {
 		}
 		return employee;
 	}
-
 }
