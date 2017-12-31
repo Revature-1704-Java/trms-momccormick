@@ -18,6 +18,39 @@ public class Reimbursement {
 	ReimbursementStatus reimbursementStatus;
 	double amountAwarded;
 
+	/*
+	 * For Newly Created Reimbursements
+	 */
+	public Reimbursement(int id, Employee employee, Event event, String workTimeMissed,
+			String justification) {
+		this.id = id;
+		this.employee = employee;
+		this.dateSubmitted = new Date(System.currentTimeMillis());
+		this.event = event;
+		this.workTimeMissed = workTimeMissed;
+		this.justification = justification;
+		this.projectedAmount = event.getCost() * event.getEventType().getPercentCovered();
+		this.reimbursementStatus = ReimbursementStatus.PENDING;
+	}
+
+	/*
+	 * Basic Reimbursement Information
+	 */
+	public Reimbursement(int id, Date dateSubmitted, String workTimeMissed, String justification,
+			double projectedAmount, Date directSupervisorApproved, Date departmentHeadApproved,
+			Date benefitesCoordinatorApproved, ReimbursementStatus reimbursementStatus, double amountAwarded) {
+		this.id = id;
+		this.dateSubmitted = dateSubmitted;
+		this.workTimeMissed = workTimeMissed;
+		this.justification = justification;
+		this.projectedAmount = projectedAmount;
+		this.directSupervisorApproved = directSupervisorApproved;
+		this.departmentHeadApproved = departmentHeadApproved;
+		this.benefitesCoordinatorApproved = benefitesCoordinatorApproved;
+		this.reimbursementStatus = reimbursementStatus;
+		this.amountAwarded = amountAwarded;
+	}
+
 	public Reimbursement(int id, Employee employee, Date dateSubmitted, Event event, String workTimeMissed,
 			String justification, double projectedAmount, Employee benefitsCoordinator, Date directSupervisorApproved,
 			Date departmentHeadApproved, Date benefitesCoordinatorApproved, ReimbursementStatus reimbursementStatus,
