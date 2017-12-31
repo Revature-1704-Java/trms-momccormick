@@ -80,16 +80,25 @@ public class EventDao implements EventDaoInterface {
 
 		queryBuilder.append("UPDATE Events SET ");
 		queryBuilder.append(newObj.getName() != null ? "Name = '" + newObj.getName() + "', " : "");
-		queryBuilder.append(newObj.getEventType().getId() != -1 ? "EventType = " + newObj.getEventType().getId() + ", " : "");
+		queryBuilder.append(
+				newObj.getEventType().getId() != -1 ? "EventType = " + newObj.getEventType().getId() + ", " : "");
 		queryBuilder.append(newObj.getDescription() != null ? "Description = '" + newObj.getDescription() + "', " : "");
-		queryBuilder.append(newObj.getStartDate() != null ? "StartDate = TO_DATE('" + newObj.getStartDate() + "','yyyy-mm-dd'), " : "");
-		queryBuilder.append(newObj.getEndDate() != null ? "EndDate = TO_DATE('" + newObj.getEndDate() + "','yyyy-mm-dd'), " : "");
+		queryBuilder.append(
+				newObj.getStartDate() != null ? "StartDate = TO_DATE('" + newObj.getStartDate() + "','yyyy-mm-dd'), "
+						: "");
+		queryBuilder.append(
+				newObj.getEndDate() != null ? "EndDate = TO_DATE('" + newObj.getEndDate() + "','yyyy-mm-dd'), " : "");
 		queryBuilder.append(newObj.getTime() != null ? "Time = '" + newObj.getTime() + "', " : "");
 		queryBuilder.append(newObj.getLocation() != null ? "Location = '" + newObj.getLocation() + "', " : "");
 		queryBuilder.append(newObj.getCost() != -1 ? "Cost = " + newObj.getCost() + ", " : "");
-		queryBuilder.append(newObj.getGradingFormat().getId() != -1 ? "GradingFormat = " + newObj.getGradingFormat().getId() + ", " : "");
-		queryBuilder.append(newObj.getPassingGrade().getId() != -1 ? "PassingGrade = " + newObj.getPassingGrade().getId() + ", " : "");
-		queryBuilder.append(newObj.getRecievedGrade() != -1 ? "RecievedGrade = " + newObj.getRecievedGrade() + ", " : "");
+		queryBuilder.append(
+				newObj.getGradingFormat().getId() != -1 ? "GradingFormat = " + newObj.getGradingFormat().getId() + ", "
+						: "");
+		queryBuilder.append(
+				newObj.getPassingGrade().getId() != -1 ? "PassingGrade = " + newObj.getPassingGrade().getId() + ", "
+						: "");
+		queryBuilder
+				.append(newObj.getRecievedGrade() != -1 ? "RecievedGrade = " + newObj.getRecievedGrade() + ", " : "");
 
 		queryBuilder.deleteCharAt(queryBuilder.length() - 2);
 		queryBuilder.append(" WHERE ID = ?");

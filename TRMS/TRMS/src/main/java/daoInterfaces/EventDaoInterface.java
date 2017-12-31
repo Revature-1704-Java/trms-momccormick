@@ -8,6 +8,7 @@ import daoObjects.EventType;
 public interface EventDaoInterface extends BaseDaoInterface<Event> {
 
 	List<Event> getAll();
+
 	List<Event> getAllOfType(EventType eventType);
-	
+
 }

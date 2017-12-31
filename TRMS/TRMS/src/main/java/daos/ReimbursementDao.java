@@ -87,18 +87,18 @@ public class ReimbursementDao implements ReimbursementDaoInterface {
 		try {
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
-			
+
 			ps.setInt(1, newObj.getId());
-			ps.setInt(2,newObj.getEmployee().getId());
+			ps.setInt(2, newObj.getEmployee().getId());
 			ps.setDate(3, newObj.getDateSubmitted());
 			ps.setInt(4, newObj.getEvent().getId());
 			ps.setString(5, newObj.getWorkTimeMissed());
 			ps.setString(6, newObj.getJustification());
-			ps.setDouble(7,newObj.getProjectedAmount());
-			ps.setInt(8,newObj.getReimbursementStatus().getId());
-			
+			ps.setDouble(7, newObj.getProjectedAmount());
+			ps.setInt(8, newObj.getReimbursementStatus().getId());
+
 			ps.executeQuery();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

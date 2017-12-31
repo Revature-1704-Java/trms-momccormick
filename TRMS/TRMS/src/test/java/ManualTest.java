@@ -29,7 +29,7 @@ public class ManualTest {
 
 		// testEmployeeDao();
 		// testEventDao();
-		testReimbursementDao();
+		// testReimbursementDao();
 	}
 
 	private static void testReimbursementDao() {

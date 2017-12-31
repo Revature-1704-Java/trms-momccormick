@@ -56,5 +56,4 @@ public class ReimbursementNote {
 				+ ", note=" + note + "]";
 	}
 
-	
 }

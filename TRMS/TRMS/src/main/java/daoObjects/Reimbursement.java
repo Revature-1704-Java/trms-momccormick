@@ -21,8 +21,7 @@ public class Reimbursement {
 	/*
 	 * For Newly Created Reimbursements
 	 */
-	public Reimbursement(int id, Employee employee, Event event, String workTimeMissed,
-			String justification) {
+	public Reimbursement(int id, Employee employee, Event event, String workTimeMissed, String justification) {
 		this.id = id;
 		this.employee = employee;
 		this.dateSubmitted = new Date(System.currentTimeMillis());

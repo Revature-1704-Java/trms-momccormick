@@ -64,7 +64,8 @@ public class EmployeeDao implements EmployeeDaoInterface {
 	}
 
 	public void update(Employee newObj) {
-		String query = "UPDATE Employees SET AvailableReimbursement = " + newObj.getAvailableReimbursement() + " WHERE ID = ?";
+		String query = "UPDATE Employees SET AvailableReimbursement = " + newObj.getAvailableReimbursement()
+				+ " WHERE ID = ?";
 
 		Connection conn = null;
 		PreparedStatement ps = null;
