@@ -1,9 +1,9 @@
 package daoObjects;
 
 public enum EventType {
-	UNIVERSITY_COURSE(0, "University Course", 0.80), SEMINAR(1, "Seminar", 0.60), CERTIFICATION_PREPARATION_CLASS(2,
-			"Certification Preparation Class", 0.75), CERTIFICATION_EXAM(3, "Certification Exam",
-					1.00), TECHNICAL_TRAINING(4, "Technical Training", 0.90), OTHER(5, "Other", 0.30);
+	UNIVERSITY_COURSE(1, "University Course", 0.80), SEMINAR(2, "Seminar", 0.60), CERTIFICATION_PREPARATION_CLASS(3,
+			"Certification Preparation Class", 0.75), CERTIFICATION_EXAM(4, "Certification Exam",
+					1.00), TECHNICAL_TRAINING(5, "Technical Training", 0.90), OTHER(6, "Other", 0.30);
 
 	private int id;
 	private String eventType;

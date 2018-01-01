@@ -1,7 +1,7 @@
 package daoObjects;
 
 public enum GradingFormat {
-	LETTER_GRADE(0, "Letter Grade"), PRESENTATION(1, "Presentation");
+	LETTER_GRADE(1, "Letter Grade"), PRESENTATION(2, "Presentation");
 
 	private int id;
 	private String gradingFormat;

@@ -1,7 +1,7 @@
 package daoObjects;
 
 public enum EmployeeType {
-	STANDARD(0, "Standard"), BENEFITS_COORDINATOR(1, "Benefits Coordinator"), MANAGEMENT(2, "Management");
+	STANDARD(1, "Standard"), BENEFITS_COORDINATOR(2, "Benefits Coordinator"), MANAGEMENT(3, "Management");
 
 	private int id;
 	private String employeeType;

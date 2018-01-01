@@ -1,8 +1,8 @@
 package daoObjects;
 
 public enum ReimbursementStatus {
-	PENDING(0, "Pending"), GRADE_PENDING(1, "Grade Pending"), APPROVAL_PENDING(2, "Approval Pending"), AWARDED(3,
-			"Awarded"), CANCELED(4, "Cancelled"), URGENT(5, "Urgent"), DENIED(6, "Denied");
+	PENDING(1, "Pending"), GRADE_PENDING(2, "Grade Pending"), APPROVAL_PENDING(3, "Approval Pending"), AWARDED(4,
+			"Awarded"), CANCELED(5, "Cancelled"), URGENT(6, "Urgent"), DENIED(7, "Denied");
 
 	private int id;
 	private String reimbursementStatus;

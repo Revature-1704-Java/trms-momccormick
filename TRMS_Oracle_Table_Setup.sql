@@ -20,7 +20,7 @@ CREATE TABLE Attachments
 (
   ID INT NOT NULL,
   Reimbursement INT NOT NULL,
-  AttachmentPath VARCHAR2(260) UNIQUE NOT NULL, --maxPath
+  AttachmentPath VARCHAR2(260) UNIQUE NOT NULL,--maxPath
   CONSTRAINT PK_Attachments PRIMARY KEY (ID)
 );
 
@@ -63,7 +63,7 @@ CREATE TABLE Employees
   ID INT NOT NULL,
   FirstName VARCHAR2(35) NOT NULL,
   LastName VARCHAR2(35) NOT NULL,
-  Email VARCHAR2(100) UNIQUE NOT NULL, --firstname.lastname@domain
+  Email VARCHAR2(100) UNIQUE NOT NULL,--firstname.lastname@domain
   Password VARCHAR2(128) NOT NULL,
   EmployeeType INT NOT NULL,
   DirectSupervisor INT,
@@ -87,12 +87,12 @@ CREATE TABLE Events
   Description VARCHAR2(140) NOT NULL,
   StartDate DATE NOT NULL,
   EndDate DATE NOT NULL,
-  Time VARCHAR2(8) NOT NULL, --HH:mm AM/PM
+  Time VARCHAR2(8) NOT NULL,--HH:mm AM/PM
   Location VARCHAR2(175) NOT NULL,
   Cost NUMBER(6,2) NOT NULL,
   GradingFormat INT NOT NULL,
-  PassingGrade INT NOT NULL, --Presentations get Grades as well
-  RecievedGrade NUMBER(4,2), --Points #/#
+  PassingGrade INT NOT NULL,--Presentations get Grades as well
+  RecievedGrade NUMBER(4,2),--Points #/#
   CONSTRAINT PK_Events PRIMARY KEY (ID)
 );
 
@@ -107,7 +107,7 @@ CREATE TABLE EventTypes --REFERENCE TABLE
 CREATE TABLE GradingFormats --REFERENCE TABLE
 (
   ID INT NOT NULL,
-  GradingFormat VARCHAR2(35) UNIQUE NOT NULL, 
+  GradingFormat VARCHAR2(35) UNIQUE NOT NULL,
   CONSTRAINT PK_GradingFormats PRIMARY KEY (ID)
 );
 
@@ -148,57 +148,57 @@ ALTER TABLE Events ADD CONSTRAINT FK_Passing FOREIGN KEY (PassingGrade) REFERENC
 /*************************
 *Add Reference Table Data*
 *************************/
-INSERT INTO NoteReasons (ID, NoteReason) VALUES (0,'Reimbursement Denied');
-INSERT INTO NoteReasons (ID, NoteReason) VALUES (1,'Reimbursement Amount Exceeded');
+INSERT INTO NoteReasons (ID,NoteReason) VALUES (1,'Reimbursement Denied');
+INSERT INTO NoteReasons (ID,NoteReason) VALUES (2,'Reimbursement Amount Exceeded');
 
-INSERT INTO EmployeeTypes (ID, EmployeeType) VALUES (0,'Standard');
-INSERT INTO EmployeeTypes (ID, EmployeeType) VALUES (1,'Benefits Coordinator');
-INSERT INTO EmployeeTypes (ID, EmployeeType) VALUES (2,'Management');
+INSERT INTO EmployeeTypes (ID,EmployeeType) VALUES (1,'Standard');
+INSERT INTO EmployeeTypes (ID,EmployeeType) VALUES (2,'Benefits Coordinator');
+INSERT INTO EmployeeTypes (ID,EmployeeType) VALUES (3,'Management');
 
-INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (0,'University Course',0.80);
-INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (1,'Seminar',0.60);
-INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (2,'Certification Preparation Classe',0.75);
-INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (3,'Certification Exam',1.00);
-INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (4,'Technical Training',0.90);
-INSERT INTO EventTypes (ID, EventType, PercentCovered) VALUES (5,'Other',0.30);
+INSERT INTO EventTypes (ID,EventType,PercentCovered) VALUES (1,'University Course',0.80);
+INSERT INTO EventTypes (ID,EventType,PercentCovered) VALUES (2,'Seminar',0.60);
+INSERT INTO EventTypes (ID,EventType,PercentCovered) VALUES (3,'Certification Preparation Classe',0.75);
+INSERT INTO EventTypes (ID,EventType,PercentCovered) VALUES (4,'Certification Exam',1.00);
+INSERT INTO EventTypes (ID,EventType,PercentCovered) VALUES (5,'Technical Training',0.90);
+INSERT INTO EventTypes (ID,EventType,PercentCovered) VALUES (6,'Other',0.30);
 
-INSERT INTO GradingFormats (ID, GradingFormat) VALUES (0,'Letter Grade');
-INSERT INTO GradingFormats (ID, GradingFormat) VALUES (1,'Presentation');
+INSERT INTO GradingFormats (ID,GradingFormat) VALUES (1,'Letter Grade');
+INSERT INTO GradingFormats (ID,GradingFormat) VALUES (2,'Presentation');
 
-INSERT INTO GradeLetterScores (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (0,'A',0.9,1.0);
-INSERT INTO GradeLetterScores (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (1,'B',0.8,0.9);
-INSERT INTO GradeLetterScores (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (2,'C',0.7,0.8);
-INSERT INTO GradeLetterScores (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (3,'D',0.6,0.7);
-INSERT INTO GradeLetterScores (ID, GradeLetter, MinPercentage, MaxPercentage) VALUES (4,'F',0.0,0.6);
+INSERT INTO GradeLetterScores (ID,GradeLetter,MinPercentage,MaxPercentage) VALUES (1,'A',0.9,1.0);
+INSERT INTO GradeLetterScores (ID,GradeLetter,MinPercentage,MaxPercentage) VALUES (2,'B',0.8,0.9);
+INSERT INTO GradeLetterScores (ID,GradeLetter,MinPercentage,MaxPercentage) VALUES (3,'C',0.7,0.8);
+INSERT INTO GradeLetterScores (ID,GradeLetter,MinPercentage,MaxPercentage) VALUES (4,'D',0.6,0.7);
+INSERT INTO GradeLetterScores (ID,GradeLetter,MinPercentage,MaxPercentage) VALUES (5,'F',0.0,0.6);
 
-INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (0,'Pending');
-INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (1,'Grade Pending');
-INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (2,'Approval Pending');
-INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (3,'Awarded');
-INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (4,'Cancelled');
-INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (5,'Urgent');
-INSERT INTO ReimbursementStatuses (ID, ReimbursementStatus) VALUES (6,'Denied');
+INSERT INTO ReimbursementStatuses (ID,ReimbursementStatus) VALUES (1,'Pending');
+INSERT INTO ReimbursementStatuses (ID,ReimbursementStatus) VALUES (2,'Grade Pending');
+INSERT INTO ReimbursementStatuses (ID,ReimbursementStatus) VALUES (3,'Approval Pending');
+INSERT INTO ReimbursementStatuses (ID,ReimbursementStatus) VALUES (4,'Awarded');
+INSERT INTO ReimbursementStatuses (ID,ReimbursementStatus) VALUES (5,'Cancelled');
+INSERT INTO ReimbursementStatuses (ID,ReimbursementStatus) VALUES (6,'Urgent');
+INSERT INTO ReimbursementStatuses (ID,ReimbursementStatus) VALUES (7,'Denied');
 
 
 /********************
 *Add Mock Table Data*
 ********************/
-INSERT INTO Employees (ID, FirstName, LastName, Email, Password, EmployeeType, DirectSupervisor, DepartmentHead, AvailableReimbursement) VALUES (0,'Department','Head','department.head@email.com','password',2,null,null,null);
-INSERT INTO Employees (ID, FirstName, LastName, Email, Password, EmployeeType, DirectSupervisor, DepartmentHead, AvailableReimbursement) VALUES (1, 'Direct', 'Supervisor','direct.supervisor@email.com','password',2,0,0,null);
-INSERT INTO Employees (ID, FirstName, LastName, Email, Password, EmployeeType, DirectSupervisor, DepartmentHead, AvailableReimbursement) VALUES (3, 'BenCo', 'Supervisor', 'ben.co.supervisor@email.com','password',2, null,null,null);
-INSERT INTO Employees (ID, FirstName, LastName, Email, Password, EmployeeType, DirectSupervisor, DepartmentHead, AvailableReimbursement) VALUES (4,'Benefits','Coordinator','benefits.cordinator@email.com','password',1,3,null,null);
-INSERT INTO Employees (ID, FirstName, LastName, Email, Password, EmployeeType, DirectSupervisor, DepartmentHead, AvailableReimbursement) VALUES (5, 'Code', 'Monkee', 'code.monkee@mail.com', 'password',0,1,0,1000);
+INSERT INTO Employees (ID,FirstName,LastName,Email,Password,EmployeeType,DirectSupervisor,DepartmentHead,AvailableReimbursement) VALUES (1,'Department','Head','department.head@email.com','password',3,null,null,null);
+INSERT INTO Employees (ID,FirstName,LastName,Email,Password,EmployeeType,DirectSupervisor,DepartmentHead,AvailableReimbursement) VALUES (2,'Direct','Supervisor','direct.supervisor@email.com','password',3,1,1,null);
+INSERT INTO Employees (ID,FirstName,LastName,Email,Password,EmployeeType,DirectSupervisor,DepartmentHead,AvailableReimbursement) VALUES (3,'BenCo','Supervisor','ben.co.supervisor@email.com','password',3,null,null,null);
+INSERT INTO Employees (ID,FirstName,LastName,Email,Password,EmployeeType,DirectSupervisor,DepartmentHead,AvailableReimbursement) VALUES (4,'Benefits','Coordinator','benefits.cordinator@email.com','password',2,3,null,null);
+INSERT INTO Employees (ID,FirstName,LastName,Email,Password,EmployeeType,DirectSupervisor,DepartmentHead,AvailableReimbursement) VALUES (5,'Code','Monkee','code.monkee@mail.com','password',1,2,1,1000);
 
-INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost, GradingFormat, PassingGrade, RecievedGrade) VALUES (0,'AUniversityCourse',0,'A University Course',TO_DATE('2017-01-08','yyyy-mm-dd'),TO_DATE('2017-01-15','yyyy-mm-dd'),'12:00 PM','Location1',100,0,2,null);
-INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost, GradingFormat, PassingGrade, RecievedGrade) VALUES (1,'ASeminar',1,'A Seminar',TO_DATE('2017-02-08','yyyy-mm-dd'),TO_DATE('2017-02-08','yyyy-mm-dd'),'01:00 PM','Location2',75,1,2,null);
-INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost, GradingFormat, PassingGrade, RecievedGrade) VALUES (2,'ACertificationPreperationClass',2,'A Certification Preperation Class',TO_DATE('2017-03-08','yyyy-mm-dd'),TO_DATE('2017-03-15','yyyy-mm-dd'),'02:00 PM','Location3',50,0,2,null);
-INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost, GradingFormat, PassingGrade, RecievedGrade) VALUES (3,'ACertificationExam',3,'A Certification Exam',TO_DATE('2017-04-08','yyyy-mm-dd'),TO_DATE('2017-04-08','yyyy-mm-dd'),'03:00 PM','Location4',150,0,2,null);
-INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost, GradingFormat, PassingGrade, RecievedGrade) VALUES (4,'SomeTechnicalTraining',4,'Some Technical Training',TO_DATE('2017-05-08','yyyy-mm-dd'),TO_DATE('2017-05-15','yyyy-mm-dd'),'04:00 PM','Location5',200,1,2,null);
-INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost, GradingFormat, PassingGrade, RecievedGrade) VALUES (5,'Other',5,'Some Other Event',TO_DATE('2017-06-08','yyyy-mm-dd'),TO_DATE('2017-06-15','yyyy-mm-dd'),'05:00 PM','Location6',25,1,2,null);
+INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost,GradingFormat,PassingGrade,RecievedGrade) VALUES (1,'AUniversityCourse',1,'A University Course',TO_DATE('2017-01-08','yyyy-mm-dd'),TO_DATE('2017-01-15','yyyy-mm-dd'),'12:00 PM','Location1',100,1,3,null);
+INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost,GradingFormat,PassingGrade,RecievedGrade) VALUES (2,'ASeminar',2,'A Seminar',TO_DATE('2017-02-08','yyyy-mm-dd'),TO_DATE('2017-02-08','yyyy-mm-dd'),'01:00 PM','Location2',75,2,3,null);
+INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost,GradingFormat,PassingGrade,RecievedGrade) VALUES (3,'ACertificationPreperationClass',3,'A Certification Preperation Class',TO_DATE('2017-03-08','yyyy-mm-dd'),TO_DATE('2017-03-15','yyyy-mm-dd'),'02:00 PM','Location3',50,1,3,null);
+INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost,GradingFormat,PassingGrade,RecievedGrade) VALUES (4,'ACertificationExam',4,'A Certification Exam',TO_DATE('2017-04-08','yyyy-mm-dd'),TO_DATE('2017-04-08','yyyy-mm-dd'),'03:00 PM','Location4',150,1,3,null);
+INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost,GradingFormat,PassingGrade,RecievedGrade) VALUES (5,'SomeTechnicalTraining',5,'Some Technical Training',TO_DATE('2017-05-08','yyyy-mm-dd'),TO_DATE('2017-05-15','yyyy-mm-dd'),'04:00 PM','Location5',200,2,3,null);
+INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost,GradingFormat,PassingGrade,RecievedGrade) VALUES (6,'Other',6,'Some Other Event',TO_DATE('2017-06-08','yyyy-mm-dd'),TO_DATE('2017-06-15','yyyy-mm-dd'),'05:00 PM','Location6',25,2,3,null);
 
-INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,BenefitsCoordinator,DirectSupervisorApproveDate, DepartmentHeadApproveDate, BenefitsCoordinatorApproveDate,ReimbursementStatus) VALUES (0,5,TO_DATE('2017-01-01','yyyy-mm-dd'),0,'4 Weeks','JUSTIFIED1',80,0,null,null,null,1);
-INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,BenefitsCoordinator,DirectSupervisorApproveDate, DepartmentHeadApproveDate, BenefitsCoordinatorApproveDate,ReimbursementStatus) VALUES (1,5,TO_DATE('2017-02-01','yyyy-mm-dd'),1,'2 Days','JUSTIFIED2',45,null,null,null,null,1);
-INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,BenefitsCoordinator,DirectSupervisorApproveDate, DepartmentHeadApproveDate, BenefitsCoordinatorApproveDate,ReimbursementStatus) VALUES (2,5,TO_DATE('2017-03-01','yyyy-mm-dd'),2,'1 Week','JUSTIFIED3',37.5,null,null,null,null,1);
-INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,BenefitsCoordinator,DirectSupervisorApproveDate, DepartmentHeadApproveDate, BenefitsCoordinatorApproveDate,ReimbursementStatus) VALUES (3,5,TO_DATE('2017-04-01','yyyy-mm-dd'),3,'1 Day','JUSTIFIED4',150,null,null,null,null,1);
-INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,BenefitsCoordinator,DirectSupervisorApproveDate, DepartmentHeadApproveDate, BenefitsCoordinatorApproveDate,ReimbursementStatus) VALUES (4,5,TO_DATE('2017-05-01','yyyy-mm-dd'),4,'2 Weeks','JUSTIFIED5',180,null,null,null,null,1);
-INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,BenefitsCoordinator,DirectSupervisorApproveDate, DepartmentHeadApproveDate, BenefitsCoordinatorApproveDate,ReimbursementStatus) VALUES (5,5,TO_DATE('2017-06-01','yyyy-mm-dd'),5,'4 Days','JUSTIFIED6',7.5,null,null,null,null,1);
+INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,BenefitsCoordinator,DirectSupervisorApproveDate,DepartmentHeadApproveDate,BenefitsCoordinatorApproveDate,ReimbursementStatus) VALUES (1,5,TO_DATE('2017-01-01','yyyy-mm-dd'),1,'4 Weeks','JUSTIFIED1',80,null,null,null,null,1);
+INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,BenefitsCoordinator,DirectSupervisorApproveDate,DepartmentHeadApproveDate,BenefitsCoordinatorApproveDate,ReimbursementStatus) VALUES (2,5,TO_DATE('2017-02-01','yyyy-mm-dd'),2,'2 Days','JUSTIFIED2',45,null,null,null,null,1);
+INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,BenefitsCoordinator,DirectSupervisorApproveDate,DepartmentHeadApproveDate,BenefitsCoordinatorApproveDate,ReimbursementStatus) VALUES (3,5,TO_DATE('2017-03-01','yyyy-mm-dd'),3,'1 Week','JUSTIFIED3',37.5,null,null,null,null,1);
+INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,BenefitsCoordinator,DirectSupervisorApproveDate,DepartmentHeadApproveDate,BenefitsCoordinatorApproveDate,ReimbursementStatus) VALUES (4,5,TO_DATE('2017-04-01','yyyy-mm-dd'),4,'1 Day','JUSTIFIED4',150,null,null,null,null,1);
+INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,BenefitsCoordinator,DirectSupervisorApproveDate,DepartmentHeadApproveDate,BenefitsCoordinatorApproveDate,ReimbursementStatus) VALUES (5,5,TO_DATE('2017-05-01','yyyy-mm-dd'),5,'2 Weeks','JUSTIFIED5',180,null,null,null,null,1);
+INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,BenefitsCoordinator,DirectSupervisorApproveDate,DepartmentHeadApproveDate,BenefitsCoordinatorApproveDate,ReimbursementStatus) VALUES (6,5,TO_DATE('2017-06-01','yyyy-mm-dd'),6,'4 Days','JUSTIFIED6',7.5,null,null,null,null,1);

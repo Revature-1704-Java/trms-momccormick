@@ -1,7 +1,7 @@
 package daoObjects;
 
 public enum NoteReason {
-	REIMBURSEMENT_DENIED(0, "Reimbursement Denied"), EXCESSIVE_AWARD(1, "Reimbursement Amount Exceeded");
+	REIMBURSEMENT_DENIED(1, "Reimbursement Denied"), EXCESSIVE_AWARD(2, "Reimbursement Amount Exceeded");
 
 	private int id;
 	private String noteReason;

@@ -44,7 +44,7 @@ public class ManualTest {
 		}
 		System.out.println();
 
-		Employee departmentHead = employeeDao.getById(0);
+		Employee departmentHead = employeeDao.getById(1);
 		List<Reimbursement> subordinateReimbursements = reimbursementDao.getAllForSubordinatesOf(departmentHead);
 		for (Reimbursement r : subordinateReimbursements) {
 			System.out.println(r.toString());
@@ -77,12 +77,12 @@ public class ManualTest {
 	}
 
 	private static void testEventDao() {
-		Event universityCourse = eventDao.getById(0);
+		Event universityCourse = eventDao.getById(1);
 
 		System.out.println(universityCourse);
 		universityCourse.setDescription("A_UNIVERSITY_COURSE");
 		eventDao.update(universityCourse);
-		Event updatedEvent = eventDao.getById(0);
+		Event updatedEvent = eventDao.getById(1);
 		System.out.println(updatedEvent);
 
 		System.out.println();
