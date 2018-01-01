@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import daoObjects.Employee;
+import daoObjects.EmployeeType;
 import daos.EmployeeDao;
 import utils.SessionAttribute;
 
@@ -39,7 +40,18 @@ public class LoginServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute(SessionAttribute.EMPLOYEE, emp);
 
-			response.sendRedirect("WEB-INF/viewReimbursements.html");
+//			response.sendRedirect("WEB-INF/viewReimbursements.html");
+			switch(emp.getType()) {
+			case STANDARD:
+				response.sendRedirect("EmployeeHomeServlet");
+				break;
+			case MANAGEMENT:
+				response.sendRedirect("ManagementHomeServlet");
+				break;
+			case BENEFITS_COORDINATOR:
+				response.sendRedirect("BenefitsCoordinatorHomeServlet");
+				break;
+			}
 		}
 
 		response.getWriter().append("Login Failed");

@@ -9,9 +9,49 @@
 		<servlet-name>LoginServlet</servlet-name>
 		<servlet-class>servlets.LoginServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>EmployeeReimbursementServlet</servlet-name>
+		<display-name>EmployeeReimbursementServlet</display-name>
+		<description></description>
+		<servlet-class>servlets.EmployeeReimbursementServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>EmployeeHomeServlet</servlet-name>
+		<display-name>EmployeeHomeServlet</display-name>
+		<description></description>
+		<servlet-class>servlets.EmployeeHomeServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ManagementHomeServlet</servlet-name>
+		<display-name>ManagementHomeServlet</display-name>
+		<description></description>
+		<servlet-class>servlets.ManagementHomeServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>BenefitsCoordinatorHomeServlet</servlet-name>
+		<display-name>BenefitsCoordinatorHomeServlet</display-name>
+		<description></description>
+		<servlet-class>servlets.BenefitsCoordinatorHomeServlet</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>LoginServlet</servlet-name>
 		<url-pattern>/login</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>EmployeeReimbursementServlet</servlet-name>
+		<url-pattern>/EmployeeReimbursementServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>EmployeeHomeServlet</servlet-name>
+		<url-pattern>/EmployeeHomeServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ManagementHomeServlet</servlet-name>
+		<url-pattern>/ManagementHomeServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>BenefitsCoordinatorHomeServlet</servlet-name>
+		<url-pattern>/BenefitsCoordinatorHomeServlet</url-pattern>
 	</servlet-mapping>
 
 
