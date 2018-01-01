@@ -110,7 +110,7 @@ public class ManualTest {
 	private static void testEmployeeDao() {
 
 		System.out.println(dummyEmployee.toString());
-		System.out.println(employeeDao.getEmployeeWithLogin(dummyEmployee.getEmail(), "password"));
+		System.out.println(employeeDao.getEmployeeWithLogin("code.monkee@mail.com", "password"));
 		System.out.println(employeeDao.getDirectSupervisorForEmployee(dummyEmployee));
 		System.out.println(employeeDao.getDirectSupervisorForEmployeeId(dummyEmployee.getId()));
 		System.out.println();
