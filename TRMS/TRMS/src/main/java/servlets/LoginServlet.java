@@ -20,8 +20,6 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		System.out.println(request.getRequestURI());
 		response.sendRedirect("login.html");
 	}
 
@@ -40,7 +38,6 @@ public class LoginServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute(SessionAttribute.EMPLOYEE, emp);
 
-//			response.sendRedirect("WEB-INF/viewReimbursements.html");
 			switch(emp.getType()) {
 			case STANDARD:
 				response.sendRedirect("EmployeeHomeServlet");
@@ -51,9 +48,11 @@ public class LoginServlet extends HttpServlet {
 			case BENEFITS_COORDINATOR:
 				response.sendRedirect("BenefitsCoordinatorHomeServlet");
 				break;
+				
 			}
 		}
-
-		response.getWriter().append("Login Failed");
+		else {
+			response.getWriter().append("Login Failed");
+		}
 	}
 }
