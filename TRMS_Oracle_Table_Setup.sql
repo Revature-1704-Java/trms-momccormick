@@ -1,7 +1,6 @@
 /*******************
 *RESET THE DATABASE*
 *******************/
-DROP TABLE Attachments;
 DROP TABLE ReimbursementNotes;
 DROP TABLE NoteReasons;
 DROP TABLE Reimbursements;
@@ -16,14 +15,6 @@ DROP TABLE ReimbursementStatuses;
 /***********************
 *Create Database Tables*
 ***********************/
-CREATE TABLE Attachments
-(
-  ID INT NOT NULL,
-  Reimbursement INT NOT NULL,
-  AttachmentPath VARCHAR2(260) UNIQUE NOT NULL,--maxPath
-  CONSTRAINT PK_Attachments PRIMARY KEY (ID)
-);
-
 CREATE TABLE ReimbursementNotes
 (
   ID INT NOT NULL,
@@ -54,6 +45,7 @@ CREATE TABLE Reimbursements
   DepartmentHeadApproveDate DATE,
   BenefitsCoordinatorApproveDate DATE,
   ReimbursementStatus INT NOT NULL,
+  AttachmentDirectory VARCHAR2(260),
   AmountAwarded NUMBER(6,2),
   CONSTRAINT PK_Reimbursements PRIMARY KEY (ID)
 );
@@ -131,7 +123,6 @@ CREATE TABLE ReimbursementStatuses --REFERENCE TABLE
 /****************************
 *Add Foriegn Key Constraints*
 ****************************/
-ALTER TABLE Attachments ADD CONSTRAINT FK_Reimbursement_1 FOREIGN KEY (Reimbursement) REFERENCES Reimbursements (ID);
 ALTER TABLE ReimbursementNotes ADD CONSTRAINT FK_Reimbursement_2 FOREIGN KEY (Reimbursement) REFERENCES Reimbursements (ID);
 ALTER TABLE ReimbursementNotes ADD CONSTRAINT FK_NoteReason FOREIGN KEY (NoteReason) REFERENCES NoteReasons (ID);ALTER TABLE Reimbursements ADD CONSTRAINT FK_Employee FOREIGN KEY (Employee) REFERENCES Employees (ID);
 ALTER TABLE Reimbursements ADD CONSTRAINT FK_Event FOREIGN KEY (Event) REFERENCES Events (ID);

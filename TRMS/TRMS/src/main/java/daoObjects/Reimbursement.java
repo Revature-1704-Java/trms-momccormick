@@ -16,6 +16,7 @@ public class Reimbursement {
 	Date departmentHeadApproved;
 	Date benefitesCoordinatorApproved;
 	ReimbursementStatus reimbursementStatus;
+	String attachmentDirectory;
 	double amountAwarded;
 
 	/*
@@ -163,6 +164,14 @@ public class Reimbursement {
 
 	public void setReimbursementStatus(ReimbursementStatus reimbursementStatus) {
 		this.reimbursementStatus = reimbursementStatus;
+	}
+	
+	public String getAttachmentDirectory() {
+		return attachmentDirectory;
+	}
+
+	public void setAttachmentDirectory(String attachmentDirectory) {
+		this.attachmentDirectory = attachmentDirectory;
 	}
 
 	public double getAmountAwarded() {
