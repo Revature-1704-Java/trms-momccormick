@@ -8,7 +8,7 @@
 	<servlet>
 		<servlet-name>LoginServlet</servlet-name>
 		<servlet-class>servlets.LoginServlet</servlet-class>
-	</servlet>	
+	</servlet>
 	<servlet>
 		<servlet-name>EmployeeHomeServlet</servlet-name>
 		<servlet-class>servlets.EmployeeHomeServlet</servlet-class>
@@ -22,10 +22,10 @@
 		<servlet-class>servlets.BenefitsCoordinatorHomeServlet</servlet-class>
 	</servlet>
 	<servlet>
-		<servlet-name>AjaxServlet</servlet-name>
-		<servlet-class>servlets.AjaxServlet</servlet-class>
+		<servlet-name>ReimbursementServlet</servlet-name>
+		<servlet-class>servlets.ReimbursementServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>LoginServlet</servlet-name>
 		<url-pattern>/login</url-pattern>
@@ -43,9 +43,12 @@
 		<url-pattern>/BenefitsCoordinatorHomeServlet</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>AjaxServlet</servlet-name>
-		<url-pattern>/AjaxServlet</url-pattern>
+		<servlet-name>ReimbursementServlet</servlet-name>
+		<url-pattern>/ReimbursementServlet</url-pattern>
 	</servlet-mapping>
 
+	<welcome-file-list>
+		<welcome-file>login.html</welcome-file>
+	</welcome-file-list>
 
 </web-app>
