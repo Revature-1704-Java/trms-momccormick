@@ -40,7 +40,8 @@ public class LoginServlet extends HttpServlet {
 
 			switch(emp.getType()) {
 			case STANDARD:
-				response.sendRedirect("EmployeeHomeServlet");
+//				response.sendRedirect("EmployeeHomeServlet");
+				response.sendRedirect("WEB-INF/employeeHome.jsp");
 				break;
 			case MANAGEMENT:
 				response.sendRedirect("ManagementHomeServlet");

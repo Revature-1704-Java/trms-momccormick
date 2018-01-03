@@ -34,6 +34,7 @@ public class EmployeeHomeServlet extends HttpServlet {
 			return;
 		} 
 		
+		System.out.println("Employee " + emp.getFirstName() + " " + emp.getLastName() + " has logged in");
 		
 		
 //		ReimbursementDao reiDao = new ReimbursementDao();

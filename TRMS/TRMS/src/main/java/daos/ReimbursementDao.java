@@ -291,6 +291,62 @@ public class ReimbursementDao implements ReimbursementDaoInterface {
 
 		return reimbursements;
 	}
+	
+	public List<Reimbursement> getAllUnassigned() {
+		List<Reimbursement> reimbursements = new ArrayList<Reimbursement>();
+
+		String query = "SELECT ID, DateSubmitted, WorkTimeMissed, Justification, ProjectedAmount, DirectSupervisorApproveDate, DepartmentHeadApproveDate, ReimbursementStatus FROM Reimbursements WHERE BenefitsCoordinator = null";
+
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			conn = ConnectionUtil.getConnection();
+			ps = conn.prepareStatement(query);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				int id = rs.getInt("ID");
+				Date dateSubmitted = rs.getDate("DateSubmitted");
+				String workTimeMissed = rs.getString("WorkTimeMissed");
+				String justification = rs.getString("Justification");
+				double projectedAmount = rs.getDouble("ProjectedAmount");
+				Date directSupervisorApproveDate = rs.getDate("DirectSupervisorApproveDate");
+				Date departmentHeadApproveDate = rs.getDate("DepartmentHeadApproveDate");
+				int reimbursementStatus = rs.getInt("ReimbursementStatus");
+
+				Reimbursement reimbursement = new Reimbursement(id, dateSubmitted, workTimeMissed, justification,
+						projectedAmount, directSupervisorApproveDate, departmentHeadApproveDate,
+						ReimbursementStatus.getById(reimbursementStatus));
+
+				reimbursements.add(reimbursement);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return reimbursements;
+	}
 
 	public List<Reimbursement> getAllWithReimbursementStatus(ReimbursementStatus reimbursementStatus) {
 		List<Reimbursement> reimbursements = new ArrayList<Reimbursement>();

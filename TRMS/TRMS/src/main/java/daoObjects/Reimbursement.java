@@ -51,6 +51,22 @@ public class Reimbursement {
 		this.amountAwarded = amountAwarded;
 	}
 
+	/*
+	 * Unassigned Reimbursement Information
+	 */
+	public Reimbursement(int id, Date dateSubmitted, String workTimeMissed, String justification,
+			double projectedAmount, Date directSupervisorApproved, Date departmentHeadApproved,
+			ReimbursementStatus reimbursementStatus) {
+		this.id = id;
+		this.dateSubmitted = dateSubmitted;
+		this.workTimeMissed = workTimeMissed;
+		this.justification = justification;
+		this.projectedAmount = projectedAmount;
+		this.directSupervisorApproved = directSupervisorApproved;
+		this.departmentHeadApproved = departmentHeadApproved;
+		this.reimbursementStatus = reimbursementStatus;
+	}
+
 	public Reimbursement(int id, Employee employee, Date dateSubmitted, Event event, String workTimeMissed,
 			String justification, double projectedAmount, Employee benefitsCoordinator, Date directSupervisorApproved,
 			Date departmentHeadApproved, Date benefitesCoordinatorApproved, ReimbursementStatus reimbursementStatus,
