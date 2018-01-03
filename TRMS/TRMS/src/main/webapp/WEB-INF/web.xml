@@ -6,11 +6,6 @@
 	<display-name>Tuition Reimbursement Management System (TRMS)</display-name>
 
 	<servlet>
-		<servlet-name>FrontController</servlet-name>
-		<servlet-class>servlets.FrontController</servlet-class>
-	</servlet>
-	
-	<servlet>
 		<servlet-name>LoginServlet</servlet-name>
 		<servlet-class>servlets.LoginServlet</servlet-class>
 	</servlet>
@@ -18,11 +13,6 @@
 		<servlet-name>ReimbursementServlet</servlet-name>
 		<servlet-class>servlets.ReimbursementServlet</servlet-class>
 	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>FrontController</servlet-name>
-		<url-pattern>/Hello</url-pattern>
-	</servlet-mapping>
 
 	<servlet-mapping>
 		<servlet-name>LoginServlet</servlet-name>
