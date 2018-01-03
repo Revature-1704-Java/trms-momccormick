@@ -13,7 +13,7 @@ import daoObjects.Employee;
 import daoObjects.EmployeeType;
 import utils.SessionAttribute;
 
-@WebServlet("/*")
+@WebServlet("")
 public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -36,8 +36,6 @@ public class FrontController extends HttpServlet {
 		if (loggedInEmployee == null) {
 			response.sendRedirect("LoginServlet");
 			return;
-		} else {
-
 		}
 
 		if (loggedInEmployee.getType() == EmployeeType.STANDARD) {
@@ -48,7 +46,6 @@ public class FrontController extends HttpServlet {
 			response.sendRedirect("BenefitsCoordinatorHomeServlet");
 		} else {
 			response.sendRedirect("LoginServlet");
-			// request.getRequestDispatcher("LoginServlet").forward(request, response);
 		}
 	}
 

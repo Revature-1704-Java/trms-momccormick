@@ -37,19 +37,8 @@ public class LoginServlet extends HttpServlet {
 		if (emp != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute(SessionAttribute.EMPLOYEE, emp);
-
-			switch(emp.getType()) {
-			case STANDARD:
-				response.sendRedirect("EmployeeHomeServlet");
-				break;
-			case MANAGEMENT:
-				response.sendRedirect("ManagementHomeServlet");
-				break;
-			case BENEFITS_COORDINATOR:
-				response.sendRedirect("BenefitsCoordinatorHomeServlet");
-				break;
-				
-			}
+			
+			response.sendRedirect("");
 		}
 		else {
 			response.getWriter().append("Login Failed");
