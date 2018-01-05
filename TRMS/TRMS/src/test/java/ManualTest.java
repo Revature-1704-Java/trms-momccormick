@@ -65,13 +65,13 @@ public class ManualTest {
 //		}
 //		System.out.println();
 
-		eventDao.add(dummyEvent);
-		Reimbursement newReimbursement = new Reimbursement(99, dummyEmployee, dummyEvent, "ALL THE TIME",
-				"Just Be Cause");
-		System.out.println(newReimbursement);
-		reimbursementDao.add(newReimbursement);
-		Reimbursement addedReimbursement = reimbursementDao.getById(99);
-		System.out.println(addedReimbursement);
+//		eventDao.add(dummyEvent);
+//		Reimbursement newReimbursement = new Reimbursement(99, dummyEmployee, dummyEvent, "ALL THE TIME",
+//				"Just Be Cause");
+//		System.out.println(newReimbursement);
+//		reimbursementDao.add(newReimbursement);
+//		Reimbursement addedReimbursement = reimbursementDao.getById(99);
+//		System.out.println(addedReimbursement);
 
 	}
 

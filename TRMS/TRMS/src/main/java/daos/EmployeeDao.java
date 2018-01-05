@@ -35,8 +35,8 @@ public class EmployeeDao implements EmployeeDaoInterface {
 				int employeeType = rs.getInt("EmployeeType");
 				double availableReimbursement = rs.getDouble("AvailableReimbursement");
 
-				employee = new Employee(id, firstName, lastName, email, EmployeeType.getById(employeeType),
-						availableReimbursement);
+				employee = new Employee(id, firstName, lastName, email, null, EmployeeType.getById(employeeType),
+						null, null, availableReimbursement);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -122,8 +122,8 @@ public class EmployeeDao implements EmployeeDaoInterface {
 				int employeeType = rs.getInt("EmployeeType");
 				double availableReimbursement = rs.getDouble("AvailableReimbursement");
 
-				employee = new Employee(id, firstName, lastName, email, EmployeeType.getById(employeeType),
-						availableReimbursement);
+				employee = new Employee(id, firstName, lastName, email, null, EmployeeType.getById(employeeType),
+						null, null, availableReimbursement);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -176,7 +176,7 @@ public class EmployeeDao implements EmployeeDaoInterface {
 				String email = rs.getString("Email");
 				int employeeType = rs.getInt("EmployeeType");
 
-				employee = new Employee(dsId, firstName, lastName, email, EmployeeType.getById(employeeType));
+				employee = new Employee(dsId, firstName, lastName, email, null, EmployeeType.getById(employeeType), null, null, 0);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

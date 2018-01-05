@@ -37,7 +37,7 @@ public class HtmlPageCreator {
 		} else if (employee.getType() == EmployeeType.BENEFITS_COORDINATOR) {
 			reimbursements = reiDao.getAllWithAssignedBenefitsCoordinator(employee);
 			reimbursements.addAll(reiDao.getAllUnassigned());
-			reimbursementTable = createBenefitsCoordinatorReimbursementTable(reimbursements);
+			reimbursementTable = createBenefitsCoordinatorReimbursementTable(reimbursements, employee);
 		}
 
 		htmlPage.append(reimbursementTable);
@@ -62,9 +62,9 @@ public class HtmlPageCreator {
 			table.append("<td>" + rei.getDateSubmitted() + "</td>");
 			table.append("<td>" + rei.getWorkTimeMissed() + "</td>");
 			table.append("<td>" + rei.getJustification() + "</td>");
-			table.append("<td>" + rei.getProjectedAmount() + "</td>");
+			table.append("<td>$" + rei.getProjectedAmount() + "</td>");
 			table.append("<td>" + rei.getReimbursementStatus() + "</td>");
-			table.append("<td>" + rei.getAmountAwarded() + "</td>");
+			table.append("<td>$" + rei.getAmountAwarded() + "</td>");
 			table.append("<td><form action='/trms/ViewEventServlet/" + rei.getEvent().getId()
 					+ "'><input type='submit' value='View Event'/></form></td>");
 			if (rei.getReimbursementStatus() == ReimbursementStatus.AWARDED) {
@@ -91,6 +91,10 @@ public class HtmlPageCreator {
 			table.append(
 					"<br/><form action='/trms/SubmitReimbursementServlet'><input type='submit' value='Create New Reimbursement'/></form>");
 		}
+		else {
+			table.append(
+					"<br/><input type='submit' value='Create New Reimbursement' disabled='true'/>");
+		}
 
 		return table.toString();
 	}
@@ -99,10 +103,10 @@ public class HtmlPageCreator {
 		StringBuilder table = new StringBuilder();
 
 		table.append("<h1>Reimbursements</h1><table border='1'><tr><th>Date Submitted</th><th>Work Time Missed</th>"
-				+ "<th>Justification</th><th>Projected Amount</th><th>Reimbursement Status</th>");
+				+ "<th>Justification</th><th>Projected Amount</th><th>Reimbursement Status</th><th>Direct Supervisor Approved</th>");
 
 		if (manager.getType() == EmployeeType.DEPARTMENT_HEAD) {
-			table.append("<th>Direct Supervisor Approved</th>");
+			table.append("<th>Department Head Approved</th>");
 		}
 
 		table.append("</tr>");
@@ -119,7 +123,7 @@ public class HtmlPageCreator {
 			table.append("<td>" + rei.getDateSubmitted() + "</td>");
 			table.append("<td>" + rei.getWorkTimeMissed() + "</td>");
 			table.append("<td>" + rei.getJustification() + "</td>");
-			table.append("<td>" + rei.getProjectedAmount() + "</td>");
+			table.append("<td>$" + rei.getProjectedAmount() + "</td>");
 			table.append("<td>" + rei.getReimbursementStatus() + "</td>");
 			table.append("<td>" + rei.getDirectSupervisorApproved() + "</td>");
 			if (manager.getType() == EmployeeType.DEPARTMENT_HEAD) {
@@ -127,8 +131,7 @@ public class HtmlPageCreator {
 			}
 			table.append("<td><form action='/trms/ViewEventServlet/" + rei.getEvent().getId()
 					+ "'><input type='submit' value='View Event'/></form></td>");
-			if ((manager.getType() == EmployeeType.DIRECT_SUPERVISOR && rei.getDirectSupervisorApproved() == null)
-					|| (manager.getType() == EmployeeType.DEPARTMENT_HEAD && rei.getDepartmentHeadApproved() == null)) {
+			if (canManagementApproveReimbursement(rei, manager)) {
 				table.append("<td><form action='/trms/UpdateReimbursementServlet/approve/" + rei.getId()
 						+ "' method='POST'><input type='submit' value='Submit Approval'/></form></td>");
 			}
@@ -141,13 +144,29 @@ public class HtmlPageCreator {
 		return table.toString();
 	}
 
-	private String createBenefitsCoordinatorReimbursementTable(List<Reimbursement> reimbursements) {
+	private boolean canManagementApproveReimbursement(Reimbursement reimbursement, Employee manager) {
+		if (reimbursement.getReimbursementStatus() != ReimbursementStatus.APPROVAL_PENDING
+				&& reimbursement.getReimbursementStatus() != ReimbursementStatus.URGENT) {
+			return false;
+		}
+
+		if (reimbursement.getDirectSupervisorApproved() == null) {
+			return manager.getType() == EmployeeType.DIRECT_SUPERVISOR;
+		} else if (reimbursement.getDepartmentHeadApproved() == null) {
+			return manager.getType() == EmployeeType.DEPARTMENT_HEAD;
+		} else if (reimbursement.getBenefitsCoordinatorApproved() == null) {
+			return manager.getType() == EmployeeType.BENEFITS_COORDINATOR;
+		}
+
+		return false;
+	}
+
+	private String createBenefitsCoordinatorReimbursementTable(List<Reimbursement> reimbursements,
+			Employee benefitsCoordinator) {
 		StringBuilder table = new StringBuilder();
 
-		table.append("<h1>Reimbursements</h1><table border='1'><tr><th>Date Submitted</th><th>Work Time Missed</th>"
-				+ "<th>Justification</th><th>Projected Amount</th><th>Reimbursement Status</th><th>Amount Awarded</th><th>Direct Supervisor Approved</th><th>Department Head Approved</th>");
-
-		table.append("</tr>");
+		table.append(
+				"<h1>Reimbursements</h1><table border='1'><tr><th>Date Submitted</th><th>Work Time Missed</th><th>Justification</th><th>Projected Amount</th><th>Reimbursement Status</th><th>Amount Awarded</th><th>Direct Supervisor Approved</th><th>Department Head Approved</th></tr>");
 
 		for (Reimbursement rei : reimbursements) {
 			table.append("<tr>");
@@ -166,11 +185,7 @@ public class HtmlPageCreator {
 						+ "' method='POST'><input type='submit' value='Assign to Myself'/></form></td>");
 				table.append("</tr>");
 			} else {
-				if (rei.getDirectSupervisorApproved() != null && rei.getDepartmentHeadApproved() != null
-						&& (rei.getReimbursementStatus() == ReimbursementStatus.PENDING
-								|| rei.getReimbursementStatus() == ReimbursementStatus.GRADE_PENDING
-								|| rei.getReimbursementStatus() == ReimbursementStatus.APPROVAL_PENDING
-								|| rei.getReimbursementStatus() == ReimbursementStatus.URGENT)) {
+				if (canManagementApproveReimbursement(rei, benefitsCoordinator)) {
 					table.append("<td><form action='/trms/UpdateReimbursementServlet/approve/" + rei.getId()
 							+ "' method='POST'><input type='submit' value='Submit Approval'/></form></td>");
 				}
@@ -259,13 +274,21 @@ public class HtmlPageCreator {
 
 		htmlPage.append("<tr><td>Grading Format:</td><td><select name='gradingformats'>");
 		for (GradingFormat gf : GradingFormat.values()) {
-			htmlPage.append("<option value='" + gf.getId() + "'>" + gf.getGradingFormat() + "</option>");
+			htmlPage.append("<option value='" + gf.getId() + "'");
+			if (gf == GradingFormat.LETTER_GRADE) {
+				htmlPage.append(" selected='selected'");
+			}
+			htmlPage.append(">" + gf.getGradingFormat() + "</option>");
 		}
 		htmlPage.append("</select></td></tr>");
 
 		htmlPage.append("<tr><td>Passing Grade:</td><td><select name='passinggrade'>");
 		for (GradeLetter gl : GradeLetter.values()) {
-			htmlPage.append("<option value='" + gl.getId() + "'>" + gl.getGradeLetter() + "</option>");
+			htmlPage.append("<option value='" + gl.getId() + "'");
+			if (gl == GradeLetter.C) {
+				htmlPage.append(" selected='selected'");
+			}
+			htmlPage.append(">" + gl.getGradeLetter() + "</option>");
 		}
 		htmlPage.append("</select></td></tr>");
 

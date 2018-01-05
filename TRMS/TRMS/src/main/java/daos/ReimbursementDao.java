@@ -84,8 +84,9 @@ public class ReimbursementDao implements ReimbursementDaoInterface {
 		queryBuilder.append("UPDATE Reimbursements SET ");
 
 		queryBuilder.append(newObj.getEmployee() != null ? "Employee = " + newObj.getEmployee().getId() + ", " : "");
-		queryBuilder.append(
-				newObj.getDateSubmitted() != null ? "DateSubmitted = TO_DATE('" + newObj.getDateSubmitted() + "','yyyy-mm-dd'), " : "");
+		queryBuilder.append(newObj.getDateSubmitted() != null
+				? "DateSubmitted = TO_DATE('" + newObj.getDateSubmitted() + "','yyyy-mm-dd'), "
+				: "");
 		queryBuilder.append(newObj.getEvent() != null ? "Event = " + newObj.getEvent().getId() + ", " : "");
 		queryBuilder.append(
 				newObj.getWorkTimeMissed() != null ? "WorkTimeMissed = '" + newObj.getWorkTimeMissed() + "', " : "");
@@ -102,9 +103,11 @@ public class ReimbursementDao implements ReimbursementDaoInterface {
 		queryBuilder.append(newObj.getDepartmentHeadApproved() != null
 				? "DepartmentHeadApproveDate = TO_DATE('" + newObj.getDepartmentHeadApproved() + "','yyyy-mm-dd'), "
 				: "");
-		queryBuilder.append(newObj.getBenefitesCoordinatorApproved() != null
-				? "BenefitsCoordinatorApproveDate = TO_DATE('" + newObj.getBenefitesCoordinatorApproved() + "','yyyy-mm-dd'), "
-				: "");
+		queryBuilder
+				.append(newObj.getBenefitsCoordinatorApproved() != null
+						? "BenefitsCoordinatorApproveDate = TO_DATE('" + newObj.getBenefitsCoordinatorApproved()
+								+ "','yyyy-mm-dd'), "
+						: "");
 		queryBuilder.append(newObj.getReimbursementStatus() != null
 				? "ReimbursementStatus = " + newObj.getReimbursementStatus().getId() + ", "
 				: "");
@@ -116,12 +119,12 @@ public class ReimbursementDao implements ReimbursementDaoInterface {
 
 		queryBuilder.deleteCharAt(queryBuilder.length() - 2);
 		queryBuilder.append(" WHERE ID = ?");
-		
+
 		System.out.println(queryBuilder.toString());
 
 		Connection conn = null;
 		PreparedStatement ps = null;
-		
+
 		try {
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(queryBuilder.toString());
@@ -429,5 +432,133 @@ public class ReimbursementDao implements ReimbursementDaoInterface {
 		}
 
 		return reimbursements;
+	}
+
+	public void changeStatusForGradeSubmissionOnEvent(ReimbursementStatus reimbursementStatus, Event event) {
+		String query = "UPDATE Reimbursements SET ReimbursementStatus = ? WHERE Event = (SELECT ID FROM Events WHERE ID = ?)";
+
+		Connection conn = null;
+		PreparedStatement ps = null;
+
+		try {
+			conn = ConnectionUtil.getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setInt(1, reimbursementStatus.getId());
+			ps.setInt(2, event.getId());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public ReimbursementStatus getStatusForEvent(Event event) {
+		ReimbursementStatus status = null;
+
+		String query = "SELECT ReimbursementStatus FROM Reimbursements WHERE Event = ?";
+
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			conn = ConnectionUtil.getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setInt(1, event.getId());
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				status = ReimbursementStatus.getById(rs.getInt("ReimbursementStatus"));
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return status;
+
+	}
+
+	public double getAmountAwardedForYearForEmployee(Date year, Employee employee) {
+		return getAmountAwardedForYearForEmployeeId(year, employee.getId());
+	}
+
+	public double getAmountAwardedForYearForEmployeeId(Date year, int employeeId) {
+		double amountAwardedForYear = 0;
+
+		String query = "SELECT SUM(AmountAwarded) AS AwardedAmountForYear FROM Reimbursements WHERE Employee = (SELECT ID FROM Employees WHERE ID = ?) AND ReimbursementStatus = ? AND TO_CHAR(DateSubmitted, 'YYYY') = (SELECT TO_CHAR(?, 'YYYY') FROM DUAL)";
+
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			conn = ConnectionUtil.getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setInt(1, employeeId);
+			ps.setInt(2, ReimbursementStatus.AWARDED.getId());
+			ps.setDate(3, year);
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				amountAwardedForYear = rs.getDouble("AwardedAmountForYear");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return amountAwardedForYear;
 	}
 }

@@ -10,7 +10,9 @@ import javax.servlet.http.HttpSession;
 
 import daoObjects.Employee;
 import daoObjects.Event;
+import daoObjects.ReimbursementStatus;
 import daos.EventDao;
+import daos.ReimbursementDao;
 import utils.HtmlPageCreator;
 
 public class ViewEventServlet extends HttpServlet {
@@ -48,14 +50,26 @@ public class ViewEventServlet extends HttpServlet {
 			response.sendRedirect("/trms/LoginServlet");
 			return;
 		}
-		
+
 		String requestUrl = request.getRequestURI().substring(request.getContextPath().length());
 		String eventId = requestUrl.substring(requestUrl.indexOf('/', 2) + 1);
-		
+
 		EventDao eventDao = new EventDao();
-		Event event = eventDao.getById(Integer.parseInt(eventId));
-		event.setRecievedGrade(Double.parseDouble(request.getParameter("submitgrade")));
-		eventDao.update(event);
-		
+		Event updatedEvent = eventDao.getById(Integer.parseInt(eventId));
+		updatedEvent.setRecievedGrade(Double.parseDouble(request.getParameter("submitgrade")));
+		eventDao.update(updatedEvent);
+
+		// If Employee Received Passing Grade
+		if (updatedEvent.getRecievedGrade() >= updatedEvent.getPassingGrade().getMinPercent() * 100) {
+			ReimbursementDao accessReimbursementDatabaseTable = new ReimbursementDao();
+			ReimbursementStatus status = accessReimbursementDatabaseTable.getStatusForEvent(updatedEvent);
+			// If Reimbursement Has Been Assigned to Benefits Coordinator
+			if (status == ReimbursementStatus.GRADE_PENDING) {
+				accessReimbursementDatabaseTable
+						.changeStatusForGradeSubmissionOnEvent(ReimbursementStatus.APPROVAL_PENDING, updatedEvent);
+			}
+		}
+
+		response.sendRedirect("/trms/HomeServlet");
 	}
 }

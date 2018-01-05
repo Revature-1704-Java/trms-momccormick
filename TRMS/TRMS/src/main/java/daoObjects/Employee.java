@@ -22,26 +22,26 @@ public class Employee {
 	/*
 	 * Managerment Employee's Basic information
 	 */
-	public Employee(int id, String firstName, String lastName, String email, EmployeeType type) {
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.type = type;
-	}
+//	public Employee(int id, String firstName, String lastName, String email, EmployeeType type) {
+//		this.id = id;
+//		this.firstName = firstName;
+//		this.lastName = lastName;
+//		this.email = email;
+//		this.type = type;
+//	}
 
 	/*
 	 * Employee's Basic information
 	 */
-	public Employee(int id, String firstName, String lastName, String email, EmployeeType type,
-			double availableReimbursement) {
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.type = type;
-		this.availableReimbursement = availableReimbursement;
-	}
+//	public Employee(int id, String firstName, String lastName, String email, EmployeeType type,
+//			double availableReimbursement) {
+//		this.id = id;
+//		this.firstName = firstName;
+//		this.lastName = lastName;
+//		this.email = email;
+//		this.type = type;
+//		this.availableReimbursement = availableReimbursement;
+//	}
 
 	public Employee(int id, String firstName, String lastName, String email, String password, EmployeeType type,
 			Employee directSupervisor, Employee departmentHead, double availableReimbursement) {

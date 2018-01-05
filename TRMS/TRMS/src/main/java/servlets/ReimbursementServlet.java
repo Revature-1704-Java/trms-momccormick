@@ -24,8 +24,8 @@ public class ReimbursementServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Employee emp = (Employee) request.getSession().getAttribute("employee");
-
-		if (emp == null) {
+		if (emp == null || emp.getType() != EmployeeType.STANDARD) {
+			response.sendRedirect("/trms/LoginServlet");
 			return;
 		}
 

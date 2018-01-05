@@ -17,7 +17,7 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {		
-		request.getRequestDispatcher("login.jsp").forward(request, response);;
+		request.getRequestDispatcher("login.html").forward(request, response);;
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -28,7 +28,6 @@ public class LoginServlet extends HttpServlet {
 		EmployeeDao empDao = new EmployeeDao();
 		Employee emp = empDao.getEmployeeWithLogin(email, password);
 
-		System.out.println(email + " " + password);
 		System.out.println(emp == null ? "NULL" : emp.toString());
 
 		if (emp != null) {

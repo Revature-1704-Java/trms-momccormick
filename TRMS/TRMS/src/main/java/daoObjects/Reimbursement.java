@@ -26,16 +26,16 @@ public class Reimbursement {
 	/*
 	 * For Newly Created Reimbursements
 	 */
-	public Reimbursement(int id, Employee employee, Event event, String workTimeMissed, String justification) {
-		this.id = id;
-		this.employee = employee;
-		this.dateSubmitted = new Date(System.currentTimeMillis());
-		this.event = event;
-		this.workTimeMissed = workTimeMissed;
-		this.justification = justification;
-		this.projectedAmount = event.getCost() * event.getEventType().getPercentCovered();
-		this.reimbursementStatus = ReimbursementStatus.PENDING;
-	}
+//	public Reimbursement(int id, Employee employee, Event event, String workTimeMissed, String justification) {
+//		this.id = id;
+//		this.employee = employee;
+//		this.dateSubmitted = new Date(System.currentTimeMillis());
+//		this.event = event;
+//		this.workTimeMissed = workTimeMissed;
+//		this.justification = justification;
+//		this.projectedAmount = event.getCost() * event.getEventType().getPercentCovered();
+//		this.reimbursementStatus = ReimbursementStatus.PENDING;
+//	}
 
 	public Reimbursement(int id, Employee employee, Date dateSubmitted, Event event, String workTimeMissed,
 			String justification, double projectedAmount, Employee benefitsCoordinator, Date directSupervisorApproved,
@@ -136,7 +136,7 @@ public class Reimbursement {
 		this.departmentHeadApproved = departmentHeadApproved;
 	}
 
-	public Date getBenefitesCoordinatorApproved() {
+	public Date getBenefitsCoordinatorApproved() {
 		return benefitesCoordinatorApproved;
 	}
 

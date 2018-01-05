@@ -88,7 +88,7 @@ CREATE TABLE Events
   Cost NUMBER(6,2) NOT NULL,
   GradingFormat INT NOT NULL,
   PassingGrade INT NOT NULL,--Presentations get Grades as well
-  RecievedGrade NUMBER(4,2),--Points #/#
+  RecievedGrade NUMBER(5,2),--Points #/#
   CONSTRAINT PK_Events PRIMARY KEY (ID)
 );
 
@@ -243,9 +243,9 @@ INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Locatio
 INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost,GradingFormat,PassingGrade,RecievedGrade) VALUES (5,'SomeTechnicalTraining',5,'Some Technical Training',TO_DATE('2017-05-08','yyyy-mm-dd'),TO_DATE('2017-05-15','yyyy-mm-dd'),'04:00 PM','Location5',200,2,3,null);
 INSERT INTO Events (ID,Name,EventType,Description,StartDate,EndDate,Time,Location,Cost,GradingFormat,PassingGrade,RecievedGrade) VALUES (6,'Other',6,'Some Other Event',TO_DATE('2017-06-08','yyyy-mm-dd'),TO_DATE('2017-06-15','yyyy-mm-dd'),'05:00 PM','Location6',25,2,3,null);
 
-INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,BenefitsCoordinator,DirectSupervisorApproveDate,DepartmentHeadApproveDate,BenefitsCoordinatorApproveDate,ReimbursementStatus) VALUES (1,5,TO_DATE('2017-01-01','yyyy-mm-dd'),1,'4 Weeks','JUSTIFIED1',80,null,null,null,null,1);
-INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,BenefitsCoordinator,DirectSupervisorApproveDate,DepartmentHeadApproveDate,BenefitsCoordinatorApproveDate,ReimbursementStatus) VALUES (2,5,TO_DATE('2017-02-01','yyyy-mm-dd'),2,'2 Days','JUSTIFIED2',45,null,null,null,null,1);
-INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,BenefitsCoordinator,DirectSupervisorApproveDate,DepartmentHeadApproveDate,BenefitsCoordinatorApproveDate,ReimbursementStatus) VALUES (3,5,TO_DATE('2017-03-01','yyyy-mm-dd'),3,'1 Week','JUSTIFIED3',37.5,null,null,null,null,1);
-INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,BenefitsCoordinator,DirectSupervisorApproveDate,DepartmentHeadApproveDate,BenefitsCoordinatorApproveDate,ReimbursementStatus) VALUES (4,5,TO_DATE('2017-04-01','yyyy-mm-dd'),4,'1 Day','JUSTIFIED4',150,null,null,null,null,1);
-INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,BenefitsCoordinator,DirectSupervisorApproveDate,DepartmentHeadApproveDate,BenefitsCoordinatorApproveDate,ReimbursementStatus) VALUES (5,5,TO_DATE('2017-05-01','yyyy-mm-dd'),5,'2 Weeks','JUSTIFIED5',180,null,null,null,null,1);
-INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,BenefitsCoordinator,DirectSupervisorApproveDate,DepartmentHeadApproveDate,BenefitsCoordinatorApproveDate,ReimbursementStatus) VALUES (6,5,TO_DATE('2017-06-01','yyyy-mm-dd'),6,'4 Days','JUSTIFIED6',7.5,null,null,null,null,1);
+INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,BenefitsCoordinator,DirectSupervisorApproveDate,DepartmentHeadApproveDate,BenefitsCoordinatorApproveDate,ReimbursementStatus) VALUES (1,5,TO_DATE('2018-01-01','yyyy-mm-dd'),1,'4 Weeks','JUSTIFIED1',80,null,null,null,null,1);
+INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,BenefitsCoordinator,DirectSupervisorApproveDate,DepartmentHeadApproveDate,BenefitsCoordinatorApproveDate,ReimbursementStatus) VALUES (2,5,TO_DATE('2018-02-01','yyyy-mm-dd'),2,'2 Days','JUSTIFIED2',45,null,null,null,null,1);
+INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,BenefitsCoordinator,DirectSupervisorApproveDate,DepartmentHeadApproveDate,BenefitsCoordinatorApproveDate,ReimbursementStatus) VALUES (3,5,TO_DATE('2018-03-01','yyyy-mm-dd'),3,'1 Week','JUSTIFIED3',37.5,null,null,null,null,1);
+INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,BenefitsCoordinator,DirectSupervisorApproveDate,DepartmentHeadApproveDate,BenefitsCoordinatorApproveDate,ReimbursementStatus) VALUES (4,5,TO_DATE('2018-04-01','yyyy-mm-dd'),4,'1 Day','JUSTIFIED4',150,null,null,null,null,1);
+INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,BenefitsCoordinator,DirectSupervisorApproveDate,DepartmentHeadApproveDate,BenefitsCoordinatorApproveDate,ReimbursementStatus) VALUES (5,5,TO_DATE('2018-05-01','yyyy-mm-dd'),5,'2 Weeks','JUSTIFIED5',180,null,null,null,null,1);
+INSERT INTO Reimbursements (ID,Employee,DateSubmitted,Event,WorkTimeMissed,Justification,ProjectedAmount,BenefitsCoordinator,DirectSupervisorApproveDate,DepartmentHeadApproveDate,BenefitsCoordinatorApproveDate,ReimbursementStatus) VALUES (6,5,TO_DATE('2018-06-01','yyyy-mm-dd'),6,'4 Days','JUSTIFIED6',7.5,null,null,null,null,1);

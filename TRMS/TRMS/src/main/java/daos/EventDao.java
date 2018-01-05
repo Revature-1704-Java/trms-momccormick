@@ -12,6 +12,7 @@ import daoObjects.Event;
 import daoObjects.EventType;
 import daoObjects.GradeLetter;
 import daoObjects.GradingFormat;
+import daoObjects.Reimbursement;
 import utils.ConnectionUtil;
 
 public class EventDao implements EventDaoInterface {
@@ -31,7 +32,7 @@ public class EventDao implements EventDaoInterface {
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			if (rs.next()) {
 				String name = rs.getString("Name");
 				int eventType = rs.getInt("EventType");
 				String description = rs.getString("Description");
@@ -188,7 +189,7 @@ public class EventDao implements EventDaoInterface {
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			if (rs.next()) {
 				int id = rs.getInt("ID");
 				int eventType = rs.getInt("EventType");
 				String description = rs.getString("Description");
@@ -228,5 +229,67 @@ public class EventDao implements EventDaoInterface {
 			}
 		}
 		return persistEvent;
+	}
+
+	public Event getForReimbursement(Reimbursement reimbursement) {
+		return getForReimbursementId(reimbursement.getId());
+	}
+
+	public Event getForReimbursementId(int reimbursementId) {
+		Event event = null;
+		String query = "SELECT ID, Name, EventType, Description, StartDate, EndDate, Time, Location, Cost, GradingFormat, PassingGrade, RecievedGrade FROM Events WHERE ID = (SELECT ID FROM Reimbursements WHERE ID = ?)";
+
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			conn = ConnectionUtil.getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setInt(1, reimbursementId);
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				int id = rs.getInt("ID");
+				String name = rs.getString("Name");
+				int eventType = rs.getInt("EventType");
+				String description = rs.getString("Description");
+				Date startDate = rs.getDate("StartDate");
+				Date endDate = rs.getDate("EndDate");
+				String time = rs.getString("Time");
+				String location = rs.getString("Location");
+				double cost = rs.getDouble("Cost");
+				int gradingFormat = rs.getInt("GradingFormat");
+				int passingGrade = rs.getInt("PassingGrade");
+				double recievedGrade = rs.getDouble("RecievedGrade");
+
+				event = new Event(id, name, EventType.getById(eventType), description, startDate, endDate, time,
+						location, cost, GradingFormat.getById(gradingFormat), GradeLetter.getById(passingGrade),
+						recievedGrade);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if (ps != null)
+					ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if (rs != null)
+					rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return event;
 	}
 }
