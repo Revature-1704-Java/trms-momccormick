@@ -29,14 +29,9 @@ public class UpdateReimbursementServlet extends HttpServlet {
 			return;
 		}
 
-		String requestUri = request.getRequestURI();
-		System.out.println("RequestURI: " + requestUri);
-		String requestUrl = requestUri.substring(request.getContextPath().length());
-		System.out.println("RequestURL: " + requestUrl);
+		String requestUrl = request.getRequestURI().substring(request.getContextPath().length());
 		String action = requestUrl.substring(requestUrl.indexOf('/', 2) + 1);
-		System.out.println("Action: " + action);
 		String reimbursementId = action.substring(action.indexOf('/', 2) + 1);
-		System.out.println("ReimbursementID: " + reimbursementId);
 
 		ReimbursementDao reimbursementDao = new ReimbursementDao();
 		Reimbursement reimbursement = reimbursementDao.getById(Integer.parseInt(reimbursementId));

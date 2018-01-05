@@ -29,12 +29,8 @@ public class ViewEventServlet extends HttpServlet {
 			return;
 		}
 
-		String requestUri = request.getRequestURI();
-		System.out.println("RequestURI: " + requestUri);
-		String requestUrl = requestUri.substring(request.getContextPath().length());
-		System.out.println("RequestURL: " + requestUrl);
+		String requestUrl = request.getRequestURI().substring(request.getContextPath().length());
 		String eventId = requestUrl.substring(requestUrl.indexOf('/', 2) + 1);
-		System.out.println(eventId);
 
 		HtmlPageCreator hpc = new HtmlPageCreator();
 		String htmlPage = null;
@@ -53,12 +49,8 @@ public class ViewEventServlet extends HttpServlet {
 			return;
 		}
 		
-		String requestUri = request.getRequestURI();
-		System.out.println("RequestURI: " + requestUri);
-		String requestUrl = requestUri.substring(request.getContextPath().length());
-		System.out.println("RequestURL: " + requestUrl);
+		String requestUrl = request.getRequestURI().substring(request.getContextPath().length());
 		String eventId = requestUrl.substring(requestUrl.indexOf('/', 2) + 1);
-		System.out.println(eventId);
 		
 		EventDao eventDao = new EventDao();
 		Event event = eventDao.getById(Integer.parseInt(eventId));
