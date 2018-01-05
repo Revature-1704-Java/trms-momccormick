@@ -12,8 +12,11 @@ public class Employee {
 	Employee departmentHead;
 	double availableReimbursement;
 
-	public Employee() {
-		super();
+	/*
+	 *  To Store Dummy Employee in Reimbursement
+	 */
+	public Employee(int id) {
+		this.id = id;
 	}
 
 	/*

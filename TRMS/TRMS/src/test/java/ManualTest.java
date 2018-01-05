@@ -7,7 +7,6 @@ import daoObjects.EventType;
 import daoObjects.GradeLetter;
 import daoObjects.GradingFormat;
 import daoObjects.Reimbursement;
-import daoObjects.ReimbursementStatus;
 import daos.EmployeeDao;
 import daos.EventDao;
 import daos.ReimbursementDao;
@@ -59,12 +58,12 @@ public class ManualTest {
 		}
 		System.out.println();
 
-		List<Reimbursement> pendingReimbursements = reimbursementDao
-				.getAllWithReimbursementStatus(ReimbursementStatus.PENDING);
-		for (Reimbursement r : pendingReimbursements) {
-			System.out.println(r.toString());
-		}
-		System.out.println();
+//		List<Reimbursement> pendingReimbursements = reimbursementDao
+//				.getAllWithReimbursementStatus(ReimbursementStatus.PENDING);
+//		for (Reimbursement r : pendingReimbursements) {
+//			System.out.println(r.toString());
+//		}
+//		System.out.println();
 
 		eventDao.add(dummyEvent);
 		Reimbursement newReimbursement = new Reimbursement(99, dummyEmployee, dummyEvent, "ALL THE TIME",
@@ -87,16 +86,16 @@ public class ManualTest {
 
 		System.out.println();
 
-		List<Event> allEvents = eventDao.getAll();
-		for (Event event : allEvents) {
-			System.out.println(event);
-		}
-		System.out.println();
+//		List<Event> allEvents = eventDao.getAll();
+//		for (Event event : allEvents) {
+//			System.out.println(event);
+//		}
+//		System.out.println();
 
-		List<Event> seminars = eventDao.getAllOfType(EventType.SEMINAR);
-		for (Event event : seminars) {
-			System.out.println(event);
-		}
+//		List<Event> seminars = eventDao.getAllOfType(EventType.SEMINAR);
+//		for (Event event : seminars) {
+//			System.out.println(event);
+//		}
 
 		// Event newEvent = new Event(96, "NEW_EVENT", EventType.OTHER, "IGNORE ME", new
 		// Date(System.currentTimeMillis()),new Date(System.currentTimeMillis()),

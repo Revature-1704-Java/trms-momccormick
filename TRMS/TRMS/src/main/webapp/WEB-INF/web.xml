@@ -9,10 +9,63 @@
 		<servlet-name>LoginServlet</servlet-name>
 		<servlet-class>servlets.LoginServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>HomeServlet</servlet-name>
+		<servlet-class>servlets.HomeServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ViewEventServlet</servlet-name>
+		<servlet-class>servlets.ViewEventServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>CreateReimbursementServlet</servlet-name>
+		<servlet-class>servlets.CreateReimbursementServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>UpdateReimbursementServlet</servlet-name>
+		<display-name>UpdateReimbursementServlet</display-name>
+		<description></description>
+		<servlet-class>servlets.UpdateReimbursementServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>SubmitReimbursementServlet</servlet-name>
+		<display-name>SubmitReimbursementServlet</display-name>
+		<description></description>
+		<servlet-class>servlets.SubmitReimbursementServlet</servlet-class>
+	</servlet>
+	
 
 	<servlet-mapping>
 		<servlet-name>LoginServlet</servlet-name>
 		<url-pattern>/LoginServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>HomeServlet</servlet-name>
+		<url-pattern>/HomeServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ViewEventServlet</servlet-name>
+		<url-pattern>/ViewEventServlet/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>CreateReimbursementServlet</servlet-name>
+		<url-pattern>/CreateReimbursementServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UpdateReimbursementServlet</servlet-name>
+		<url-pattern>/UpdateReimbursementServlet/assign/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UpdateReimbursementServlet</servlet-name>
+		<url-pattern>/UpdateReimbursementServlet/approve/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UpdateReimbursementServlet</servlet-name>
+		<url-pattern>/UpdateReimbursementServlet/cancel/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SubmitReimbursementServlet</servlet-name>
+		<url-pattern>/SubmitReimbursementServlet</url-pattern>
 	</servlet-mapping>
 	
 	

@@ -4,7 +4,6 @@ import java.util.List;
 
 import daoObjects.Employee;
 import daoObjects.Reimbursement;
-import daoObjects.ReimbursementStatus;
 
 public interface ReimbursementDaoInterface extends BaseDaoInterface<Reimbursement> {
 
@@ -15,6 +14,4 @@ public interface ReimbursementDaoInterface extends BaseDaoInterface<Reimbursemen
 	List<Reimbursement> getAllForSubordinatesOf(Employee manager);
 
 	List<Reimbursement> getAllWithAssignedBenefitsCoordinator(Employee benefitsCoordinator);
-
-	List<Reimbursement> getAllWithReimbursementStatus(ReimbursementStatus reimbursementStatus);
 }

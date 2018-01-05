@@ -3,17 +3,14 @@ package servlets;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import daoObjects.Employee;
-import daoObjects.EmployeeType;
-import utils.SessionAttribute;
 
-@WebServlet("")
+//@WebServlet("")
 public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -31,22 +28,11 @@ public class FrontController extends HttpServlet {
 
 		HttpSession session = request.getSession();
 
-		Employee loggedInEmployee = (Employee) session.getAttribute(SessionAttribute.EMPLOYEE);
+		Employee loggedInEmployee = (Employee) session.getAttribute("employee");
 
 		if (loggedInEmployee == null) {
 			response.sendRedirect("LoginServlet");
 			return;
 		}
-
-		if (loggedInEmployee.getType() == EmployeeType.STANDARD) {
-			response.sendRedirect("EmployeeHomeServlet");
-		} else if (loggedInEmployee.getType() == EmployeeType.MANAGEMENT) {
-			response.sendRedirect("ManagementHomeServlet");
-		} else if (loggedInEmployee.getType() == EmployeeType.BENEFITS_COORDINATOR) {
-			response.sendRedirect("BenefitsCoordinatorHomeServlet");
-		} else {
-			response.sendRedirect("LoginServlet");
-		}
 	}
-
 }

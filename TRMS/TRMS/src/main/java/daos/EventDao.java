@@ -6,8 +6,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import daoInterfaces.EventDaoInterface;
 import daoObjects.Event;
@@ -174,10 +172,10 @@ public class EventDao implements EventDaoInterface {
 			}
 		}
 	}
-
-	public List<Event> getAll() {
-		List<Event> events = new ArrayList<Event>();
-		String query = "SELECT ID, Name, EventType, Description, StartDate, EndDate, Time, Location, Cost, GradingFormat, PassingGrade, RecievedGrade FROM Events";
+	
+	public Event persist(Event event) {
+		Event persistEvent = null;
+		String query = "SELECT ID, EventType, Description, StartDate, EndDate, Time, Location, Cost, GradingFormat, PassingGrade, RecievedGrade FROM Events WHERE Name = ?";
 
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -186,12 +184,12 @@ public class EventDao implements EventDaoInterface {
 		try {
 			conn = ConnectionUtil.getConnection();
 			ps = conn.prepareStatement(query);
+			ps.setString(1, event.getName());
 
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
 				int id = rs.getInt("ID");
-				String name = rs.getString("Name");
 				int eventType = rs.getInt("EventType");
 				String description = rs.getString("Description");
 				Date startDate = rs.getDate("StartDate");
@@ -203,10 +201,9 @@ public class EventDao implements EventDaoInterface {
 				int passingGrade = rs.getInt("PassingGrade");
 				double recievedGrade = rs.getDouble("RecievedGrade");
 
-				Event event = new Event(id, name, EventType.getById(eventType), description, startDate, endDate, time,
+				persistEvent = new Event(id, event.getName(), EventType.getById(eventType), description, startDate, endDate, time,
 						location, cost, GradingFormat.getById(gradingFormat), GradeLetter.getById(passingGrade),
 						recievedGrade);
-				events.add(event);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -230,64 +227,6 @@ public class EventDao implements EventDaoInterface {
 				e.printStackTrace();
 			}
 		}
-		return events;
+		return persistEvent;
 	}
-
-	public List<Event> getAllOfType(EventType eventType) {
-		List<Event> events = new ArrayList<Event>();
-		String query = "SELECT ID, Name, EventType, Description, StartDate, EndDate, Time, Location, Cost, GradingFormat, PassingGrade, RecievedGrade FROM Events WHERE EventType = ?";
-
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			conn = ConnectionUtil.getConnection();
-			ps = conn.prepareStatement(query);
-			ps.setInt(1, eventType.getId());
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				int id = rs.getInt("ID");
-				String name = rs.getString("Name");
-				String description = rs.getString("Description");
-				Date startDate = rs.getDate("StartDate");
-				Date endDate = rs.getDate("EndDate");
-				String time = rs.getString("Time");
-				String location = rs.getString("Location");
-				double cost = rs.getDouble("Cost");
-				int gradingFormat = rs.getInt("GradingFormat");
-				int passingGrade = rs.getInt("PassingGrade");
-				double recievedGrade = rs.getDouble("RecievedGrade");
-
-				Event event = new Event(id, name, eventType, description, startDate, endDate, time, location, cost,
-						GradingFormat.getById(gradingFormat), GradeLetter.getById(passingGrade), recievedGrade);
-				events.add(event);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (conn != null)
-					conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			try {
-				if (ps != null)
-					ps.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			try {
-				if (rs != null)
-					rs.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return events;
-	}
-
 }

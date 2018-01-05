@@ -11,6 +11,10 @@ DROP TABLE EventTypes;
 DROP TABLE GradingFormats;
 DROP TABLE GradeLetterScores;
 DROP TABLE ReimbursementStatuses;
+DROP SEQUENCE seqPK_ReimbursementNotes;
+DROP SEQUENCE seqPK_Reimbursements;
+DROP SEQUENCE seqPK_Employees;
+DROP SEQUENCE seqPK_Events;
 
 /***********************
 *Create Database Tables*
@@ -144,7 +148,8 @@ INSERT INTO NoteReasons (ID,NoteReason) VALUES (2,'Reimbursement Amount Exceeded
 
 INSERT INTO EmployeeTypes (ID,EmployeeType) VALUES (1,'Standard');
 INSERT INTO EmployeeTypes (ID,EmployeeType) VALUES (2,'Benefits Coordinator');
-INSERT INTO EmployeeTypes (ID,EmployeeType) VALUES (3,'Management');
+INSERT INTO EmployeeTypes (ID,EmployeeType) VALUES (3,'Direct Supervisor');
+INSERT INTO EmployeeTypes (ID,EmployeeType) VALUES (4,'Department Head');
 
 INSERT INTO EventTypes (ID,EventType,PercentCovered) VALUES (1,'University Course',0.80);
 INSERT INTO EventTypes (ID,EventType,PercentCovered) VALUES (2,'Seminar',0.60);
@@ -171,10 +176,61 @@ INSERT INTO ReimbursementStatuses (ID,ReimbursementStatus) VALUES (6,'Urgent');
 INSERT INTO ReimbursementStatuses (ID,ReimbursementStatus) VALUES (7,'Denied');
 
 
+/*****************************
+*Create Primary Key Sequences*
+*****************************/
+CREATE SEQUENCE seqPK_ReimbursementNotes;
+CREATE SEQUENCE seqPK_Reimbursements;
+CREATE SEQUENCE seqPK_Employees;
+CREATE SEQUENCE seqPK_Events;
+
+
+
+/****************
+*Create Triggers*
+****************/
+CREATE OR REPLACE TRIGGER inc_ReimbursementNotes
+BEFORE INSERT ON ReimbursementNotes
+FOR EACH ROW
+  BEGIN
+    :NEW.ID := seqPK_ReimbursementNotes.NEXTVAL;
+  END;
+/
+
+CREATE OR REPLACE TRIGGER inc_Reimbursements
+BEFORE INSERT ON Reimbursements
+FOR EACH ROW
+  BEGIN
+    :NEW.ID := seqPK_Reimbursements.NEXTVAL;
+  END;
+/
+
+CREATE OR REPLACE TRIGGER inc_Employees
+BEFORE INSERT ON Employees
+FOR EACH ROW
+  BEGIN
+    :NEW.ID := seqPK_Employees.NEXTVAL;
+    
+    IF :NEW.AvailableReimbursement IS NULL
+    THEN
+      :NEW.AvailableReimbursement := 1000;
+    END IF;
+  END;
+/
+
+CREATE OR REPLACE TRIGGER inc_Events
+BEFORE INSERT ON Events
+FOR EACH ROW
+  BEGIN
+    :NEW.ID := seqPK_Events.NEXTVAL;
+  END;
+/
+
+
 /********************
 *Add Mock Table Data*
 ********************/
-INSERT INTO Employees (ID,FirstName,LastName,Email,Password,EmployeeType,DirectSupervisor,DepartmentHead,AvailableReimbursement) VALUES (1,'Department','Head','department.head@email.com','password',3,null,null,null);
+INSERT INTO Employees (ID,FirstName,LastName,Email,Password,EmployeeType,DirectSupervisor,DepartmentHead,AvailableReimbursement) VALUES (1,'Department','Head','department.head@email.com','password',4,null,null,null);
 INSERT INTO Employees (ID,FirstName,LastName,Email,Password,EmployeeType,DirectSupervisor,DepartmentHead,AvailableReimbursement) VALUES (2,'Direct','Supervisor','direct.supervisor@email.com','password',3,1,1,null);
 INSERT INTO Employees (ID,FirstName,LastName,Email,Password,EmployeeType,DirectSupervisor,DepartmentHead,AvailableReimbursement) VALUES (3,'BenCo','Supervisor','ben.co.supervisor@email.com','password',3,null,null,null);
 INSERT INTO Employees (ID,FirstName,LastName,Email,Password,EmployeeType,DirectSupervisor,DepartmentHead,AvailableReimbursement) VALUES (4,'Benefits','Coordinator','benefits.cordinator@email.com','password',2,3,null,null);

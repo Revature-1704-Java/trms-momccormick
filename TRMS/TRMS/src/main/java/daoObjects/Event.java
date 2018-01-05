@@ -17,6 +17,13 @@ public class Event {
 	GradeLetter passingGrade;
 	double recievedGrade;
 	
+	/*
+	 * To Store Dummy Event in Reimbursement 
+	 */
+	public Event(int id) {
+		this.id = id;
+	}
+	
 	public Event(int id, String name, EventType eventType, String description, Date startDate, Date endDate,
 			String time, String location, double cost, GradingFormat gradingFormat, GradeLetter passingGrade,
 			double recievedGrade) {
