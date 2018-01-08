@@ -19,97 +19,103 @@ public class HtmlPageCreator {
 		StringBuilder htmlPage = new StringBuilder();
 
 		htmlPage.append(
-				"<html><head><meta http-equiv='Content-Type' content='text/html; charset=ISO-8859-1'><title>TRMS HOME</title></head><body>");
+				"<html><link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css' integrity='sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy' crossorigin='anonymous'><head><meta http-equiv='Content-Type' content='text/html; charset=ISO-8859-1'><title>TRMS HOME</title></head><body>");
 
 		htmlPage.append("<h1>Welcome " + employee.getFirstName() + " " + employee.getLastName()
 				+ "</h1><br/><form action='/trms/LoginServlet' method='GET'><input type='submit' value='Logout'/></form>");
 
-		String reimbursementTable = null;
+		String reimbursementView = null;
 		ReimbursementDao reiDao = new ReimbursementDao();
 		List<Reimbursement> reimbursements = null;
 		if (employee.getType() == EmployeeType.STANDARD) {
 			reimbursements = reiDao.getAllForEmployee(employee);
-			reimbursementTable = createStandardReimbursementTable(reimbursements);
+			reimbursementView = createStandardReimbursementView(reimbursements);
 		} else if (employee.getType() == EmployeeType.DIRECT_SUPERVISOR
 				|| employee.getType() == EmployeeType.DEPARTMENT_HEAD) {
 			reimbursements = reiDao.getAllForSubordinatesOf(employee);
-			reimbursementTable = createManagementReimbursementTable(reimbursements, employee);
+			reimbursementView = createManagementReimbursementView(reimbursements, employee);
 		} else if (employee.getType() == EmployeeType.BENEFITS_COORDINATOR) {
 			reimbursements = reiDao.getAllWithAssignedBenefitsCoordinator(employee);
 			reimbursements.addAll(reiDao.getAllUnassigned());
-			reimbursementTable = createBenefitsCoordinatorReimbursementTable(reimbursements, employee);
+			reimbursementView = createBenefitsCoordinatorReimbursementView(reimbursements, employee);
 		}
 
-		htmlPage.append(reimbursementTable);
+		htmlPage.append(reimbursementView);
 
 		htmlPage.append("</body></html>");
 
 		return htmlPage.toString();
 	}
 
-	private String createStandardReimbursementTable(List<Reimbursement> reimbursements) {
-		StringBuilder table = new StringBuilder();
+	private String createStandardReimbursementView(List<Reimbursement> reimbursements) {
+		StringBuilder view = new StringBuilder();
 
-		table.append("<h1>Reimbursements</h1><table border='1'><tr><th>Date Submitted</th><th>Work Time Missed</th>"
+		view.append(getUniformTableSetUp());
+
+		view.append("<tr><th>Date Submitted</th><th>Work Time Missed</th>"
 				+ "<th>Justification</th><th>Projected Amount</th><th>Reimbursement Status</th><th>Amount Awarded</th></tr>");
 
 		double pendingAmount = 0;
 		double awardedAmount = 0;
 
+		view.append("<tbody>");
 		for (Reimbursement rei : reimbursements) {
 
-			table.append("<tr>");
-			table.append("<td>" + rei.getDateSubmitted() + "</td>");
-			table.append("<td>" + rei.getWorkTimeMissed() + "</td>");
-			table.append("<td>" + rei.getJustification() + "</td>");
-			table.append("<td>$" + rei.getProjectedAmount() + "</td>");
-			table.append("<td>" + rei.getReimbursementStatus() + "</td>");
-			table.append("<td>$" + rei.getAmountAwarded() + "</td>");
-			table.append("<td><form action='/trms/ViewEventServlet/" + rei.getEvent().getId()
+			view.append("<tr>");
+			view.append("<td>" + rei.getDateSubmitted() + "</td>");
+			view.append("<td>" + rei.getWorkTimeMissed() + "</td>");
+			view.append("<td>" + rei.getJustification() + "</td>");
+			view.append("<td>$" + rei.getProjectedAmount() + "</td>");
+			view.append("<td>" + rei.getReimbursementStatus() + "</td>");
+			view.append("<td>$" + rei.getAmountAwarded() + "</td>");
+			view.append("<td><form action='/trms/ViewEventServlet/" + rei.getEvent().getId()
 					+ "'><input type='submit' value='View Event'/></form></td>");
 			if (rei.getReimbursementStatus() == ReimbursementStatus.AWARDED) {
 				awardedAmount += rei.getAmountAwarded();
 			} else if (rei.getReimbursementStatus() != ReimbursementStatus.DENIED
 					&& rei.getReimbursementStatus() != ReimbursementStatus.CANCELED) {
 				pendingAmount += rei.getProjectedAmount();
-				table.append("<td><form action='/trms/UpdateReimbursementServlet/cancel/" + rei.getId()
+				view.append("<td><form action='/trms/UpdateReimbursementServlet/cancel/" + rei.getId()
 						+ "' method='POST'><input type='submit' value='Cancel Request'/></form></td>");
 			}
 
-			table.append("</tr>");
+			view.append("</tr>");
 		}
+		view.append("</tbody>");
 
 		double remainingAmount = 1000 - awardedAmount - pendingAmount;
 
-		table.append("<tr><td colspan='2'>Currently Pending Amount: $" + pendingAmount
+		view.append("<tr><td colspan='2'>Currently Pending Amount: $" + pendingAmount
 				+ "</td><td colspan='2'>Awarded Amount: $" + awardedAmount + "</td><td colspan='2'>Amount Available: $"
-				+ remainingAmount + "</td></tr>");
-
-		table.append("</table>");
+				+ remainingAmount + "</td></tr></table>");
 
 		if (remainingAmount > 0) {
-			table.append(
+			view.append(
 					"<br/><form action='/trms/SubmitReimbursementServlet'><input type='submit' value='Create New Reimbursement'/></form>");
-		}
-		else {
-			table.append(
-					"<br/><input type='submit' value='Create New Reimbursement' disabled='true'/>");
+		} else {
+			view.append("<br/><input type='submit' value='Create New Reimbursement' disabled='true'/>");
 		}
 
-		return table.toString();
+		return view.toString();
 	}
 
-	private String createManagementReimbursementTable(List<Reimbursement> reimbursements, Employee manager) {
-		StringBuilder table = new StringBuilder();
+	private String getUniformTableSetUp() {
+		return "<table class='table table-bordered table-striped table-hover' width='100%'>";
+	}
 
-		table.append("<h1>Reimbursements</h1><table border='1'><tr><th>Date Submitted</th><th>Work Time Missed</th>"
+	private String createManagementReimbursementView(List<Reimbursement> reimbursements, Employee manager) {
+		StringBuilder view = new StringBuilder();
+
+		view.append(getUniformTableSetUp());
+
+		view.append("<tr><th>Date Submitted</th><th>Work Time Missed</th>"
 				+ "<th>Justification</th><th>Projected Amount</th><th>Reimbursement Status</th><th>Direct Supervisor Approved</th>");
 
 		if (manager.getType() == EmployeeType.DEPARTMENT_HEAD) {
-			table.append("<th>Department Head Approved</th>");
+			view.append("<th>Department Head Approved</th>");
 		}
 
-		table.append("</tr>");
+		view.append("</tr>");
 
 		for (Reimbursement rei : reimbursements) {
 			// if (rei.getDepartmentHeadApproved() != null) {
@@ -119,29 +125,29 @@ public class HtmlPageCreator {
 			// EmployeeType.DIRECT_SUPERVISOR) {
 			// continue;
 			// }
-			table.append("<tr>");
-			table.append("<td>" + rei.getDateSubmitted() + "</td>");
-			table.append("<td>" + rei.getWorkTimeMissed() + "</td>");
-			table.append("<td>" + rei.getJustification() + "</td>");
-			table.append("<td>$" + rei.getProjectedAmount() + "</td>");
-			table.append("<td>" + rei.getReimbursementStatus() + "</td>");
-			table.append("<td>" + rei.getDirectSupervisorApproved() + "</td>");
+			view.append("<tr>");
+			view.append("<td>" + rei.getDateSubmitted() + "</td>");
+			view.append("<td>" + rei.getWorkTimeMissed() + "</td>");
+			view.append("<td>" + rei.getJustification() + "</td>");
+			view.append("<td>$" + rei.getProjectedAmount() + "</td>");
+			view.append("<td>" + rei.getReimbursementStatus() + "</td>");
+			view.append("<td>" + rei.getDirectSupervisorApproved() + "</td>");
 			if (manager.getType() == EmployeeType.DEPARTMENT_HEAD) {
-				table.append("<td>" + rei.getDepartmentHeadApproved() + "</td>");
+				view.append("<td>" + rei.getDepartmentHeadApproved() + "</td>");
 			}
-			table.append("<td><form action='/trms/ViewEventServlet/" + rei.getEvent().getId()
+			view.append("<td><form action='/trms/ViewEventServlet/" + rei.getEvent().getId()
 					+ "'><input type='submit' value='View Event'/></form></td>");
 			if (canManagementApproveReimbursement(rei, manager)) {
-				table.append("<td><form action='/trms/UpdateReimbursementServlet/approve/" + rei.getId()
+				view.append("<td><form action='/trms/UpdateReimbursementServlet/approve/" + rei.getId()
 						+ "' method='POST'><input type='submit' value='Submit Approval'/></form></td>");
 			}
 
-			table.append("</tr>");
+			view.append("</tr>");
 		}
 
-		table.append("</table>");
+		view.append("</table>");
 
-		return table.toString();
+		return view.toString();
 	}
 
 	private boolean canManagementApproveReimbursement(Reimbursement reimbursement, Employee manager) {
@@ -161,47 +167,49 @@ public class HtmlPageCreator {
 		return false;
 	}
 
-	private String createBenefitsCoordinatorReimbursementTable(List<Reimbursement> reimbursements,
+	private String createBenefitsCoordinatorReimbursementView(List<Reimbursement> reimbursements,
 			Employee benefitsCoordinator) {
-		StringBuilder table = new StringBuilder();
+		StringBuilder view = new StringBuilder();
 
-		table.append(
-				"<h1>Reimbursements</h1><table border='1'><tr><th>Date Submitted</th><th>Work Time Missed</th><th>Justification</th><th>Projected Amount</th><th>Reimbursement Status</th><th>Amount Awarded</th><th>Direct Supervisor Approved</th><th>Department Head Approved</th></tr>");
+		view.append(getUniformTableSetUp());
+
+		view.append(
+				"<tr><th>Date Submitted</th><th>Work Time Missed</th><th>Justification</th><th>Projected Amount</th><th>Reimbursement Status</th><th>Amount Awarded</th><th>Direct Supervisor Approved</th><th>Department Head Approved</th></tr>");
 
 		for (Reimbursement rei : reimbursements) {
-			table.append("<tr>");
-			table.append("<td>" + rei.getDateSubmitted() + "</td>");
-			table.append("<td>" + rei.getWorkTimeMissed() + "</td>");
-			table.append("<td>" + rei.getJustification() + "</td>");
-			table.append("<td>$" + rei.getProjectedAmount() + "</td>");
-			table.append("<td>" + rei.getReimbursementStatus() + "</td>");
-			table.append("<td>$" + rei.getAmountAwarded() + "</td>");
-			table.append("<td>" + rei.getDirectSupervisorApproved() + "</td>");
-			table.append("<td>" + rei.getDepartmentHeadApproved() + "</td>");
-			table.append("<td><form action='/trms/ViewEventServlet/" + rei.getEvent().getId()
+			view.append("<tr>");
+			view.append("<td>" + rei.getDateSubmitted() + "</td>");
+			view.append("<td>" + rei.getWorkTimeMissed() + "</td>");
+			view.append("<td>" + rei.getJustification() + "</td>");
+			view.append("<td>$" + rei.getProjectedAmount() + "</td>");
+			view.append("<td>" + rei.getReimbursementStatus() + "</td>");
+			view.append("<td>$" + rei.getAmountAwarded() + "</td>");
+			view.append("<td>" + rei.getDirectSupervisorApproved() + "</td>");
+			view.append("<td>" + rei.getDepartmentHeadApproved() + "</td>");
+			view.append("<td><form action='/trms/ViewEventServlet/" + rei.getEvent().getId()
 					+ "'><input type='submit' value='View Event'/></form></td>");
 			if (rei.getBenefitsCoordinator() == null && rei.getReimbursementStatus() != ReimbursementStatus.CANCELED) {
-				table.append("<td><form action='/trms/UpdateReimbursementServlet/assign/" + rei.getId()
+				view.append("<td><form action='/trms/UpdateReimbursementServlet/assign/" + rei.getId()
 						+ "' method='POST'><input type='submit' value='Assign to Myself'/></form></td>");
-				table.append("</tr>");
+				view.append("</tr>");
 			} else {
 				if (canManagementApproveReimbursement(rei, benefitsCoordinator)) {
-					table.append("<td><form action='/trms/UpdateReimbursementServlet/approve/" + rei.getId()
+					view.append("<td><form action='/trms/UpdateReimbursementServlet/approve/" + rei.getId()
 							+ "' method='POST'><input type='submit' value='Submit Approval'/></form></td>");
 				}
 			}
 		}
 
-		table.append("</table>");
+		view.append("</table>");
 
-		return table.toString();
+		return view.toString();
 	}
 
 	public String createEventDetails(Employee employee, int eventId) {
 		StringBuilder htmlPage = new StringBuilder();
 
 		htmlPage.append(
-				"<html><head><meta http-equiv='Content-Type' content='text/html; charset=ISO-8859-1'><title>Event Details</title></head><body>");
+				"<html><link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css' integrity='sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy' crossorigin='anonymous'><head><meta http-equiv='Content-Type' content='text/html; charset=ISO-8859-1'><title>Event Details</title></head><body>");
 
 		htmlPage.append("<h1>Welcome " + employee.getFirstName() + " " + employee.getLastName()
 				+ "</h1><br/><form action='/trms/LoginServlet'><input type='submit' value='Logout'/></form>");
@@ -209,8 +217,8 @@ public class HtmlPageCreator {
 		EventDao eventDao = new EventDao();
 		Event event = eventDao.getById(eventId);
 
-		htmlPage.append("<table border='1'>");
-		htmlPage.append("<tr><td>Name</td><td>" + event.getName() + "</td></tr>");
+		htmlPage.append("<table class='table table-bordered' width='50%'>");
+		htmlPage.append("<tr><td class='col-sm-2'>Name</td><td class='col-sm-2'>" + event.getName() + "</td></tr>");
 		htmlPage.append("<tr><td>Type</td><td>" + event.getEventType() + "</td></tr>");
 		htmlPage.append("<tr><td>Description</td><td>" + event.getDescription() + "</td></tr>");
 		htmlPage.append("<tr><td>Start Date</td><td>" + event.getStartDate() + "</td></tr>");
@@ -218,14 +226,16 @@ public class HtmlPageCreator {
 		htmlPage.append("<tr><td>Time</td><td>" + event.getTime() + "</td></tr>");
 		htmlPage.append("<tr><td>Location</td><td>" + event.getLocation() + "</td></tr>");
 		htmlPage.append("<tr><td>Cost</td><td>" + event.getCost() + "</td></tr>");
-		htmlPage.append("<tr><td>Grading Format</td><td>" + event.getGradingFormat() + "</td></tr>");
-		htmlPage.append("<tr><td>Passing Grade</td><td>" + event.getPassingGrade() + " ("
-				+ event.getPassingGrade().getMinPercent() * 100 + "%-" + event.getPassingGrade().getMaxPercent() * 100
+		htmlPage.append("<tr><td>Grading Format</td><td>" + event.getGradingFormat().toString() + "</td></tr>");
+
+		double minGrade = event.getPassingGrade().getMinPercent();
+		double maxGrade = event.getPassingGrade().getMaxPercent();
+		htmlPage.append("<tr><td>Passing Grade</td><td>" + event.getPassingGrade() + " (" + minGrade + "%-" + maxGrade
 				+ "%) </td></tr>");
 
-		if (employee.getType() == EmployeeType.STANDARD) {
+		if (employee.getType() == EmployeeType.STANDARD && event.getRecievedGrade() == 0) {
 			htmlPage.append("<tr><form action='/trms/ViewEventServlet/" + event.getId()
-					+ "' method='POST'><td>Recieved Grade (%):</td><td><input type='number' name='submitgrade' placeholder='Recieved Grade' value='"
+					+ "' method='POST'><td>Recieved Grade (%):</td><td class='col-sm-1'><input type='number' name='submitgrade' placeholder='Recieved Grade' value='"
 					+ event.getRecievedGrade()
 					+ "'/></td><td><input type='submit' value='Submit Grade'/></td></form></tr>");
 		} else {
@@ -244,15 +254,17 @@ public class HtmlPageCreator {
 		StringBuilder htmlPage = new StringBuilder();
 
 		htmlPage.append(
-				"<html><head><meta http-equiv='Content-Type' content='text/html; charset=ISO-8859-1'><title>TRMS HOME</title></head><body>");
+				"<html><link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css' integrity='sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy' crossorigin='anonymous'><head><meta http-equiv='Content-Type' content='text/html; charset=ISO-8859-1'><title>TRMS HOME</title></head><body>");
 
 		htmlPage.append("<h1>Welcome " + employee.getFirstName() + " " + employee.getLastName()
 				+ "</h1><br/><form action='/trms/LoginServlet'><input type='submit' value='Logout'/></form>");
+		
+		htmlPage.append("<h2>Reimbursement Request Information</h2>");
 
 		htmlPage.append(
-				"<form action='/trms/SubmitReimbursementServlet' method='POST'><table><tr><th colspan='2'>Reimbursement Request Information</th></tr>");
+				"<form action='/trms/SubmitReimbursementServlet' method='POST'><table class='table table-bordered'>");
 		htmlPage.append(
-				"<tr><td>Event Name:</td><td><input type='text' name='eventname' placeholder='Event Name' value='TRMS Presentation'/></td></tr>");
+				"<tr><td style='width:10%'>Event Name:</td><td style='width:30%'><input type='text' name='eventname' placeholder='Event Name' value='TRMS Presentation'/></td></tr>");
 
 		htmlPage.append("<tr><td>Event Type:</td><td><select name='eventtype'>");
 		for (EventType et : EventType.values()) {
@@ -270,7 +282,7 @@ public class HtmlPageCreator {
 		htmlPage.append(
 				"<tr><td>Location:</td><td><input type='text' name='location' placeholder='Location' value='Revature Office'/></td></tr>");
 		htmlPage.append(
-				"<tr><td>Cost:</td><td><input type='number' name='cost' min='0.00' step='0.01' placeholder='Cost' value='150.00'/></td></tr>");
+				"<tr><td>Cost ($):</td><td><input type='number' name='cost' min='0.00' step='0.01' placeholder='Cost' value='150.00'/></td></tr>");
 
 		htmlPage.append("<tr><td>Grading Format:</td><td><select name='gradingformats'>");
 		for (GradingFormat gf : GradingFormat.values()) {

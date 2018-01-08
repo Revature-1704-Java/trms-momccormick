@@ -111,8 +111,8 @@ CREATE TABLE GradeLetterScores --REFERENCE TABLE
 (
   ID INT NOT NULL,
   GradeLetter VARCHAR2(2) UNIQUE NOT NULL,
-  MinPercentage NUMBER(2,1) UNIQUE NOT NULL,
-  MaxPercentage NUMBER(2,1) UNIQUE NOT NULL,
+  MinPercentage NUMBER(2,0) UNIQUE NOT NULL,
+  MaxPercentage NUMBER(3,0) UNIQUE NOT NULL,
   CONSTRAINT PK_GradeLetterScores PRIMARY KEY (ID)
 );
 
@@ -161,11 +161,11 @@ INSERT INTO EventTypes (ID,EventType,PercentCovered) VALUES (6,'Other',0.30);
 INSERT INTO GradingFormats (ID,GradingFormat) VALUES (1,'Letter Grade');
 INSERT INTO GradingFormats (ID,GradingFormat) VALUES (2,'Presentation');
 
-INSERT INTO GradeLetterScores (ID,GradeLetter,MinPercentage,MaxPercentage) VALUES (1,'A',0.9,1.0);
-INSERT INTO GradeLetterScores (ID,GradeLetter,MinPercentage,MaxPercentage) VALUES (2,'B',0.8,0.9);
-INSERT INTO GradeLetterScores (ID,GradeLetter,MinPercentage,MaxPercentage) VALUES (3,'C',0.7,0.8);
-INSERT INTO GradeLetterScores (ID,GradeLetter,MinPercentage,MaxPercentage) VALUES (4,'D',0.6,0.7);
-INSERT INTO GradeLetterScores (ID,GradeLetter,MinPercentage,MaxPercentage) VALUES (5,'F',0.0,0.6);
+INSERT INTO GradeLetterScores (ID,GradeLetter,MinPercentage,MaxPercentage) VALUES (1,'A',90,100);
+INSERT INTO GradeLetterScores (ID,GradeLetter,MinPercentage,MaxPercentage) VALUES (2,'B',80,90);
+INSERT INTO GradeLetterScores (ID,GradeLetter,MinPercentage,MaxPercentage) VALUES (3,'C',70,80);
+INSERT INTO GradeLetterScores (ID,GradeLetter,MinPercentage,MaxPercentage) VALUES (4,'D',60,70);
+INSERT INTO GradeLetterScores (ID,GradeLetter,MinPercentage,MaxPercentage) VALUES (5,'F',0,60);
 
 INSERT INTO ReimbursementStatuses (ID,ReimbursementStatus) VALUES (1,'Pending');
 INSERT INTO ReimbursementStatuses (ID,ReimbursementStatus) VALUES (2,'Grade Pending');

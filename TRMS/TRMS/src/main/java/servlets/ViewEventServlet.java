@@ -60,7 +60,7 @@ public class ViewEventServlet extends HttpServlet {
 		eventDao.update(updatedEvent);
 
 		// If Employee Received Passing Grade
-		if (updatedEvent.getRecievedGrade() >= updatedEvent.getPassingGrade().getMinPercent() * 100) {
+		if (updatedEvent.getRecievedGrade() >= updatedEvent.getPassingGrade().getMinPercent()) {
 			ReimbursementDao accessReimbursementDatabaseTable = new ReimbursementDao();
 			ReimbursementStatus status = accessReimbursementDatabaseTable.getStatusForEvent(updatedEvent);
 			// If Reimbursement Has Been Assigned to Benefits Coordinator

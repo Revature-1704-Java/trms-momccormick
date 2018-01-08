@@ -44,7 +44,7 @@ public class UpdateReimbursementServlet extends HttpServlet {
 		} else if (action.startsWith("assign") && emp.getType() == EmployeeType.BENEFITS_COORDINATOR) {
 			reimbursement.setBenefitsCoordinator(emp);
 			Event event = new EventDao().getForReimbursement(reimbursement);
-			if (event.getRecievedGrade() > event.getPassingGrade().getMinPercent() * 100) {
+			if (event.getRecievedGrade() > event.getPassingGrade().getMinPercent()) {
 				reimbursement.setReimbursementStatus(ReimbursementStatus.APPROVAL_PENDING);
 			} else if (reimbursement.getReimbursementStatus() == ReimbursementStatus.PENDING) {
 				reimbursement.setReimbursementStatus(ReimbursementStatus.GRADE_PENDING);

@@ -1,7 +1,7 @@
 package daoObjects;
 
 public enum GradeLetter {
-	A(1, 'A', 0.9, 1.0), B(2, 'B', 0.8, 0.9), C(3, 'C', 0.7, 0.8), D(4, 'D', 0.6, 0.7), F(5, 'F', 0.0, 0.6);
+	A(1, 'A', 90, 100), B(2, 'B', 80, 90), C(3, 'C', 70, 80), D(4, 'D', 60, 70), F(5, 'F', 0, 60);
 
 	private int id;
 	private char gradeLetter;

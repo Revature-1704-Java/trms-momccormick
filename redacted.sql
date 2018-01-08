@@ -85,3 +85,25 @@ BEGIN
   RETURN coverageCost;
 END;
 /
+
+
+CREATE OR REPLACE PROCEDURE event_updatestatus(
+rei_id IN NUMBER
+)
+AS
+    rei Reimbursements%ROWTYPE;
+    CURSOR c_rei IS SELECT * FROM Reimbursements WHERE ID = rei_id;
+    CURSOR c_gls (eve_id VARCHAR2) IS SELECT MinPercentage FROM GradeLetterScores WHERE ID = (SELECT RecievedGrade FROM Events WHERE ID = eve_id);
+    passPercent NUMBER;
+    gradepassed BOOLEAN;
+BEGIN
+    OPEN c_rei;    
+    FETCH c_rei INTO rei;
+    CLOSE c_rei;
+    
+    OPEN c_gls (rei.Event);
+    FETCH c_gls INTO passPercent;    
+    CLOSE c_gls;
+    
+    END event_updatestatus;
+/
